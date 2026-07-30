@@ -637,11 +637,33 @@ function checkAll() {
       qDiv.style.borderColor = '#64ffda';
       qDiv.dataset.correct = 'true';
     } else {
-      fb.style.background = 'rgba(60,10,10,0.8)';
-      fb.style.border = '1px solid #ff6464';
-      fb.innerHTML = `✗ Incorrect.<br><strong>Your answer:</strong> ${input || '(blank)'}<br><strong>Correct answer:</strong> ${item.answer}<br><br><strong>💡 Hint:</strong> ${item.hint}<br><br><strong>📝 Explanation:</strong> ${item.explanation}`;
-      qDiv.style.borderColor = '#ff6464';
-      qDiv.dataset.correct = 'false';
+      // Easter eggs
+      const inputLower = input.toLowerCase().replace(/\s+/g,'');
+      if (inputLower === 'bread>key' || inputLower === 'bread>keys') {
+        fb.style.background = 'rgba(60,40,0,0.8)';
+        fb.style.border = '1px solid #f0c040';
+        fb.innerHTML = '🍞 <b>EASTER EGG!</b> Bread does indeed taste better than key. But that\'s not the answer...';
+        qDiv.style.borderColor = '#f0c040';
+        qDiv.dataset.correct = 'false';
+      } else if (inputLower === 'amoldesai' || inputLower === 'amol desai' || inputLower === 'amol') {
+        fb.style.background = 'rgba(60,0,60,0.8)';
+        fb.style.border = '1px solid #ff64ff';
+        fb.innerHTML = '👑 <b>EASTER EGG!</b> The legend himself. But he didn\'t say that was the answer...';
+        qDiv.style.borderColor = '#ff64ff';
+        qDiv.dataset.correct = 'false';
+      } else if (inputLower === '67' || inputLower === 'sixty seven') {
+        fb.style.background = 'rgba(0,30,60,0.8)';
+        fb.style.border = '1px solid #6496ff';
+        fb.innerHTML = '🎯 <b>EASTER EGG!</b> 67. You know what that means. But try the actual answer...';
+        qDiv.style.borderColor = '#6496ff';
+        qDiv.dataset.correct = 'false';
+      } else {
+        fb.style.background = 'rgba(60,10,10,0.8)';
+        fb.style.border = '1px solid #ff6464';
+        fb.innerHTML = `✗ Incorrect.<br><strong>Your answer:</strong> ${input || '(blank)'}<br><strong>Correct answer:</strong> ${item.answer}<br><br><strong>💡 Hint:</strong> ${item.hint}<br><br><strong>📝 Explanation:</strong> ${item.explanation}`;
+        qDiv.style.borderColor = '#ff6464';
+        qDiv.dataset.correct = 'false';
+      }
     }
   });
   const scoreText = correct + '/' + items.length;
