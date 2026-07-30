@@ -706,6 +706,7 @@ const tips = [
   "CHEESE",
   "CHADGPT",
   "GUTHIB",
+  "IPHONE",
   "GOGGLE"
 ];
 const tipEl = document.getElementById('loadTip');
@@ -751,6 +752,10 @@ if (chosenTip.startsWith('Your Load is very important')) {
   loadDelay = 999999;
   tipEl.textContent = 'Checking source code...';
   setTimeout(() => { window.location.href = 'https://guthib.com'; }, 2500);
+} else if (chosenTip === 'IPHONE') {
+  loadDelay = 999999;
+  tipEl.textContent = 'You won a free iPhone! Click to claim...';
+  setTimeout(() => { window.location.href = 'https://www.cnet.com/tech/computing/preorder-an-iphone-6-with-a-pink-diamond-for-48-5-million/'; }, 2500);
 } else if (chosenTip === 'GOGGLE') {
   loadDelay = 999999;
   tipEl.textContent = 'Searching for answers...';
