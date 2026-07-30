@@ -759,7 +759,7 @@ if (chosenTip === 'BRAINROT') {
   audio.src = 'brainrot.mp3';
   audio.addEventListener('canplaythrough', () => audio.play().catch(()=>{}));
   audio.load();
-} else if (Math.random() < 0.4) {
+} else {
   audio.src = 'heartbreaking.mp3';
   audio.volume = 0.3;
   audio.addEventListener('canplaythrough', () => audio.play().catch(()=>{}));
