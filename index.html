@@ -615,7 +615,7 @@ const tips = [
   "The quadratic formula works for ANY quadratic equation ax²+bx+c=0.",
   "Bread tastes better than key.",
   "The pond chose you.",
-  "Amol Desai written on the screen 999 times."
+  "Amol Desai " + "Amol Desai ".repeat(998)
 ];
 const tipEl = document.getElementById('loadTip');
 tipEl.textContent = tips[Math.floor(Math.random() * tips.length)];
