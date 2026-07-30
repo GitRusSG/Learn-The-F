@@ -644,7 +644,13 @@ function checkAll() {
     } else {
       // Easter eggs
       const inputLower = input.toLowerCase().replace(/\s+/g,'');
-      if (inputLower === 'bread>key' || inputLower === 'bread>keys') {
+      if (input.endsWith('?')) {
+        fb.style.background = 'rgba(40,40,0,0.8)';
+        fb.style.border = '1px solid #f0c040';
+        fb.innerHTML = '❓ Why the LearnTF u asking me? I\'m not Google.';
+        qDiv.style.borderColor = '#f0c040';
+        qDiv.dataset.correct = 'false';
+      } else if (inputLower === 'bread>key' || inputLower === 'bread>keys') {
         fb.style.background = 'rgba(60,40,0,0.8)';
         fb.style.border = '1px solid #f0c040';
         fb.innerHTML = '🍞 <b>EASTER EGG!</b> Bread does indeed taste better than key. But that\'s not the answer...';
