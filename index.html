@@ -696,6 +696,7 @@ const tips = [
   "The pond chose you.",
   "Amol Desai " + "Amol Desai ".repeat(998),
   "Get TF out.",
+  "RICKROLL",
   "Your Load is very important to us. Please wait patiently.",
   "MRS JANG SUCKS",
   'Amol Desai once said, "I did not say that shi" — Said one of his soldiers'
@@ -723,6 +724,10 @@ if (chosenTip.startsWith('Your Load is very important')) {
     };
     tipEl.parentElement.appendChild(continueBtn);
   }, 60000);
+} else if (chosenTip === 'RICKROLL') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Loading exclusive content...';
+  setTimeout(() => { window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; }, 2500);
 } else if (chosenTip.startsWith('Amol Desai once said')) {
   loadDelay = 8000;
 }
