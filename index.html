@@ -707,6 +707,10 @@ const tips = [
   "CHADGPT",
   "GUTHIB",
   "IPHONE",
+  "EARTH",
+  "PRINCE",
+  "VIRUS",
+  "WINNER",
   "GOGGLE"
 ];
 const tipEl = document.getElementById('loadTip');
@@ -756,6 +760,18 @@ if (chosenTip.startsWith('Your Load is very important')) {
   loadDelay = 999999;
   tipEl.textContent = 'You won a free iPhone! Click to claim...';
   setTimeout(() => { window.location.href = 'https://www.cnet.com/tech/computing/preorder-an-iphone-6-with-a-pink-diamond-for-48-5-million/'; }, 2500);
+} else if (chosenTip === 'EARTH') {
+  loadDelay = 6000;
+  tipEl.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/600px-The_Blue_Marble_%28remastered%29.jpg" style="width:150px;border-radius:50%;margin-bottom:15px;box-shadow:0 0 30px rgba(100,150,255,0.4);"><br><span style="font-size:1.4em;color:#ff4444;font-family:Orbitron,monospace;letter-spacing:3px;">I KNOW WHERE YOU LIVE.</span>';
+} else if (chosenTip === 'PRINCE') {
+  loadDelay = 8000;
+  tipEl.innerHTML = '📧 <b>URGENT:</b> I am Prince Abubakar of Nigeria. I have $45,000,000 USD that I need to transfer to your account. Please send your bank details to proceed. — <i>Definitely not a scam</i>';
+} else if (chosenTip === 'VIRUS') {
+  loadDelay = 6000;
+  tipEl.innerHTML = '⚠️🔴 <b style="color:#ff0000;font-size:1.3em;">WARNING: YOUR DEVICE HAS 47 VIRUSES!</b> 🔴⚠️<br><br><span style="color:#ff6666;">Click here immediately to download FREE antivirus protection before your files are DELETED!</span><br><br><span style="font-size:0.7em;color:#555;">(just kidding lol)</span>';
+} else if (chosenTip === 'WINNER') {
+  loadDelay = 6000;
+  tipEl.innerHTML = '🎉🎊 <b style="color:#f0c040;font-size:1.2em;">CONGRATULATIONS!!!</b> 🎊🎉<br><br>You are the 1,000,000th visitor! You have won a FREE PS5!<br>Enter your credit card number to claim your prize:<br><input style="margin-top:8px;padding:5px;border-radius:4px;border:1px solid #333;background:#111;color:#eee;" placeholder="Nice try buddy">';
 } else if (chosenTip === 'GOGGLE') {
   loadDelay = 999999;
   tipEl.textContent = 'Searching for answers...';
