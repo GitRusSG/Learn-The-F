@@ -17,6 +17,8 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2em; }
 .folder-content.open { display: grid; }
 .quiz-btn { padding: 20px; background: #16213e; border: 2px solid #0f3460; border-radius: 12px; cursor: pointer; transition: all 0.3s; color: #eee; font-size: 1em; text-align: left; }
 .quiz-btn:hover { border-color: #64ffda; transform: translateY(-2px); }
+.unit-btn { background:#0f3460;color:#aaa;border:1px solid #1a3a5c;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:0.8em; }
+.unit-btn:hover { color:#64ffda;border-color:#64ffda; }
 .quiz-btn.active { border-color: #64ffda; background: #0f3460; }
 .quiz-area { display: none; }
 .quiz-area.show { display: block; }
@@ -376,6 +378,19 @@ function loadQuiz(name) {
           style="width:100%;padding:12px;font-size:0.95em;border-radius:8px;border:1px solid #0f3460;background:#0d1b2a;color:#aaa;font-family:'Courier New',monospace;min-height:80px;resize:vertical;margin-bottom:10px;"></textarea>
         <input type="text" id="ans${i}" placeholder="Final answer..."
           style="width:100%;padding:12px;font-size:1.1em;border-radius:8px;border:2px solid #0f3460;background:#0d1b2a;color:#eee;font-family:'Courier New',monospace;">
+        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;">
+          <button class="unit-btn" onclick="insertUnit(${i},'km/h')">km/h</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'m/s')">m/s</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'m/s²')">m/s²</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'cm²')">cm²</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'km²')">km²</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'m²')">m²</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'cm³')">cm³</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'²')">²</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'³')">³</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'√')">√</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'±')">±</button>
+        </div>
         <button onclick="showHint(${i})" style="margin-top:10px;background:none;border:1px solid #f0c040;color:#f0c040;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:0.9em;">💡 Hint</button>
         <div id="hint${i}" style="margin-top:8px;display:none;padding:10px;border-radius:8px;background:#2a2a00;border:1px solid #f0c040;color:#f0c040;font-size:0.95em;"></div>
         <div id="fb${i}" style="margin-top:12px;display:none;padding:12px;border-radius:8px;"></div>
@@ -395,8 +410,31 @@ function showHint(i) {
   hintDiv.textContent = items[i].hint;
 }
 
+function insertUnit(i, unit) {
+  const input = document.getElementById('ans'+i);
+  input.value += unit;
+  input.focus();
+}
+
 function normalize(s) {
-  return s.toLowerCase().replace(/\s+/g,'').replace(/\*/g,'').replace(/×/g,'');
+  return s.toLowerCase()
+    .replace(/\s+/g,'')
+    .replace(/\*/g,'')
+    .replace(/×/g,'')
+    .replace(/²/g,'^2')
+    .replace(/³/g,'^3')
+    .replace(/√/g,'sqrt')
+    .replace(/÷/g,'/')
+    .replace(/km\/hr/g,'km/h')
+    .replace(/kmh/g,'km/h')
+    .replace(/m\/s\^2/g,'m/s^2')
+    .replace(/ms\^2/g,'m/s^2')
+    .replace(/cm2/g,'cm^2')
+    .replace(/km2/g,'km^2')
+    .replace(/m2/g,'m^2')
+    .replace(/cm3/g,'cm^3')
+    .replace(/m3/g,'m^3')
+    .replace(/\$/g,'');
 }
 
 function checkAll() {
