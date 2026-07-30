@@ -10,6 +10,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .container { max-width: 800px; margin: 0 auto; }
 h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2em; }
 .quiz-select { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; max-height: 70vh; overflow-y: auto; padding: 10px; }
+.folder { margin-bottom: 20px; }
+.folder-title { color: #64ffda; font-size: 1.3em; margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #0f3460; cursor: pointer; }
+.folder-title:hover { background: #0f3460; border-radius: 8px; }
+.folder-content { display: none; grid-template-columns: 1fr 1fr; gap: 10px; padding-left: 10px; }
+.folder-content.open { display: grid; }
 .quiz-btn { padding: 20px; background: #16213e; border: 2px solid #0f3460; border-radius: 12px; cursor: pointer; transition: all 0.3s; color: #eee; font-size: 1em; text-align: left; }
 .quiz-btn:hover { border-color: #64ffda; transform: translateY(-2px); }
 .quiz-btn.active { border-color: #64ffda; background: #0f3460; }
@@ -23,7 +28,7 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2em; }
 <body>
 <div class="container">
 <h1>Math Quiz App</h1>
-<div class="quiz-select" id="quizSelect"></div>
+<div class="quiz-select" id="quizSelect" style="display:block;"></div>
 <div class="quiz-area" id="quizArea">
 <button onclick="goHome()" style="background:#0f3460;color:#64ffda;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;margin-bottom:20px;font-size:1em;">← Back</button>
 <h2 id="quizTitle" style="color:#64ffda;margin-bottom:20px;"></h2>
@@ -310,12 +315,49 @@ let currentQuiz = null;
 
 function init() {
   const sel = document.getElementById('quizSelect');
+  // Define folders
+  const folders = {
+    "Unit 3: Algebraic Expressions": [],
+    "Unit 4: Quadratic Equations & Graphs": [],
+    "Unit 5: Scales & Maps": [],
+    "Unit 6: Direct & Inverse Proportion": [],
+    "Unit 7: Rate & Speed": [],
+    "Unit 8: Congruence & Similarity": []
+  };
+  // Sort quizzes into folders
   Object.keys(quizzes).forEach(name => {
-    const btn = document.createElement('button');
-    btn.className = 'quiz-btn';
-    btn.textContent = name;
-    btn.onclick = () => loadQuiz(name);
-    sel.appendChild(btn);
+    if (name.includes("Unit 3")) folders["Unit 3: Algebraic Expressions"].push(name);
+    else if (name.includes("Unit 4") || name.includes("4.")) folders["Unit 4: Quadratic Equations & Graphs"].push(name);
+    else if (name.includes("Unit 5")) folders["Unit 5: Scales & Maps"].push(name);
+    else if (name.includes("Unit 6")) folders["Unit 6: Direct & Inverse Proportion"].push(name);
+    else if (name.includes("Unit 7")) folders["Unit 7: Rate & Speed"].push(name);
+    else if (name.includes("Unit 8")) folders["Unit 8: Congruence & Similarity"].push(name);
+    else folders["Unit 3: Algebraic Expressions"].push(name); // fallback
+  });
+  // Render folders
+  Object.entries(folders).forEach(([folderName, items]) => {
+    if (items.length === 0) return;
+    const folder = document.createElement('div');
+    folder.className = 'folder';
+    const title = document.createElement('div');
+    title.className = 'folder-title';
+    title.textContent = '📁 ' + folderName + ' (' + items.length + ' quizzes)';
+    title.onclick = () => {
+      const content = title.nextElementSibling;
+      content.classList.toggle('open');
+    };
+    folder.appendChild(title);
+    const content = document.createElement('div');
+    content.className = 'folder-content';
+    items.forEach(name => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-btn';
+      btn.textContent = name;
+      btn.onclick = () => loadQuiz(name);
+      content.appendChild(btn);
+    });
+    folder.appendChild(content);
+    sel.appendChild(folder);
   });
 }
 
