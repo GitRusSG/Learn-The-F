@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Quiz - Sec 2</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; padding: 20px; }
+.container { max-width: 800px; margin: 0 auto; }
+h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2em; }
+.quiz-select { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+.quiz-btn { padding: 20px; background: #16213e; border: 2px solid #0f3460; border-radius: 12px; cursor: pointer; transition: all 0.3s; color: #eee; font-size: 1em; text-align: left; }
+.quiz-btn:hover { border-color: #64ffda; transform: translateY(-2px); }
+.quiz-btn.active { border-color: #64ffda; background: #0f3460; }
+.quiz-area { display: none; }
+.quiz-area.show { display: block; }
+.question { background: #16213e; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #0f3460; }
+.question h3 { color: #64ffda; margin-bottom: 12px; font-size: 1.1em; }
+.question .prompt { font-size: 1.2em; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Math Quiz App</h1>
+<div class="quiz-select" id="quizSelect"></div>
+<div class="quiz-area" id="quizArea">
+<button onclick="goHome()" style="background:#0f3460;color:#64ffda;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;margin-bottom:20px;font-size:1em;">← Back</button>
+<h2 id="quizTitle" style="color:#64ffda;margin-bottom:20px;"></h2>
+<div id="questions"></div>
+<button onclick="checkAll()" style="background:#64ffda;color:#1a1a2e;border:none;padding:15px 40px;border-radius:8px;cursor:pointer;font-size:1.2em;font-weight:bold;display:block;margin:30px auto;">Check Answers</button>
+<div id="score" style="text-align:center;font-size:1.5em;margin:20px 0;color:#64ffda;"></div>
+</div>
+</div>
+</body>
+</html>
+<script>
+const quizzes = {
+  "Unit 3: Algebraic Expressions": [
+    {
+      q: "Expand and simplify: 3(x² + 2x - 4) - (-x² + 3)",
+      answer: "4x² + 6x - 15",
+      accepts: ["4x^2 + 6x - 15", "4x²+6x-15", "4x^2+6x-15"],
+      hint: "Remember: -(-x²+3) means +x²-3. Don't flip the sign of +3 to +3, it becomes -3.",
+      explanation: "3(x²+2x-4) = 3x²+6x-12. Then -(-x²+3) = +x²-3. Total: 3x²+x²+6x-12-3 = 4x²+6x-15"
+    },
+    {
+      q: "Expand and simplify: (4x - 1)²",
+      answer: "16x² - 8x + 1",
+      accepts: ["16x^2 - 8x + 1", "16x²-8x+1", "16x^2-8x+1"],
+      hint: "Use (a-b)² = a² - 2ab + b². Here a=4x, b=1.",
+      explanation: "(4x-1)² = (4x)² - 2(4x)(1) + 1² = 16x² - 8x + 1. Don't drop the middle term!"
+    },
+    {
+      q: "Expand: (5a + 3b)(5a - 3b)",
+      answer: "25a² - 9b²",
+      accepts: ["25a^2 - 9b^2", "25a²-9b²", "25a^2-9b^2"],
+      hint: "This is (A+B)(A-B) = A²-B². Square the WHOLE terms: (5a)²=25a², (3b)²=9b².",
+      explanation: "(5a+3b)(5a-3b) = (5a)² - (3b)² = 25a² - 9b². Remember to square both the coefficient AND variable."
+    },
+    {
+      q: "Expand and simplify: -5x(x - 4) + (2x - 1)(x + 5)",
+      answer: "-3x² + 29x - 5",
+      accepts: ["-3x^2 + 29x - 5", "-3x²+29x-5", "-3x^2+29x-5"],
+      hint: "Expand each part separately then combine. -5x(x-4) = -5x²+20x. (2x-1)(x+5) = 2x²+10x-x-5.",
+      explanation: "-5x²+20x + 2x²+10x-x-5 = (-5+2)x² + (20+10-1)x - 5 = -3x²+29x-5"
+    },
+    {
+      q: "Factorise completely: 9x² - 25y²",
+      answer: "(3x + 5y)(3x - 5y)",
+      accepts: ["(3x+5y)(3x-5y)", "(3x - 5y)(3x + 5y)", "(3x-5y)(3x+5y)"],
+      hint: "This is a² - b² = (a+b)(a-b). What squared gives 9x²? What squared gives 25y²?",
+      explanation: "9x² - 25y² = (3x)² - (5y)² = (3x+5y)(3x-5y)"
+    },
+    {
+      q: "Factorise completely: x² + 10x + 25",
+      answer: "(x + 5)²",
+      accepts: ["(x+5)^2", "(x+5)²", "(x + 5)^2", "(x+5)(x+5)"],
+      hint: "Is this a perfect square? Check: a²+2ab+b² = (a+b)². What is a? What is b?",
+      explanation: "x²+10x+25 = x²+2(5)(x)+5² = (x+5)². It's a perfect square trinomial."
+    },
+    {
+      q: "Factorise completely: 2x² - 5x - 12",
+      answer: "(2x + 3)(x - 4)",
+      accepts: ["(2x+3)(x-4)", "(x-4)(2x+3)"],
+      hint: "Use cross method. Need two numbers that multiply to 2×(-12)=-24 and add to -5. Try +3 and -8.",
+      explanation: "2x²-5x-12: factors of 2x² are 2x,x. Factors of -12 that give -5x middle: (2x+3)(x-4). Check: 2x²-8x+3x-12 = 2x²-5x-12 ✓"
+    },
+    {
+      q: "Factorise completely: 3ax - 6ay + bx - 2by",
+      answer: "(3a + b)(x - 2y)",
+      accepts: ["(3a+b)(x-2y)", "(x-2y)(3a+b)"],
+      hint: "Group terms: first two share 3a, last two share b. Factor each group then factor again.",
+      explanation: "3ax-6ay+bx-2by = 3a(x-2y)+b(x-2y) = (3a+b)(x-2y)"
+    },
+    {
+      q: "Simplify: (x² - 9) / (x² + 5x + 6)",
+      answer: "(x - 3)/(x + 2)",
+      accepts: ["(x-3)/(x+2)", "x-3/x+2"],
+      hint: "Factorise top and bottom separately. Top is difference of squares. Bottom is a trinomial.",
+      explanation: "(x²-9)/(x²+5x+6) = (x+3)(x-3)/((x+2)(x+3)) = (x-3)/(x+2). Cancel (x+3)."
+    },
+    {
+      q: "Express as single fraction: 2/(x+1) + 3/(x-2)",
+      answer: "(5x - 1)/((x+1)(x-2))",
+      accepts: ["(5x-1)/((x+1)(x-2))", "(5x-1)/(x+1)(x-2)", "(5x - 1)/((x + 1)(x - 2))"],
+      hint: "LCM of denominators is (x+1)(x-2). Multiply each fraction to get common denominator.",
+      explanation: "2(x-2)/((x+1)(x-2)) + 3(x+1)/((x+1)(x-2)) = (2x-4+3x+3)/((x+1)(x-2)) = (5x-1)/((x+1)(x-2))"
+    }
+  ],
+  "Unit 4.1-4.2: Quadratic Graphs": [
+    {
+      q: "For y = (x + 4)(x + 2): Find the x-intercepts.",
+      answer: "x = -4 and x = -2",
+      accepts: ["x=-4, x=-2", "x = -4 and x = -2", "-4 and -2", "-4, -2", "x=-4 and x=-2"],
+      hint: "Set y=0. Then (x+4)(x+2)=0. Each bracket equals zero gives an x-intercept.",
+      explanation: "y=0: (x+4)(x+2)=0 → x+4=0 or x+2=0 → x=-4 or x=-2"
+    },
+    {
+      q: "For y = (x + 4)(x + 2): Find the line of symmetry.",
+      answer: "x = -3",
+      accepts: ["x=-3", "x = -3"],
+      hint: "The line of symmetry is the average of the two x-intercepts: (h+k)/2.",
+      explanation: "Line of symmetry = (-4 + -2)/2 = -6/2 = -3. So x = -3."
+    },
+    {
+      q: "For y = (x + 4)(x + 2): Find the turning point (write as coordinates).",
+      answer: "(-3, -1)",
+      accepts: ["(-3,-1)", "(-3, -1)"],
+      hint: "Sub x = -3 (the line of symmetry) into the equation to find y.",
+      explanation: "x=-3: y=(-3+4)(-3+2)=(1)(-1)=-1. Turning point: (-3,-1), minimum."
+    },
+    {
+      q: "For y = -(x - 3)(x + 1): Is the turning point a maximum or minimum?",
+      answer: "maximum",
+      accepts: ["maximum", "max", "Maximum"],
+      hint: "Look at the sign in front. Negative means the parabola opens downward.",
+      explanation: "The negative sign means parabola opens downward → turning point is a maximum."
+    },
+    {
+      q: "For y = -(x - 3)(x + 1): Find the turning point (write as coordinates).",
+      answer: "(1, 4)",
+      accepts: ["(1,4)", "(1, 4)"],
+      hint: "Line of symmetry = (3+(-1))/2 = 1. Sub x=1 into equation.",
+      explanation: "x-intercepts: 3 and -1. LoS: x=(3-1)/2=1. y=-(1-3)(1+1)=-(-2)(2)=4. TP: (1,4)"
+    },
+    {
+      q: "For y = (x - 1)² - 4: State the turning point.",
+      answer: "(1, -4)",
+      accepts: ["(1,-4)", "(1, -4)"],
+      hint: "In y=(x-p)²+q form, the turning point is (p, q).",
+      explanation: "y=(x-1)²-4 → p=1, q=-4. Turning point: (1,-4), minimum."
+    },
+    {
+      q: "For y = -(x + 3)² + 4: State the turning point and whether it's max or min.",
+      answer: "(-3, 4) maximum",
+      accepts: ["(-3,4) maximum", "(-3, 4) maximum", "(-3,4) max", "(-3, 4) max"],
+      hint: "y=-(x-p)²+q → TP is (p,q). The negative means maximum. Watch the sign: (x+3)=(x-(-3)).",
+      explanation: "y=-(x+3)²+4 = -(x-(-3))²+4. p=-3, q=4. TP: (-3,4). Negative → maximum."
+    },
+    {
+      q: "Express y = x² - 6x + 5 in completed square form.",
+      answer: "(x - 3)² - 4",
+      accepts: ["(x-3)^2 - 4", "(x-3)²-4", "(x - 3)^2 - 4", "y=(x-3)^2-4"],
+      hint: "Half of -6 is -3. Square it: 9. So x²-6x+9-9+5 = (x-3)²-4.",
+      explanation: "x²-6x+5 = (x²-6x+9)-9+5 = (x-3)²-4. TP: (3,-4)."
+    }
+  ],
+  "Unit 4.3: Factorisation": [
+    {
+      q: "Solve: x² - 5x + 6 = 0",
+      answer: "x = 2 or x = 3",
+      accepts: ["x=2 or x=3", "x = 2 or x = 3", "x=2, x=3", "2 and 3", "x=3 or x=2"],
+      hint: "Find two numbers that multiply to +6 and add to -5.",
+      explanation: "x²-5x+6 = (x-2)(x-3)=0 → x=2 or x=3"
+    },
+    {
+      q: "Solve: 2x² + 7x - 15 = 0",
+      answer: "x = 3/2 or x = -5",
+      accepts: ["x=3/2 or x=-5", "x = 3/2 or x = -5", "x=1.5 or x=-5", "x=-5 or x=3/2"],
+      hint: "Use cross method. Product = 2×(-15)=-30. Sum = 7. Try +10 and -3.",
+      explanation: "(2x-3)(x+5)=0: check 2x²+10x-3x-15=2x²+7x-15 ✓. x=3/2 or x=-5"
+    },
+    {
+      q: "Solve: 4b² - 100 = 0",
+      answer: "b = 5 or b = -5",
+      accepts: ["b=5 or b=-5", "b = 5 or b = -5", "b=±5", "b = ±5"],
+      hint: "Factor out 4 first, then use difference of squares.",
+      explanation: "4(b²-25)=0 → 4(b+5)(b-5)=0 → b=5 or b=-5"
+    },
+    {
+      q: "Solve: x² = 9x",
+      answer: "x = 0 or x = 9",
+      accepts: ["x=0 or x=9", "x = 0 or x = 9", "0 and 9", "x=9 or x=0"],
+      hint: "DON'T divide by x! Move everything to one side: x²-9x=0, then factor.",
+      explanation: "x²-9x=0 → x(x-9)=0 → x=0 or x=9. Never divide by x (you'd lose the x=0 solution)."
+    },
+    {
+      q: "Solve: 6x² - x - 15 = 0",
+      answer: "x = 5/3 or x = -3/2",
+      accepts: ["x=5/3 or x=-3/2", "x = 5/3 or x = -3/2", "x=-3/2 or x=5/3"],
+      hint: "Cross method: 6×(-15)=-90. Need two numbers multiplying to -90, adding to -1.",
+      explanation: "(3x-5)(2x+3)=0: check 6x²+9x-10x-15=6x²-x-15 ✓. x=5/3 or x=-3/2"
+    },
+    {
+      q: "If x=5 is a solution of x²-qx+10=0, find q.",
+      answer: "q = 7",
+      accepts: ["q=7", "q = 7", "7"],
+      hint: "Substitute x=5 into the equation: 25-5q+10=0. Solve for q.",
+      explanation: "Sub x=5: 25-5q+10=0 → 35-5q=0 → 5q=35 → q=7"
+    }
+  ],
+  "Unit 4.4: Completing the Square": [
+    {
+      q: "Express x² + 8x + 3 in the form (x+p)²+q.",
+      answer: "(x + 4)² - 13",
+      accepts: ["(x+4)^2 - 13", "(x+4)²-13", "(x + 4)^2 - 13", "(x+4)^2-13"],
+      hint: "Half of 8 is 4. Square it: 16. So add and subtract 16: (x²+8x+16)-16+3.",
+      explanation: "x²+8x+3 = (x²+8x+16)-16+3 = (x+4)²-13"
+    },
+    {
+      q: "Express -x² + 4x + 7 in the form -(x-p)²+q.",
+      answer: "-(x - 2)² + 11",
+      accepts: ["-(x-2)^2 + 11", "-(x-2)²+11", "-(x - 2)^2 + 11", "-(x-2)^2+11"],
+      hint: "Factor out -1 first: -(x²-4x)+7. Then complete square inside: -(x²-4x+4)+4+7.",
+      explanation: "-(x²-4x)+7 = -(x²-4x+4)+4+7 = -(x-2)²+11"
+    },
+    {
+      q: "Solve x² + 6x - 4 = 0 by completing the square. Give answers to 1 d.p.",
+      answer: "x = 0.6 or x = -6.6",
+      accepts: ["x=0.6 or x=-6.6", "x = 0.6 or x = -6.6", "0.6 and -6.6"],
+      hint: "(x+3)²-9-4=0 → (x+3)²=13 → x+3=±√13.",
+      explanation: "(x+3)²=13 → x=-3±√13 = -3±3.606 → x=0.6 or x=-6.6"
+    },
+    {
+      q: "Express y=-4x²+12x-7 in form y=a(x-p)²+q. State max value of y.",
+      answer: "max y = 2 when x = 3/2",
+      accepts: ["max y=2 when x=3/2", "max y = 2 when x = 1.5", "2", "y=2 at x=1.5"],
+      hint: "Factor out -4: y=-4(x²-3x)-7. Complete square: -4(x-3/2)²+9-7.",
+      explanation: "y=-4(x²-3x+9/4)+9-7 = -4(x-3/2)²+2. Max y=2 when x=3/2."
+    },
+    {
+      q: "The height h=-5t²+20t+2. Find the maximum height.",
+      answer: "22",
+      accepts: ["22", "22 metres", "22m", "h=22"],
+      hint: "Factor out -5: h=-5(t²-4t)+2. Complete square: -5(t-2)²+20+2.",
+      explanation: "h=-5(t²-4t+4)+20+2 = -5(t-2)²+22. Max height=22 when t=2."
+    }
+  ],
+  "Unit 4.5: Quadratic Formula": [
+    {
+      q: "Solve x²+5x-3=0 using the quadratic formula (3 s.f.).",
+      answer: "x = 0.541 or x = -5.54",
+      accepts: ["x=0.541 or x=-5.54", "x = 0.541 or x = -5.54", "0.541 and -5.54"],
+      hint: "a=1, b=5, c=-3. x = (-5±√(25+12))/2 = (-5±√37)/2.",
+      explanation: "x=(-5+√37)/2=0.5414... ≈0.541. x=(-5-√37)/2=-5.541... ≈-5.54"
+    },
+    {
+      q: "Solve 2x²-7x+4=0 using the quadratic formula (3 s.f.).",
+      answer: "x = 2.78 or x = 0.719",
+      accepts: ["x=2.78 or x=0.719", "x = 2.78 or x = 0.719", "2.78 and 0.719"],
+      hint: "a=2, b=-7, c=4. x = (7±√(49-32))/4 = (7±√17)/4.",
+      explanation: "x=(7+√17)/4=2.781...≈2.78. x=(7-√17)/4=0.7192...≈0.719"
+    },
+    {
+      q: "State the quadratic formula.",
+      answer: "x = (-b ± √(b²-4ac)) / (2a)",
+      accepts: ["x=(-b±√(b²-4ac))/(2a)", "x = (-b ± sqrt(b^2-4ac)) / 2a", "(-b±√(b²-4ac))/2a"],
+      hint: "For ax²+bx+c=0, x equals negative b, plus or minus the square root of b²-4ac, all over 2a.",
+      explanation: "x = (-b ± √(b²-4ac)) / (2a). This works for ANY quadratic equation ax²+bx+c=0."
+    }
+  ],
+  "Unit 4.6: Graphical Method": [
+    {
+      q: "Graph of y=x²-2x-3 is drawn. What line do you draw to solve x²-2x-3=5?",
+      answer: "y = 5",
+      accepts: ["y=5", "y = 5"],
+      hint: "If y=x²-2x-3 and you want x²-2x-3=5, what does y equal?",
+      explanation: "Since y=x²-2x-3, setting x²-2x-3=5 means y=5. Draw the horizontal line y=5."
+    },
+    {
+      q: "Graph of y=x²-2x-3 is drawn. What line solves x²-3x-2=0?",
+      answer: "y = x - 1",
+      accepts: ["y=x-1", "y = x - 1", "y = x-1"],
+      hint: "Rearrange: x²-3x-2=0 → x²-2x-3=x-1 (add x-1 to both sides). So y=x-1.",
+      explanation: "x²-3x-2=0 → x²-2x-3=x-2+3-2... Actually: x²-2x-3 = x²-3x-2+x-1? Let's check: (x²-2x-3)-(x²-3x-2)=x-1. So x²-2x-3=0+(x-1) when x²-3x-2=0. Draw y=x-1."
+    },
+    {
+      q: "Graph of y=x²-4x is drawn. What line solves x²-5x+2=0?",
+      answer: "y = x - 2",
+      accepts: ["y=x-2", "y = x - 2", "y = x-2"],
+      hint: "x²-5x+2=0 → x²-4x = x-2. So y=x-2.",
+      explanation: "x²-5x+2=0 → x²-4x=5x-2-4x... Rearrange: x²-4x=x-2. Draw y=x-2."
+    },
+    {
+      q: "Why are the x-intercepts of y=x²-2x-3 the solutions to x²-2x-3=0?",
+      answer: "Because x-intercepts are where y=0, which means x²-2x-3=0",
+      accepts: ["y=0", "x-intercepts are where y=0", "because y=0 at x-intercepts"],
+      hint: "What is the y-value at any point on the x-axis?",
+      explanation: "At x-intercepts, y=0. Since y=x²-2x-3, this means x²-2x-3=0. So x-intercepts ARE the solutions."
+    }
+  ]
+};
+
+let currentQuiz = null;
+
+function init() {
+  const sel = document.getElementById('quizSelect');
+  Object.keys(quizzes).forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-btn';
+    btn.textContent = name;
+    btn.onclick = () => loadQuiz(name);
+    sel.appendChild(btn);
+  });
+}
+
+function loadQuiz(name) {
+  currentQuiz = name;
+  document.getElementById('quizSelect').style.display = 'none';
+  document.getElementById('quizArea').classList.add('show');
+  document.getElementById('quizTitle').textContent = name;
+  document.getElementById('score').textContent = '';
+  const container = document.getElementById('questions');
+  container.innerHTML = '';
+  quizzes[name].forEach((item, i) => {
+    container.innerHTML += `
+      <div class="question" id="q${i}">
+        <h3>Question ${i+1}</h3>
+        <div class="prompt">${item.q}</div>
+        <input type="text" id="ans${i}" placeholder="Your answer..."
+          style="width:100%;padding:12px;font-size:1.1em;border-radius:8px;border:2px solid #0f3460;background:#0d1b2a;color:#eee;font-family:'Courier New',monospace;">
+        <div id="fb${i}" style="margin-top:12px;display:none;padding:12px;border-radius:8px;"></div>
+      </div>`;
+  });
+}
+
+function goHome() {
+  document.getElementById('quizSelect').style.display = 'grid';
+  document.getElementById('quizArea').classList.remove('show');
+}
+
+function normalize(s) {
+  return s.toLowerCase().replace(/\s+/g,'').replace(/\*/g,'').replace(/×/g,'');
+}
+
+function checkAll() {
+  let correct = 0;
+  const items = quizzes[currentQuiz];
+  items.forEach((item, i) => {
+    const input = document.getElementById('ans'+i).value.trim();
+    const fb = document.getElementById('fb'+i);
+    const qDiv = document.getElementById('q'+i);
+    fb.style.display = 'block';
+    const normInput = normalize(input);
+    const isCorrect = item.accepts.some(a => normalize(a) === normInput);
+    if (isCorrect) {
+      correct++;
+      fb.style.background = '#0a3d2a';
+      fb.style.border = '1px solid #64ffda';
+      fb.innerHTML = '✓ Correct!';
+      qDiv.style.borderColor = '#64ffda';
+    } else {
+      fb.style.background = '#3d0a0a';
+      fb.style.border = '1px solid #ff6464';
+      fb.innerHTML = `✗ Incorrect.<br><strong>Your answer:</strong> ${input || '(blank)'}<br><strong>Correct answer:</strong> ${item.answer}<br><br><strong>💡 Hint:</strong> ${item.hint}<br><br><strong>📝 Explanation:</strong> ${item.explanation}`;
+      qDiv.style.borderColor = '#ff6464';
+    }
+  });
+  document.getElementById('score').textContent = `Score: ${correct}/${items.length}`;
+}
+
+init();
+</script>
