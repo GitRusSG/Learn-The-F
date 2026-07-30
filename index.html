@@ -701,7 +701,8 @@ const tips = [
   "MRS JANG SUCKS",
   'Amol Desai once said, "I did not say that shi" — Said one of his soldiers',
   "HELP IM CHAT GPT IM STUCK CODING",
-  "Don't listen to ChatGPT, he's lying."
+  "Don't listen to ChatGPT, he's lying.",
+  "CORNHUB"
 ];
 const tipEl = document.getElementById('loadTip');
 const chosenTip = tips[Math.floor(Math.random() * tips.length)];
@@ -730,6 +731,10 @@ if (chosenTip.startsWith('Your Load is very important')) {
   loadDelay = 999999;
   tipEl.textContent = 'Loading exclusive content...';
   setTimeout(() => { window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; }, 2500);
+} else if (chosenTip === 'CORNHUB') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Redirecting to study materials...';
+  setTimeout(() => { window.location.href = 'https://cornhub.com'; }, 2500);
 } else if (chosenTip.startsWith('Amol Desai once said')) {
   loadDelay = 8000;
 }
