@@ -58,7 +58,9 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 <h2 id="quizTitle" style="color:#64ffda;margin-bottom:20px;font-family:'Orbitron',monospace;font-size:1em;letter-spacing:2px;text-transform:uppercase;"></h2>
 <div id="questions"></div>
 <button onclick="checkAll()" style="background:linear-gradient(135deg,#64ffda,#00bfa5);color:#0a0a1a;border:none;padding:16px 50px;border-radius:10px;cursor:pointer;font-size:1.1em;font-weight:bold;display:block;margin:30px auto;font-family:'Orbitron',monospace;letter-spacing:2px;text-transform:uppercase;box-shadow:0 0 25px rgba(100,255,218,0.2);transition:all 0.3s;">CHECK ANSWERS</button>
-<div id="score" style="text-align:center;font-size:1.5em;margin:20px 0;color:#64ffda;"></div>
+<button onclick="retryWrong()" id="retryBtn" style="display:none;background:rgba(10,30,60,0.8);color:#f0c040;border:1px solid #f0c040;padding:12px 40px;border-radius:10px;cursor:pointer;font-size:1em;font-weight:bold;margin:10px auto;font-family:'Orbitron',monospace;letter-spacing:2px;text-transform:uppercase;transition:all 0.3s;">RETRY INCORRECT</button>
+<div id="score" style="text-align:center;font-size:1.5em;margin:20px 0;color:#64ffda;font-family:'Orbitron',monospace;"></div>
+<div id="prevScore" style="text-align:center;font-size:0.9em;color:#888;font-family:'Rajdhani',sans-serif;margin-bottom:20px;"></div>
 </div>
 </div>
 </body>
@@ -468,6 +470,15 @@ function loadQuiz(name) {
   document.getElementById('quizArea').classList.add('show');
   document.getElementById('quizTitle').textContent = name;
   document.getElementById('score').textContent = '';
+  document.getElementById('retryBtn').style.display = 'none';
+  // Show previous best score if exists
+  const prev = localStorage.getItem('score_' + name);
+  const prevEl = document.getElementById('prevScore');
+  if (prev) {
+    prevEl.textContent = '📊 Previous best: ' + prev;
+  } else {
+    prevEl.textContent = '';
+  }
   const container = document.getElementById('questions');
   container.innerHTML = '';
   quizzes[name].forEach((item, i) => {
@@ -583,18 +594,49 @@ function checkAll() {
     const isCorrect = item.accepts.some(a => normalize(a) === normInput);
     if (isCorrect) {
       correct++;
-      fb.style.background = '#0a3d2a';
+      fb.style.background = 'rgba(10,60,40,0.8)';
       fb.style.border = '1px solid #64ffda';
       fb.innerHTML = '✓ Correct!';
       qDiv.style.borderColor = '#64ffda';
+      qDiv.dataset.correct = 'true';
     } else {
-      fb.style.background = '#3d0a0a';
+      fb.style.background = 'rgba(60,10,10,0.8)';
       fb.style.border = '1px solid #ff6464';
       fb.innerHTML = `✗ Incorrect.<br><strong>Your answer:</strong> ${input || '(blank)'}<br><strong>Correct answer:</strong> ${item.answer}<br><br><strong>💡 Hint:</strong> ${item.hint}<br><br><strong>📝 Explanation:</strong> ${item.explanation}`;
       qDiv.style.borderColor = '#ff6464';
+      qDiv.dataset.correct = 'false';
     }
   });
-  document.getElementById('score').textContent = `Score: ${correct}/${items.length}`;
+  const scoreText = correct + '/' + items.length;
+  document.getElementById('score').textContent = 'Score: ' + scoreText;
+  // Save best score
+  const prev = localStorage.getItem('score_' + currentQuiz);
+  const prevNum = prev ? parseInt(prev.split('/')[0]) : 0;
+  if (correct >= prevNum) {
+    localStorage.setItem('score_' + currentQuiz, scoreText);
+  }
+  document.getElementById('prevScore').textContent = '📊 Best: ' + (localStorage.getItem('score_' + currentQuiz));
+  // Show retry button if any wrong
+  if (correct < items.length) {
+    document.getElementById('retryBtn').style.display = 'block';
+  }
+}
+
+function retryWrong() {
+  const items = quizzes[currentQuiz];
+  items.forEach((item, i) => {
+    const qDiv = document.getElementById('q'+i);
+    if (qDiv.dataset.correct === 'true') {
+      qDiv.style.display = 'none';
+    } else {
+      // Clear feedback and answer for retry
+      document.getElementById('fb'+i).style.display = 'none';
+      document.getElementById('ans'+i).value = '';
+      qDiv.style.borderColor = 'rgba(100,255,218,0.08)';
+    }
+  });
+  document.getElementById('score').textContent = '';
+  document.getElementById('retryBtn').style.display = 'none';
 }
 
 init();
