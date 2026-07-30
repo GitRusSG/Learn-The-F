@@ -328,8 +328,12 @@ function loadQuiz(name) {
       <div class="question" id="q${i}">
         <h3>Question ${i+1}</h3>
         <div class="prompt">${item.q}</div>
-        <input type="text" id="ans${i}" placeholder="Your answer..."
+        <textarea id="work${i}" placeholder="Working space (scratch work here)..."
+          style="width:100%;padding:12px;font-size:0.95em;border-radius:8px;border:1px solid #0f3460;background:#0d1b2a;color:#aaa;font-family:'Courier New',monospace;min-height:80px;resize:vertical;margin-bottom:10px;"></textarea>
+        <input type="text" id="ans${i}" placeholder="Final answer..."
           style="width:100%;padding:12px;font-size:1.1em;border-radius:8px;border:2px solid #0f3460;background:#0d1b2a;color:#eee;font-family:'Courier New',monospace;">
+        <button onclick="showHint(${i})" style="margin-top:10px;background:none;border:1px solid #f0c040;color:#f0c040;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:0.9em;">💡 Hint</button>
+        <div id="hint${i}" style="margin-top:8px;display:none;padding:10px;border-radius:8px;background:#2a2a00;border:1px solid #f0c040;color:#f0c040;font-size:0.95em;"></div>
         <div id="fb${i}" style="margin-top:12px;display:none;padding:12px;border-radius:8px;"></div>
       </div>`;
   });
@@ -338,6 +342,13 @@ function loadQuiz(name) {
 function goHome() {
   document.getElementById('quizSelect').style.display = 'grid';
   document.getElementById('quizArea').classList.remove('show');
+}
+
+function showHint(i) {
+  const items = quizzes[currentQuiz];
+  const hintDiv = document.getElementById('hint'+i);
+  hintDiv.style.display = hintDiv.style.display === 'none' ? 'block' : 'none';
+  hintDiv.textContent = items[i].hint;
 }
 
 function normalize(s) {
