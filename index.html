@@ -657,14 +657,28 @@ const tips = [
   "The quadratic formula works for ANY quadratic equation ax²+bx+c=0.",
   "Bread tastes better than key.",
   "The pond chose you.",
-  "Amol Desai " + "Amol Desai ".repeat(998)
+  "Amol Desai " + "Amol Desai ".repeat(998),
+  "Get TF out.",
+  "Your Load is very important to us. Please wait patiently.",
+  "MRS JANG SUCKS",
+  'Amol Desai once said, "I did not say that shi" — Said one of his soldiers'
 ];
 const tipEl = document.getElementById('loadTip');
-tipEl.textContent = tips[Math.floor(Math.random() * tips.length)];
+const chosenTip = tips[Math.floor(Math.random() * tips.length)];
+tipEl.textContent = chosenTip;
 setTimeout(() => { document.getElementById('loadBar').style.width = '100%'; }, 100);
+
+// Special behavior for certain tips
+let loadDelay = 1800;
+if (chosenTip.startsWith('Your Load is very important')) {
+  loadDelay = 999999; // freeze forever
+} else if (chosenTip.startsWith('Amol Desai once said')) {
+  loadDelay = 8000; // 8 seconds so people can read
+}
+
 setTimeout(() => {
   const ls = document.getElementById('loadingScreen');
   ls.style.opacity = '0';
   setTimeout(() => ls.style.display = 'none', 500);
-}, 1800);
+}, loadDelay);
 </script>
