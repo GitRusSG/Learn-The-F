@@ -807,8 +807,24 @@ if (chosenTip.startsWith('Your Load is very important')) {
   tipEl.textContent = 'You won a free iPhone! Click to claim...';
   setTimeout(() => { window.location.href = 'https://www.cnet.com/tech/computing/preorder-an-iphone-6-with-a-pink-diamond-for-48-5-million/'; }, 2500);
 } else if (chosenTip === 'EARTH') {
-  loadDelay = 6000;
-  tipEl.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/600px-The_Blue_Marble_%28remastered%29.jpg" style="width:150px;border-radius:50%;margin-bottom:15px;box-shadow:0 0 30px rgba(100,150,255,0.4);"><br><span style="font-size:1.4em;color:#ff4444;font-family:Orbitron,monospace;letter-spacing:3px;">I KNOW WHERE YOU LIVE.</span>';
+  loadDelay = 10000;
+  tipEl.innerHTML = '<div style="font-size:0.8em;color:#888;margin-bottom:10px;">Locating user...</div>';
+  fetch('https://ipapi.co/json/').then(r=>r.json()).then(data=>{
+    tipEl.innerHTML = `
+      <div style="font-family:monospace;color:#ff4444;text-shadow:0 0 10px rgba(255,0,0,0.5);">
+        <div style="font-size:1.5em;margin-bottom:15px;letter-spacing:3px;">I KNOW WHERE YOU LIVE.</div>
+        <div style="color:#ff8888;font-size:0.9em;text-align:left;display:inline-block;">
+          IP: ${data.ip}<br>
+          City: ${data.city}<br>
+          Region: ${data.region}<br>
+          Country: ${data.country_name}<br>
+          ISP: ${data.org}<br>
+          Lat: ${data.latitude}, Lon: ${data.longitude}
+        </div>
+      </div>`;
+  }).catch(()=>{
+    tipEl.innerHTML = '<div style="font-size:1.5em;color:#ff4444;">I KNOW WHERE YOU LIVE.</div><div style="color:#ff8888;font-size:0.8em;margin-top:10px;">Nice try hiding behind a VPN.</div>';
+  });
 } else if (chosenTip === 'BRAINROT') {
   loadDelay = 999999;
   tipEl.textContent = 'Optimizing neural pathways...';
