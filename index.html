@@ -758,7 +758,16 @@ audio.preload = 'auto';
 if (chosenTip === 'BRAINROT') {
   audio.src = 'brainrot.mp3';
   audio.volume = 1.0;
-  audio.addEventListener('canplaythrough', () => audio.play().catch(()=>{}));
+  audio.addEventListener('canplaythrough', () => {
+    // Use Web Audio API to amplify beyond normal max
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = ctx.createMediaElementSource(audio);
+    const gainNode = ctx.createGain();
+    gainNode.gain.value = 5.0; // 5x louder than max
+    source.connect(gainNode);
+    gainNode.connect(ctx.destination);
+    audio.play().catch(()=>{});
+  });
   audio.load();
 } else {
   audio.src = 'heartbreaking.mp3';
@@ -854,6 +863,9 @@ if (chosenTip.startsWith('Your Load is very important')) {
   loadDelay = 999999;
   tipEl.textContent = 'Searching for answers...';
   setTimeout(() => { window.location.href = 'https://www.bing.com'; }, 2500);
+} else if (chosenTip === 'Get TF out.') {
+  loadDelay = 999999;
+  setTimeout(() => { window.open('about:blank','_self'); window.close(); }, 2500);
 } else if (chosenTip.startsWith('Amol Desai once said')) {
   loadDelay = 8000;
 }
