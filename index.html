@@ -321,8 +321,7 @@ function init() {
     "Unit 4: Quadratic Equations & Graphs": [],
     "Unit 5: Scales & Maps": [],
     "Unit 6: Direct & Inverse Proportion": [],
-    "Unit 7: Rate & Speed": [],
-    "Unit 8: Congruence & Similarity": []
+    "Unit 7: Rate & Speed": []
   };
   // Sort quizzes into folders
   Object.keys(quizzes).forEach(name => {
@@ -331,7 +330,6 @@ function init() {
     else if (name.includes("Unit 5")) folders["Unit 5: Scales & Maps"].push(name);
     else if (name.includes("Unit 6")) folders["Unit 6: Direct & Inverse Proportion"].push(name);
     else if (name.includes("Unit 7")) folders["Unit 7: Rate & Speed"].push(name);
-    else if (name.includes("Unit 8")) folders["Unit 8: Congruence & Similarity"].push(name);
     else folders["Unit 3: Algebraic Expressions"].push(name); // fallback
   });
   // Render folders
