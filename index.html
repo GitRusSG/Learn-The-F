@@ -344,6 +344,66 @@ function init() {
     else if (name.includes("Unit 7")) folders["Unit 7: Rate & Speed"].push(name);
     else folders["Unit 3: Algebraic Expressions"].push(name); // fallback
   });
+  // Unit summaries for "Teach me" sections
+  const unitTeach = {
+    "Unit 3: Algebraic Expressions": `
+      <h3>Key Concepts</h3>
+      <ul>
+        <li><b>Expansion:</b> a(b ± c) = ab ± ac</li>
+        <li><b>Special identities:</b><br>(a+b)² = a²+2ab+b²<br>(a-b)² = a²-2ab+b²<br>(a+b)(a-b) = a²-b²</li>
+        <li><b>Factorisation methods:</b> Common factor → Grouping → Special identities → Cross method</li>
+        <li><b>Algebraic fractions:</b> Factorise top & bottom, cancel common factors</li>
+        <li><b>Adding/subtracting fractions:</b> Find LCM of denominators</li>
+        <li><b>Change of subject:</b> Isolate the variable using inverse operations</li>
+      </ul>`,
+    "Unit 4: Quadratic Equations & Graphs": `
+      <h3>Key Concepts</h3>
+      <ul>
+        <li><b>Factorised form:</b> y = (x-h)(x-k) → x-intercepts at h and k</li>
+        <li><b>Line of symmetry:</b> x = (h+k)/2</li>
+        <li><b>Completed square form:</b> y = (x-p)² + q → turning point (p, q)</li>
+        <li><b>Positive a:</b> ∪ shape (minimum). <b>Negative a:</b> ∩ shape (maximum)</li>
+        <li><b>Solving by factorisation:</b> Set = 0, factorise, each bracket = 0</li>
+        <li><b>Completing the square:</b> Half the x-coefficient, square it, add & subtract</li>
+        <li><b>Quadratic formula:</b> x = (-b ± √(b²-4ac)) / 2a</li>
+        <li><b>Graphical method:</b> To solve f(x)=g(x), draw y=g(x) and find intersections</li>
+      </ul>`,
+    "Unit 5: Scales & Maps": `
+      <h3>Key Concepts</h3>
+      <ul>
+        <li><b>Scale:</b> ratio of map distance to actual distance (same units)</li>
+        <li><b>Form:</b> 1:n or R.F. = 1/n (numerator always 1)</li>
+        <li><b>Converting:</b> 1 km = 1000 m = 100,000 cm</li>
+        <li><b>Actual distance</b> = map distance × scale factor</li>
+        <li><b>Map distance</b> = actual distance ÷ scale factor</li>
+        <li><b>Area scale:</b> if linear scale is 1:r, then area scale is 1:r²</li>
+        <li><b>Scale factor:</b> new dimension ÷ original dimension<br>&gt;1 = enlargement, &lt;1 = reduction</li>
+      </ul>`,
+    "Unit 6: Direct & Inverse Proportion": `
+      <h3>Key Concepts</h3>
+      <ul>
+        <li><b>Direct proportion:</b> y = kx (y/x = constant)</li>
+        <li><b>Graph:</b> straight line through origin</li>
+        <li><b>If y ∝ x²:</b> y = kx² (find k by substituting known values)</li>
+        <li><b>Inverse proportion:</b> y = k/x (xy = constant)</li>
+        <li><b>Graph:</b> curved (hyperbola), never touches axes</li>
+        <li><b>If y ∝ 1/x²:</b> y = k/x²</li>
+        <li><b>Steps:</b> (1) Write formula with k → (2) Sub known values to find k → (3) Use formula</li>
+        <li><b>Key check:</b> Direct: y/x constant. Inverse: xy constant.</li>
+      </ul>`,
+    "Unit 7: Rate & Speed": `
+      <h3>Key Concepts</h3>
+      <ul>
+        <li><b>Speed = Distance ÷ Time</b></li>
+        <li><b>Convert:</b> km/h → m/s: ÷ 3.6 | m/s → km/h: × 3.6</li>
+        <li><b>Average speed</b> = total distance ÷ total time (NOT average of speeds!)</li>
+        <li><b>Distance-time graph:</b> gradient = speed, flat = stationary, steeper = faster</li>
+        <li><b>Speed-time graph:</b> gradient = acceleration, area under = distance</li>
+        <li><b>Acceleration</b> = change in speed ÷ time</li>
+        <li><b>Area of trapezium:</b> ½(a+b)×h (useful for speed-time graphs)</li>
+      </ul>`
+  };
+
   // Render folders
   Object.entries(folders).forEach(([folderName, items]) => {
     if (items.length === 0) return;
@@ -359,6 +419,25 @@ function init() {
     folder.appendChild(title);
     const content = document.createElement('div');
     content.className = 'folder-content';
+    // Add "Teach me" section
+    if (unitTeach[folderName]) {
+      const teachBtn = document.createElement('button');
+      teachBtn.className = 'quiz-btn';
+      teachBtn.style.gridColumn = '1 / -1';
+      teachBtn.style.borderColor = '#f0c040';
+      teachBtn.style.color = '#f0c040';
+      teachBtn.innerHTML = '📖 Teach me this unit';
+      teachBtn.onclick = () => {
+        const existing = content.querySelector('.teach-panel');
+        if (existing) { existing.remove(); return; }
+        const panel = document.createElement('div');
+        panel.className = 'teach-panel';
+        panel.style.cssText = 'grid-column:1/-1;background:#1a2a1a;border:1px solid #64ffda;border-radius:10px;padding:20px;margin-bottom:10px;color:#ddd;font-size:0.95em;line-height:1.7;';
+        panel.innerHTML = unitTeach[folderName];
+        content.insertBefore(panel, content.children[1]);
+      };
+      content.appendChild(teachBtn);
+    }
     items.forEach(name => {
       const btn = document.createElement('button');
       btn.className = 'quiz-btn';
