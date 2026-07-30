@@ -757,6 +757,7 @@ const audio = new Audio();
 audio.preload = 'auto';
 if (chosenTip === 'BRAINROT') {
   audio.src = 'brainrot.mp3';
+  audio.volume = 1.0;
   audio.addEventListener('canplaythrough', () => audio.play().catch(()=>{}));
   audio.load();
 } else {
@@ -830,8 +831,12 @@ if (chosenTip.startsWith('Your Load is very important')) {
   });
 } else if (chosenTip === 'BRAINROT') {
   loadDelay = 999999;
-  tipEl.textContent = 'Optimizing neural pathways...';
-  setTimeout(() => { window.location.href = 'https://www.youtube.com/watch?v=bNVFp9kiHYE'; }, 2500);
+  tipEl.innerHTML = '<div style="font-size:1.5em;color:#ff00ff;font-family:Orbitron,monospace;animation:pulse 0.5s infinite;letter-spacing:4px;">⚡ BRAINROT ACTIVATED ⚡</div>';
+  setTimeout(() => {
+    const ls = document.getElementById('loadingScreen');
+    ls.style.opacity = '0';
+    setTimeout(() => ls.style.display = 'none', 500);
+  }, 8000);
 } else if (chosenTip === 'PRINCE') {
   loadDelay = 8000;
   tipEl.innerHTML = '📧 <b>URGENT:</b> I am Prince Abubakar of Nigeria. I have $45,000,000 USD that I need to transfer to your account. Please send your bank details to proceed. — <i>Definitely not a scam</i>';
