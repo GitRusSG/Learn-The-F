@@ -754,13 +754,16 @@ if (Math.random() < 0.10) {
 }
 tipEl.textContent = chosenTip;
 const audio = new Audio();
+audio.preload = 'auto';
 if (chosenTip === 'BRAINROT') {
   audio.src = 'brainrot.mp3';
-  audio.play().catch(()=>{});
-} else if (Math.random() < 0.3) {
-  audio.src = Math.random() < 0.5 ? 'heartbreaking.mp3' : 'amberlight.mp3';
+  audio.addEventListener('canplaythrough', () => audio.play().catch(()=>{}));
+  audio.load();
+} else if (Math.random() < 0.4) {
+  audio.src = 'heartbreaking.mp3';
   audio.volume = 0.3;
-  audio.play().catch(()=>{});
+  audio.addEventListener('canplaythrough', () => audio.play().catch(()=>{}));
+  audio.load();
 }
 setTimeout(() => { document.getElementById('loadBar').style.width = '100%'; }, 100);
 
