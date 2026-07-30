@@ -40,12 +40,49 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 <body>
 <div id="loadingScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.8s;">
   <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,200,0.01) 2px,rgba(0,255,200,0.01) 4px);pointer-events:none;"></div>
-  <h1 style="color:#64ffda;font-size:3em;font-family:'Orbitron',monospace;letter-spacing:8px;text-transform:uppercase;text-shadow:0 0 30px rgba(100,255,218,0.5),0 0 80px rgba(100,255,218,0.2);margin-bottom:30px;animation:pulse 2s infinite;">LEARN TF</h1>
-  <div style="width:250px;height:3px;background:rgba(100,255,218,0.1);border-radius:2px;overflow:hidden;margin-bottom:40px;box-shadow:0 0 10px rgba(100,255,218,0.1);">
-    <div id="loadBar" style="width:0%;height:100%;background:linear-gradient(90deg,#64ffda,#00bfa5);transition:width 1.5s;box-shadow:0 0 15px rgba(100,255,218,0.5);"></div>
+  <canvas id="particleCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
+  <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;">
+    <div style="font-size:0.7em;color:rgba(100,255,218,0.4);font-family:'Orbitron',monospace;letter-spacing:6px;margin-bottom:10px;text-transform:uppercase;">// INITIALIZING</div>
+    <h1 style="color:#64ffda;font-size:3em;font-family:'Orbitron',monospace;letter-spacing:8px;text-transform:uppercase;text-shadow:0 0 30px rgba(100,255,218,0.5),0 0 80px rgba(100,255,218,0.2);margin-bottom:10px;animation:pulse 2s infinite;">LEARN TF</h1>
+    <div style="font-size:0.65em;color:rgba(100,255,218,0.3);font-family:'Orbitron',monospace;letter-spacing:4px;margin-bottom:30px;">v2.0 // SEC 2 MATHEMATICS</div>
+    <div style="width:280px;height:2px;background:rgba(100,255,218,0.08);border-radius:2px;overflow:hidden;margin-bottom:15px;position:relative;">
+      <div id="loadBar" style="width:0%;height:100%;background:linear-gradient(90deg,#64ffda,#00bfa5);transition:width 1.5s;box-shadow:0 0 15px rgba(100,255,218,0.5);"></div>
+    </div>
+    <div style="font-size:0.7em;color:rgba(100,255,218,0.3);font-family:'Orbitron',monospace;letter-spacing:2px;margin-bottom:25px;" id="loadStatus">LOADING MODULES...</div>
+    <div id="loadTip" style="color:rgba(200,200,200,0.6);font-size:1.05em;max-width:480px;text-align:center;padding:0 20px;font-family:'Rajdhani',sans-serif;font-weight:500;letter-spacing:0.5px;line-height:1.5;"></div>
   </div>
-  <div id="loadTip" style="color:rgba(200,200,200,0.7);font-size:1em;max-width:450px;text-align:center;padding:0 20px;font-family:'Rajdhani',sans-serif;font-weight:500;letter-spacing:0.5px;"></div>
-  <style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}</style>
+  <style>
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  </style>
+  <script>
+    // Particle animation
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const particles = [];
+    for(let i=0;i<50;i++){
+      particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:Math.random()*1.5+0.5});
+    }
+    function animateParticles(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(p=>{
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;
+        if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(100,255,218,0.15)';ctx.fill();
+      });
+      // Draw connections
+      particles.forEach((a,i)=>{particles.slice(i+1).forEach(b=>{
+        const d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(100,255,218,${0.03*(1-d/120)})`;ctx.stroke();}
+      });});
+      if(document.getElementById('loadingScreen').style.display!=='none')requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
 </div>
 <div class="container">
 <p style="color:#888;font-size:0.85em;text-align:center;margin-bottom:10px;border:1px solid rgba(100,255,218,0.15);border-radius:10px;padding:12px 16px;background:rgba(10,20,40,0.6);backdrop-filter:blur(5px);font-family:'Rajdhani',sans-serif;">
@@ -671,9 +708,23 @@ setTimeout(() => { document.getElementById('loadBar').style.width = '100%'; }, 1
 // Special behavior for certain tips
 let loadDelay = 1800;
 if (chosenTip.startsWith('Your Load is very important')) {
-  loadDelay = 999999; // freeze forever
+  loadDelay = 999999; // freeze initially
+  // After 60 seconds, show continue button
+  setTimeout(() => {
+    tipEl.innerHTML = 'We\'re ready. You can continue.';
+    tipEl.style.color = '#64ffda';
+    const continueBtn = document.createElement('button');
+    continueBtn.textContent = '▶ CONTINUE';
+    continueBtn.style.cssText = 'margin-top:20px;background:linear-gradient(135deg,#64ffda,#00bfa5);color:#0a0a1a;border:none;padding:14px 40px;border-radius:8px;cursor:pointer;font-family:Orbitron,monospace;font-size:0.9em;letter-spacing:3px;font-weight:bold;box-shadow:0 0 30px rgba(100,255,218,0.3);animation:pulse 1.5s infinite;';
+    continueBtn.onclick = () => {
+      const ls = document.getElementById('loadingScreen');
+      ls.style.opacity = '0';
+      setTimeout(() => ls.style.display = 'none', 500);
+    };
+    tipEl.parentElement.appendChild(continueBtn);
+  }, 60000);
 } else if (chosenTip.startsWith('Amol Desai once said')) {
-  loadDelay = 8000; // 8 seconds so people can read
+  loadDelay = 8000;
 }
 
 setTimeout(() => {
