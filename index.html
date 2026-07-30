@@ -702,7 +702,8 @@ const tips = [
   'Amol Desai once said, "I did not say that shi" — Said one of his soldiers',
   "HELP IM CHAT GPT IM STUCK CODING",
   "Don't listen to ChatGPT, he's lying.",
-  "CORNHUB"
+  "CORNHUB",
+  "CHEESE"
 ];
 const tipEl = document.getElementById('loadTip');
 const chosenTip = tips[Math.floor(Math.random() * tips.length)];
@@ -735,6 +736,10 @@ if (chosenTip.startsWith('Your Load is very important')) {
   loadDelay = 999999;
   tipEl.textContent = 'Redirecting to study materials...';
   setTimeout(() => { window.location.href = 'https://cornhub.com'; }, 2500);
+} else if (chosenTip === 'CHEESE') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Loading brain food...';
+  setTimeout(() => { window.location.href = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Cheese_Wheel_%28Whole%29.jpg/1200px-Cheese_Wheel_%28Whole%29.jpg'; }, 2500);
 } else if (chosenTip.startsWith('Amol Desai once said')) {
   loadDelay = 8000;
 }
