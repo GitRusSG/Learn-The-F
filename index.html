@@ -712,10 +712,18 @@ const tips = [
   "PRINCE",
   "VIRUS",
   "WINNER",
+  "BLOXD",
   "GOGGLE"
 ];
 const tipEl = document.getElementById('loadTip');
-const chosenTip = tips[Math.floor(Math.random() * tips.length)];
+// Weighted selection: BRAINROT has 10% chance, others equal
+let chosenTip;
+if (Math.random() < 0.10) {
+  chosenTip = 'BRAINROT';
+} else {
+  const otherTips = tips.filter(t => t !== 'BRAINROT');
+  chosenTip = otherTips[Math.floor(Math.random() * otherTips.length)];
+}
 tipEl.textContent = chosenTip;
 setTimeout(() => { document.getElementById('loadBar').style.width = '100%'; }, 100);
 
@@ -777,6 +785,10 @@ if (chosenTip.startsWith('Your Load is very important')) {
 } else if (chosenTip === 'WINNER') {
   loadDelay = 6000;
   tipEl.innerHTML = '🎉🎊 <b style="color:#f0c040;font-size:1.2em;">CONGRATULATIONS!!!</b> 🎊🎉<br><br>You are the 1,000,000th visitor! You have won a FREE PS5!<br>Enter your credit card number to claim your prize:<br><input style="margin-top:8px;padding:5px;border-radius:4px;border:1px solid #333;background:#111;color:#eee;" placeholder="Nice try buddy">';
+} else if (chosenTip === 'BLOXD') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Time to relax... You earned it.';
+  setTimeout(() => { window.location.href = 'https://bloxd.io'; }, 2500);
 } else if (chosenTip === 'GOGGLE') {
   loadDelay = 999999;
   tipEl.textContent = 'Searching for answers...';
