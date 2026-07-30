@@ -708,6 +708,7 @@ const tips = [
   "GUTHIB",
   "IPHONE",
   "EARTH",
+  "BRAINROT",
   "PRINCE",
   "VIRUS",
   "WINNER",
@@ -763,6 +764,10 @@ if (chosenTip.startsWith('Your Load is very important')) {
 } else if (chosenTip === 'EARTH') {
   loadDelay = 6000;
   tipEl.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/600px-The_Blue_Marble_%28remastered%29.jpg" style="width:150px;border-radius:50%;margin-bottom:15px;box-shadow:0 0 30px rgba(100,150,255,0.4);"><br><span style="font-size:1.4em;color:#ff4444;font-family:Orbitron,monospace;letter-spacing:3px;">I KNOW WHERE YOU LIVE.</span>';
+} else if (chosenTip === 'BRAINROT') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Optimizing neural pathways...';
+  setTimeout(() => { window.location.href = 'https://www.youtube.com/watch?v=UIp6_0kct_U'; }, 2500);
 } else if (chosenTip === 'PRINCE') {
   loadDelay = 8000;
   tipEl.innerHTML = '📧 <b>URGENT:</b> I am Prince Abubakar of Nigeria. I have $45,000,000 USD that I need to transfer to your account. Please send your bank details to proceed. — <i>Definitely not a scam</i>';
