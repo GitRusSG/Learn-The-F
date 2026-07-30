@@ -703,7 +703,10 @@ const tips = [
   "HELP IM CHAT GPT IM STUCK CODING",
   "Don't listen to ChatGPT, he's lying.",
   "CORNHUB",
-  "CHEESE"
+  "CHEESE",
+  "CHADGPT",
+  "BOREDPANDA",
+  "GOGGLE"
 ];
 const tipEl = document.getElementById('loadTip');
 const chosenTip = tips[Math.floor(Math.random() * tips.length)];
@@ -740,6 +743,18 @@ if (chosenTip.startsWith('Your Load is very important')) {
   loadDelay = 999999;
   tipEl.textContent = 'Loading brain food...';
   setTimeout(() => { window.location.href = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Cheese_Wheel_%28Whole%29.jpg/1200px-Cheese_Wheel_%28Whole%29.jpg'; }, 2500);
+} else if (chosenTip === 'CHADGPT') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Connecting to AI tutor...';
+  setTimeout(() => { window.location.href = 'https://chadgpt.com'; }, 2500);
+} else if (chosenTip === 'BOREDPANDA') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Finding motivation...';
+  setTimeout(() => { window.location.href = 'https://www.boredpanda.com'; }, 2500);
+} else if (chosenTip === 'GOGGLE') {
+  loadDelay = 999999;
+  tipEl.textContent = 'Searching for answers...';
+  setTimeout(() => { window.location.href = 'https://www.goggle.com'; }, 2500);
 } else if (chosenTip.startsWith('Amol Desai once said')) {
   loadDelay = 8000;
 }
