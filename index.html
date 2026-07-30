@@ -725,6 +725,18 @@ if (Math.random() < 0.10) {
   chosenTip = otherTips[Math.floor(Math.random() * otherTips.length)];
 }
 tipEl.textContent = chosenTip;
+
+// Play audio based on tip
+const audio = new Audio();
+if (chosenTip === 'BRAINROT') {
+  audio.src = 'brainrot.mp3';
+  audio.play().catch(()=>{});
+} else if (Math.random() < 0.3) {
+  // 30% chance of background music on normal tips
+  audio.src = Math.random() < 0.5 ? 'heartbreaking.mp3' : 'amberlight.mp3';
+  audio.volume = 0.3;
+  audio.play().catch(()=>{});
+}
 setTimeout(() => { document.getElementById('loadBar').style.width = '100%'; }, 100);
 
 // Special behavior for certain tips
