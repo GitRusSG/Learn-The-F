@@ -5,13 +5,36 @@ body{background:#0a0a1a;color:#00ff00;font-family:'Courier New',monospace;paddin
 h1{color:#64ffda;text-align:center;letter-spacing:4px;}
 .flag{background:#111;border:1px solid #00ff00;padding:15px;margin:10px 0;border-radius:8px;}
 .flag b{color:#64ffda;}
+.hint{color:#888;font-size:0.85em;margin-top:5px;}
 </style></head><body>
 <h1>🚩 LearnTF CTF 🚩</h1>
-<p style="text-align:center;color:#888;">Find all 5 flags hidden across the site.</p>
-<div class="flag"><b>Flag 1:</b> View Page Source (Ctrl+U / Cmd+U)</div>
-<div class="flag"><b>Flag 2:</b> DevTools Console (look closely...)</div>
-<div class="flag"><b>Flag 3:</b> Inspect a certain element's attributes</div>
-<div class="flag"><b>Flag 4:</b> Read the CSS stylesheet</div>
-<div class="flag"><b>Flag 5:</b> Type a special word in any answer box</div>
-<p style="color:#555;margin-top:30px;text-align:center;">Format: FLAG{...}</p>
+<p style="text-align:center;color:#888;">Find all 5 flags hidden across the site. Format: FLAG{...}</p>
+
+<div class="flag">
+  <b>Flag 1:</b> Hidden in the HTML source code
+  <div class="hint">💡 Right-click the page → "View Page Source" (or Ctrl+U / Cmd+U). Search for "FLAG".</div>
+</div>
+
+<div class="flag">
+  <b>Flag 2:</b> Hidden in the browser console
+  <div class="hint">💡 Right-click → Inspect → Console tab. Look for tiny/hidden text. Try selecting all text.</div>
+</div>
+
+<div class="flag">
+  <b>Flag 3:</b> Hidden on an HTML element
+  <div class="hint">💡 Right-click → Inspect → Look at the &lt;body&gt; tag. Check its attributes.</div>
+</div>
+
+<div class="flag">
+  <b>Flag 4:</b> Hidden in the CSS
+  <div class="hint">💡 View Page Source and scroll through the &lt;style&gt; section. Look for comments (/* ... */).</div>
+</div>
+
+<div class="flag">
+  <b>Flag 5:</b> Type a secret word in any quiz answer box
+  <div class="hint">💡 The word is 3 letters. It's the name of this challenge type...</div>
+</div>
+
+<p style="color:#555;margin-top:30px;text-align:center;">Good luck! 🍞 > 🔑</p>
+<a href="index.html" style="display:block;text-align:center;color:#64ffda;margin-top:20px;">← Back to quizzes</a>
 </body></html>
