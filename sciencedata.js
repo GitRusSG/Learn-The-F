@@ -121,15 +121,37 @@ function sVoltmeter(bLabel, rLabel) {
   );
 }
 function sParallel2(bLabel, r1, r2) {
+  // Correct parallel circuit: battery on the left, two resistor branches
+  // between junction A (top) and junction B (bottom).
+  //
+  //    A ──────┬──────── ─┐
+  //    |       |          |
+  //   batt   [R1]       [R2]
+  //    |       |          |
+  //    B ──────┴──────── ─┘
+  //
+  const left = 60, right = 340, top = 40, bot = 190;
+  const brX1 = 160, brX2 = 280; // x-positions of the two branches
+  const battCy = 115;
   return sWrap(
-    // outer loop
-    sW(40, 40, 360, 40) + sW(360, 40, 360, 190) + sW(360, 190, 40, 190) + sW(40, 190, 40, 40) +
-    // two vertical branches
-    sW(150, 40, 150, 190) + sW(260, 40, 260, 190) +
-    sResV(150, 115, r1) + sResV(260, 115, r2) +
-    // use sBatt's own label placement (cy+40) so it clears the plates
-    sBatt(95, 190, bLabel),
-    244
+    // top rail: junction A across to both branches
+    sW(left, top, right, top) +
+    // bottom rail: junction B across to both branches
+    sW(left, bot, right, bot) +
+    // left vertical — split into two segments with a gap for the battery
+    // (no wire passes through the battery symbol itself)
+    sW(left, top, left, battCy - 24) +
+    sW(left, battCy + 24, left, bot) +
+    // branch 1 vertical wire
+    sW(brX1, top, brX1, bot) +
+    // branch 2 vertical wire
+    sW(brX2, top, brX2, bot) +
+    // resistors on the two branches
+    sResV(brX1, 115, r1) + sResV(brX2, 115, r2) +
+    // battery on the left rail (between the two wire segments)
+    sBatt(left, battCy, '') +
+    `<text x="${left}" y="${bot + 26}" text-anchor="middle" fill="${S_CY}" font-size="15" font-family="monospace">${bLabel}</text>`,
+    224
   );
 }
 function sLampCircuit(bLabel) {
