@@ -17,7 +17,23 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 .folder-title { color: #64ffda; font-size: 1.2em; margin-bottom: 10px; padding: 14px 18px; border-bottom: 1px solid rgba(100,255,218,0.15); cursor: pointer; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 0.85em; letter-spacing: 2px; transition: all 0.3s; border-left: 3px solid transparent; text-transform: uppercase; }
 .folder-title:hover { background: rgba(100,255,218,0.05); border-radius: 8px; border-left: 3px solid #64ffda; box-shadow: inset 0 0 30px rgba(100,255,218,0.03); }
 .folder-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease; opacity: 0; padding-top: 0; padding-bottom: 0; }
-.folder-content.open { max-height: 2000px; opacity: 1; padding-top: 10px; padding-bottom: 10px; }
+/* max-height is set inline by refreshFolderHeight(); the value here is only a
+   fallback if JS measurement has not run yet */
+.folder-content.open { max-height: 4000px; opacity: 1; padding-top: 10px; padding-bottom: 10px; }
+/* --- Top-level subject folders --- */
+.subject { margin-bottom: 22px; border: 1px solid rgba(100,255,218,0.18); border-radius: 14px; background: rgba(8,16,32,0.55); backdrop-filter: blur(6px); overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s; }
+.subject.open { border-color: rgba(100,255,218,0.45); box-shadow: 0 0 40px rgba(100,255,218,0.07); }
+.subject-title { color: #64ffda; padding: 20px 22px; cursor: pointer; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 1.05em; letter-spacing: 3px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; transition: all 0.3s; text-shadow: 0 0 14px rgba(100,255,218,0.35); }
+.subject-title:hover { background: rgba(100,255,218,0.06); }
+.sub-caret { display: inline-block; transition: transform 0.3s ease; font-size: 0.9em; }
+.subject.open .sub-caret { transform: rotate(90deg); }
+.subject-count { margin-left: auto; font-size: 0.6em; letter-spacing: 2px; color: #f0c040; border: 1px solid rgba(240,192,64,0.35); border-radius: 20px; padding: 4px 12px; font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+.subject-content { max-height: 0; overflow: hidden; opacity: 0; padding: 0 16px; transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease; }
+.subject-content.open { max-height: 20000px; opacity: 1; padding: 4px 16px 16px 16px; }
+.teach-panel svg { max-width: 175px !important; margin: 6px auto !important; }
+.teach-panel table td, .teach-panel table th { font-size: 0.95em; }
+/* cap diagram size but stay responsive on narrow screens */
+.prompt svg { width: 100%; max-width: 420px; height: auto; }
 .quiz-btn { padding: 18px; background: rgba(10,20,40,0.8); border: 1px solid rgba(100,255,218,0.12); border-radius: 12px; cursor: pointer; transition: all 0.3s; color: #aaa; font-size: 0.95em; text-align: left; font-family: 'Rajdhani', sans-serif; font-weight: 500; backdrop-filter: blur(5px); position: relative; overflow: hidden; }
 .quiz-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(100,255,218,0.05),transparent); transition:left 0.5s; }
 .quiz-btn:hover::before { left:100%; }
@@ -110,6 +126,7 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 </body>
 </html>
 <script src="quizdata-new.js"></script>
+<script src="sciencedata.js"></script>
 <script>
 const quizzes = {
   "Unit 3: Algebraic Expressions": [
@@ -380,28 +397,48 @@ const quizzes = {
 
 // Merge new quizzes into main object
 Object.assign(quizzes, newQuizzes);
+// Merge science quizzes
+if (typeof scienceQuizzes !== 'undefined') Object.assign(quizzes, scienceQuizzes);
 
 let currentQuiz = null;
 
+// Set an open folder's max-height to its real content height so nothing gets
+// clipped. Images/SVGs can change layout after insertion, so re-measure on the
+// next frame too.
+function refreshFolderHeight(content) {
+  if (!content || !content.classList.contains('open')) return;
+  const apply = () => { content.style.maxHeight = (content.scrollHeight + 40) + 'px'; };
+  apply();
+  requestAnimationFrame(apply);
+}
+
 function init() {
   const sel = document.getElementById('quizSelect');
-  // Define folders
-  const folders = {
-    "Unit 3: Algebraic Expressions": [],
-    "Unit 4: Quadratic Equations & Graphs": [],
-    "Unit 5: Scales & Maps": [],
-    "Unit 6: Direct & Inverse Proportion": [],
-    "Unit 7: Rate & Speed": []
+  // Two-level structure: Subject -> Unit -> Quizzes
+  const subjects = {
+    "Mathematics": {
+      "Unit 3: Algebraic Expressions": [],
+      "Unit 4: Quadratic Equations & Graphs": [],
+      "Unit 5: Scales & Maps": [],
+      "Unit 6: Direct & Inverse Proportion": [],
+      "Unit 7: Rate & Speed": []
+    },
+    "Science": {
+      "Electricity: Symbols, Formulas & Circuits": []
+    }
   };
+  const mathFolders = subjects["Mathematics"];
   // Sort quizzes into folders
   Object.keys(quizzes).forEach(name => {
-    if (name.includes("Unit 3")) folders["Unit 3: Algebraic Expressions"].push(name);
-    else if (name.includes("Unit 4") || name.includes("4.")) folders["Unit 4: Quadratic Equations & Graphs"].push(name);
-    else if (name.includes("Unit 5")) folders["Unit 5: Scales & Maps"].push(name);
-    else if (name.includes("Unit 6")) folders["Unit 6: Direct & Inverse Proportion"].push(name);
-    else if (name.includes("Unit 7")) folders["Unit 7: Rate & Speed"].push(name);
-    else folders["Unit 3: Algebraic Expressions"].push(name); // fallback
+    if (name.startsWith("Sci ")) subjects["Science"]["Electricity: Symbols, Formulas & Circuits"].push(name);
+    else if (name.includes("Unit 3")) mathFolders["Unit 3: Algebraic Expressions"].push(name);
+    else if (name.includes("Unit 4") || name.includes("4.")) mathFolders["Unit 4: Quadratic Equations & Graphs"].push(name);
+    else if (name.includes("Unit 5")) mathFolders["Unit 5: Scales & Maps"].push(name);
+    else if (name.includes("Unit 6")) mathFolders["Unit 6: Direct & Inverse Proportion"].push(name);
+    else if (name.includes("Unit 7")) mathFolders["Unit 7: Rate & Speed"].push(name);
+    else mathFolders["Unit 3: Algebraic Expressions"].push(name); // fallback
   });
+  const subjectIcons = { "Mathematics": "🧮", "Science": "⚡" };
   // Unit summaries for "Teach me" sections
   const unitTeach = {
     "Unit 3: Algebraic Expressions": `
@@ -459,20 +496,92 @@ function init() {
         <li><b>Speed-time graph:</b> gradient = acceleration, area under = distance</li>
         <li><b>Acceleration</b> = change in speed ÷ time</li>
         <li><b>Area of trapezium:</b> ½(a+b)×h (useful for speed-time graphs)</li>
+      </ul>`,
+    "Electricity: Symbols, Formulas & Circuits": `
+      <h3>Symbols, Meanings & Units</h3>
+      <table style="width:100%;border-collapse:collapse;font-family:'Rajdhani',sans-serif;margin-bottom:16px;">
+        <tr style="color:#64ffda;text-align:left;"><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">Symbol</th><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">Meaning</th><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">Unit</th><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">Full word</th></tr>
+        <tr><td style="padding:6px;color:#f0c040;"><b>V</b></td><td style="padding:6px;">Voltage</td><td style="padding:6px;">V</td><td style="padding:6px;">volt</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;"><b>I</b></td><td style="padding:6px;">Current</td><td style="padding:6px;">A</td><td style="padding:6px;">ampere</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;"><b>R</b></td><td style="padding:6px;">Resistance</td><td style="padding:6px;">Ω</td><td style="padding:6px;">ohm</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;"><b>P</b></td><td style="padding:6px;">Power</td><td style="padding:6px;">W</td><td style="padding:6px;">watt</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;"><b>Q</b></td><td style="padding:6px;">Charge</td><td style="padding:6px;">C</td><td style="padding:6px;">coulomb</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;"><b>t</b></td><td style="padding:6px;">Time</td><td style="padding:6px;">s</td><td style="padding:6px;">second</td></tr>
+      </table>
+      <h3>The Three Formula Triangles</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+        ${typeof sTri === 'function' ? sTri("V","I","R") + sTri("P","V","I") + sTri("Q","I","t") : ''}
+      </div>
+      <ul>
+        <li><b>Ohm's Law:</b> V = IR &nbsp;|&nbsp; I = V/R &nbsp;|&nbsp; R = V/I</li>
+        <li><b>Power:</b> P = VI &nbsp;|&nbsp; V = P/I &nbsp;|&nbsp; I = P/V</li>
+        <li><b>Charge:</b> Q = It &nbsp;|&nbsp; I = Q/t &nbsp;|&nbsp; t = Q/I</li>
+        <li><b>Combined:</b> P = I²R (substitute V = IR into P = VI)</li>
+      </ul>
+      <h3>How to Use a Formula Triangle</h3>
+      <ul>
+        <li>Cover the quantity you want to find.</li>
+        <li>If the two remaining are <b>side by side</b> → multiply them.</li>
+        <li>If one is <b>above</b> the other → divide top by bottom.</li>
+      </ul>
+      <h3>Series vs Parallel</h3>
+      <ul>
+        <li><b>Series:</b> current is the SAME everywhere. Voltages ADD. R<sub>total</sub> = R₁ + R₂</li>
+        <li><b>Parallel:</b> voltage is the SAME across each branch. Currents ADD. 1/R<sub>total</sub> = 1/R₁ + 1/R₂</li>
+        <li>Two <i>equal</i> resistors in parallel → half the resistance.</li>
+        <li><b>Ammeter</b> → connected in <b>series</b> (current must flow through it).</li>
+        <li><b>Voltmeter</b> → connected in <b>parallel</b> (measures across a component).</li>
+      </ul>
+      <h3>Study Tips</h3>
+      <ul>
+        <li><b>Don't confuse quantity symbols with unit symbols.</b> Current is <i>I</i> but its unit is <i>A</i>. Charge is <i>Q</i> but its unit is <i>C</i>. Only voltage uses V for both.</li>
+        <li><b>Time must be in seconds.</b> If a question says "2 minutes", convert to 120 s before using Q = It.</li>
+        <li><b>Always use total resistance</b> when finding the current drawn from the supply.</li>
+        <li><b>Check your answer both ways.</b> Found I = 2 A? Multiply back: V = IR should give the supply voltage.</li>
+        <li><b>Write the formula, then substitute, then solve.</b> You get method marks even if the arithmetic slips.</li>
+        <li><b>Always write the unit.</b> A bare number loses marks.</li>
+        <li><b>Memorise the three triangles</b> — V/IR, P/VI, Q/It. Nine formulas from three pictures.</li>
       </ul>`
   };
 
-  // Render folders
+  // Render subjects -> units -> quizzes
+  Object.entries(subjects).forEach(([subjectName, folders]) => {
+  const totalQuizzes = Object.values(folders).reduce((a, b) => a + b.length, 0);
+  if (totalQuizzes === 0) return;
+  const subject = document.createElement('div');
+  subject.className = 'subject';
+  const subTitle = document.createElement('div');
+  subTitle.className = 'subject-title';
+  subTitle.innerHTML = '<span class="sub-caret">▸</span> ' + (subjectIcons[subjectName] || '📚') + ' ' + subjectName +
+    ' <span class="subject-count">' + totalQuizzes + ' QUIZZES</span>';
+  subTitle.onclick = () => {
+    subject.classList.toggle('open');
+    subContent.classList.toggle('open');
+  };
+  subject.appendChild(subTitle);
+  const subContent = document.createElement('div');
+  subContent.className = 'subject-content';
+  subject.appendChild(subContent);
+  sel.appendChild(subject);
+
   Object.entries(folders).forEach(([folderName, items]) => {
     if (items.length === 0) return;
     const folder = document.createElement('div');
     folder.className = 'folder';
     const title = document.createElement('div');
     title.className = 'folder-title';
-    title.textContent = '📁 ' + folderName + ' (' + items.length + ' quizzes)';
+    title.textContent = '📁 ' + folderName + ' (' + items.length + (items.length === 1 ? ' quiz)' : ' quizzes)');
     title.onclick = () => {
       const content = title.nextElementSibling;
-      content.classList.toggle('open');
+      if (content.classList.contains('open')) {
+        content.style.maxHeight = '0px';
+        content.classList.remove('open');
+      } else {
+        content.classList.add('open');
+        // Measure instead of using a fixed cap, otherwise tall content
+        // (like the "Teach me" panel) gets clipped.
+        refreshFolderHeight(content);
+      }
     };
     folder.appendChild(title);
     const content = document.createElement('div');
@@ -487,12 +596,15 @@ function init() {
       teachBtn.innerHTML = '📖 Teach me this unit';
       teachBtn.onclick = () => {
         const existing = content.querySelector('.teach-panel');
-        if (existing) { existing.remove(); return; }
+        if (existing) { existing.remove(); refreshFolderHeight(content); return; }
         const panel = document.createElement('div');
         panel.className = 'teach-panel';
         panel.style.cssText = 'grid-column:1/-1;background:#1a2a1a;border:1px solid #64ffda;border-radius:10px;padding:20px;margin-bottom:10px;color:#ddd;font-size:0.95em;line-height:1.7;';
         panel.innerHTML = unitTeach[folderName];
         content.insertBefore(panel, content.children[1]);
+        // The panel is much taller than the button grid, so re-measure or the
+        // folder's max-height would cut it off.
+        refreshFolderHeight(content);
       };
       content.appendChild(teachBtn);
     }
@@ -504,7 +616,8 @@ function init() {
       content.appendChild(btn);
     });
     folder.appendChild(content);
-    sel.appendChild(folder);
+    subContent.appendChild(folder);
+  });
   });
 }
 
@@ -546,6 +659,12 @@ function loadQuiz(name) {
           <button class="unit-btn" onclick="insertUnit(${i},'³')">³</button>
           <button class="unit-btn" onclick="insertUnit(${i},'√')">√</button>
           <button class="unit-btn" onclick="insertUnit(${i},'±')">±</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'Ω')">Ω</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'V')">V</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'A')">A</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'W')">W</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'C')">C</button>
+          <button class="unit-btn" onclick="insertUnit(${i},'s')">s</button>
         </div>
         <button onclick="showHint(${i})" style="margin-top:10px;background:none;border:1px solid #f0c040;color:#f0c040;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:0.9em;">💡 Hint</button>
         <div id="hint${i}" style="margin-top:8px;display:none;padding:10px;border-radius:8px;background:#2a2a00;border:1px solid #f0c040;color:#f0c040;font-size:0.95em;"></div>
@@ -555,7 +674,7 @@ function loadQuiz(name) {
 }
 
 function goHome() {
-  document.getElementById('quizSelect').style.display = 'grid';
+  document.getElementById('quizSelect').style.display = 'block';
   document.getElementById('quizArea').classList.remove('show');
 }
 
@@ -623,6 +742,29 @@ function normalize(s) {
     .replace(/m2(?!\/)/g,'m^2')
     .replace(/cm3/g,'cm^3')
     .replace(/m3/g,'m^3')
+    // Science / electricity units
+    .replace(/\u03a9/g,'ohm')   // Ω greek capital omega
+    .replace(/\u03c9/g,'ohm')   // ω lowercase (from toLowerCase)
+    .replace(/\u2126/g,'ohm')   // Ω ohm sign
+    // plural -> singular
+    .replace(/ohms/g,'ohm')
+    .replace(/volts/g,'volt')
+    .replace(/amperes/g,'ampere')
+    .replace(/amps/g,'amp')
+    .replace(/watts/g,'watt')
+    .replace(/coulombs/g,'coulomb')
+    .replace(/seconds/g,'second')
+    // A unit WORD directly after a number means the same as its symbol,
+    // so "3 amperes" == "3 A". Anchoring on the digit is deliberate: a bare
+    // word is left alone so quiz 1.2 can still tell "A" apart from "ampere".
+    // Order matters: longer words first (ampere before amp, second before sec).
+    .replace(/(\d)ampere/g,'$1a')
+    .replace(/(\d)amp/g,'$1a')
+    .replace(/(\d)volt/g,'$1v')
+    .replace(/(\d)watt/g,'$1w')
+    .replace(/(\d)coulomb/g,'$1c')
+    .replace(/(\d)second/g,'$1s')
+    .replace(/(\d)sec/g,'$1s')
     .replace(/\$/g,'');
 }
 
@@ -635,7 +777,10 @@ function checkAll() {
     const qDiv = document.getElementById('q'+i);
     fb.style.display = 'block';
     const normInput = normalize(input);
-    const isCorrect = item.accepts.some(a => normalize(a) === normInput);
+    // The answer shown to the student must always be accepted, even when the
+    // accepts[] list only holds shorter variants (common for wordy answers).
+    const isCorrect = normInput !== '' &&
+      (normalize(item.answer) === normInput || item.accepts.some(a => normalize(a) === normInput));
     if (isCorrect) {
       correct++;
       fb.style.background = 'rgba(10,60,40,0.8)';
@@ -726,9 +871,43 @@ console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:14px;color:#64ffda
 console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:12px;color:#f0c040;');
 console.log('%c Built with pain, suffering, and one very patient AI at 2am', 'font-size:11px;color:#0a0a1a;background:#0a0a1a;');
 console.log('%c FLAG{2_c0ns0l3_cr4wl3r}', 'font-size:1px;color:#0a0a1a;');
+console.log('%c Safe mode: learnTFSafeMode(true) = calm, learnTFSafeMode(false) = chaos, learnTFSafeMode() = reset to default', 'font-size:11px;color:#64ffda;');
+
+// ============================================================
+// SAFE MODE
+// A first-time visitor gets a clean, boring, trustworthy load:
+// real study tips only, no redirects, no fake scams, no earrape.
+// Someone who read ctf.html BEFORE ever opening the quiz site is
+// flagged as a "briefed" user and stays in safe mode permanently.
+// ============================================================
+const LS_VISITS = 'learntf_visits';
+const LS_CTF_FIRST = 'learntf_ctf_first';
+
+function getVisitCount() {
+  const n = parseInt(localStorage.getItem(LS_VISITS) || '0', 10);
+  return isNaN(n) ? 0 : n;
+}
+function isSafeMode() {
+  // Manual override always wins (see learnTFSafeMode() below)
+  const forced = localStorage.getItem('learntf_safe_override');
+  if (forced === 'on') return true;
+  if (forced === 'off') return false;
+  if (localStorage.getItem(LS_CTF_FIRST) === '1') return true; // came via CTF first
+  return getVisitCount() === 0;                                // very first visit
+}
+// Console helper so this is recoverable either way
+function learnTFSafeMode(on) {
+  if (on === undefined) {
+    localStorage.removeItem('learntf_safe_override');
+    console.log('Safe mode override cleared. Currently safe: ' + isSafeMode());
+    return;
+  }
+  localStorage.setItem('learntf_safe_override', on ? 'on' : 'off');
+  console.log('Safe mode forced ' + (on ? 'ON — clean loads only.' : 'OFF — chaos enabled.') + ' Reload to apply.');
+}
 
 // Loading screen
-const tips = [
+const studyTips = [
   "Type ^ followed by a number for superscript: x^2 → x²",
   "Use the unit buttons to quickly add km/h, m/s², cm², etc.",
   "Click 💡 Hint if you're stuck before checking your answer.",
@@ -741,6 +920,12 @@ const tips = [
   "Factorising tip: look for common factors first, then try special identities.",
   "Completing the square: half the coefficient of x, then square it.",
   "The quadratic formula works for ANY quadratic equation ax²+bx+c=0.",
+  "Ohm's Law: V = IR. Cover what you want on the triangle.",
+  "Current is I but its unit is A. Charge is Q but its unit is C. Don't mix them up.",
+  "In series the current is the same everywhere. In parallel the voltage is.",
+  "Ammeter → series. Voltmeter → parallel."
+];
+const prankTips = [
   "Bread tastes better than key.",
   "The pond chose you.",
   "Amol Desai " + "Amol Desai ".repeat(998),
@@ -764,11 +949,21 @@ const tips = [
   "BLOXD",
   "GOGGLE"
 ];
+const tips = studyTips.concat(prankTips);
+
 function startLoading() {
 document.getElementById('loadingScreen').style.display = 'flex';
 const tipEl = document.getElementById('loadTip');
+
+// Decide safe mode BEFORE counting this visit, so visit #1 is always clean
+const safeMode = isSafeMode();
+localStorage.setItem(LS_VISITS, String(getVisitCount() + 1));
+
 let chosenTip;
-if (Math.random() < 0.10) {
+if (safeMode) {
+  // Genuine study tips only — nothing that redirects, freezes or screams.
+  chosenTip = studyTips[Math.floor(Math.random() * studyTips.length)];
+} else if (Math.random() < 0.10) {
   chosenTip = 'BRAINROT';
 } else {
   const otherTips = tips.filter(t => t !== 'BRAINROT');
@@ -777,7 +972,7 @@ if (Math.random() < 0.10) {
 tipEl.textContent = chosenTip;
 const audio = new Audio();
 audio.preload = 'auto';
-if (chosenTip === 'BRAINROT') {
+if (!safeMode && chosenTip === 'BRAINROT') {
   audio.src = 'brainrot.mp3';
   audio.volume = 1.0;
   audio.addEventListener('canplaythrough', () => {
@@ -801,7 +996,10 @@ setTimeout(() => { document.getElementById('loadBar').style.width = '100%'; }, 1
 
 // Special behavior for certain tips
 let loadDelay = 1800;
-if (chosenTip.startsWith('Your Load is very important')) {
+if (safeMode) {
+  // Hard guard: in safe mode nothing below can run. Straight 1.8s clean load.
+  tipEl.style.color = '';
+} else if (chosenTip.startsWith('Your Load is very important')) {
   loadDelay = 999999; // freeze initially
   // After 60 seconds, show continue button
   setTimeout(() => {

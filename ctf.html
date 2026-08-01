@@ -36,5 +36,30 @@ h1{color:#64ffda;text-align:center;letter-spacing:4px;}
 </div>
 
 <p style="color:#555;margin-top:30px;text-align:center;">Good luck! 🍞 > 🔑</p>
+<div id="safeNote" style="display:none;border:1px solid #64ffda;border-radius:8px;padding:12px;margin-top:24px;color:#64ffda;font-size:0.8em;text-align:center;"></div>
 <a href="index.html" style="display:block;text-align:center;color:#64ffda;margin-top:20px;">← Back to quizzes</a>
+<script>
+// If someone lands on the CTF page before ever opening the quiz site,
+// they get flagged as "briefed" and the quiz site stays in safe mode
+// for them permanently: no redirects, no fake scams, no earrape.
+(function () {
+  try {
+    var visits = parseInt(localStorage.getItem('learntf_visits') || '0', 10);
+    if (isNaN(visits)) visits = 0;
+    var note = document.getElementById('safeNote');
+    if (visits === 0) {
+      localStorage.setItem('learntf_ctf_first', '1');
+      note.innerHTML = '&#128274; You found this page before the quizzes, so <b>Safe Mode</b> is on for you: '
+        + 'the site will never redirect you, fake-scam you or blast audio.<br>'
+        + '<span style="color:#888;">Want the chaos anyway? Open the console on the quiz page and run '
+        + '<code style="color:#f0c040;">learnTFSafeMode(false)</code></span>';
+      note.style.display = 'block';
+    } else if (localStorage.getItem('learntf_ctf_first') === '1') {
+      note.innerHTML = '&#128274; <b>Safe Mode</b> is active for you. Run '
+        + '<code style="color:#f0c040;">learnTFSafeMode(false)</code> in the quiz page console to disable it.';
+      note.style.display = 'block';
+    }
+  } catch (e) { /* localStorage blocked — nothing to do */ }
+})();
+</script>
 </body></html>
