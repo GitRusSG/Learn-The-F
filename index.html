@@ -400,6 +400,17 @@ Object.assign(quizzes, newQuizzes);
 // Merge science quizzes
 if (typeof scienceQuizzes !== 'undefined') Object.assign(quizzes, scienceQuizzes);
 
+// ============================================================
+// MASTER SWITCH for all the joke content.
+// false = disabled everywhere: no answer-box easter eggs, no console
+//         spam, no prank loading tips, no redirects, no scam screens.
+// true  = everything comes back exactly as it was.
+// Note: CTF flags 2 (console) and 5 (answer box) live in this layer, so
+// they are inactive while this is false. Flags 1, 3 and 4 (HTML source,
+// DOM attribute, CSS comment) are passive and still findable.
+// ============================================================
+const EASTER_EGGS = false;
+
 let currentQuiz = null;
 
 // Set an open folder's max-height to its real content height so nothing gets
@@ -789,9 +800,10 @@ function checkAll() {
       qDiv.style.borderColor = '#64ffda';
       qDiv.dataset.correct = 'true';
     } else {
-      // Easter eggs
-      const inputLower = input.toLowerCase().replace(/\s+/g,'');
-      if (input.endsWith('?')) {
+      // Easter eggs (skipped entirely when EASTER_EGGS is false, so a wrong
+      // answer always gets the normal explanation instead of a joke)
+      const inputLower = EASTER_EGGS ? input.toLowerCase().replace(/\s+/g,'') : '\u0000';
+      if (EASTER_EGGS && input.endsWith('?')) {
         fb.style.background = 'rgba(40,40,0,0.8)';
         fb.style.border = '1px solid #f0c040';
         fb.innerHTML = '❓ Why the LearnTF u asking me? I\'m not Google.';
@@ -865,13 +877,15 @@ function retryWrong() {
 init();
 
 // Console easter egg
-console.log('%c AMOL DESAI ', 'font-size:50px;color:red;font-weight:bold;');
-console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:16px;color:white;');
-console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:14px;color:#64ffda;');
-console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:12px;color:#f0c040;');
-console.log('%c Built with pain, suffering, and one very patient AI at 2am', 'font-size:11px;color:#0a0a1a;background:#0a0a1a;');
-console.log('%c FLAG{2_c0ns0l3_cr4wl3r}', 'font-size:1px;color:#0a0a1a;');
-console.log('%c Safe mode: learnTFSafeMode(true) = calm, learnTFSafeMode(false) = chaos, learnTFSafeMode() = reset to default', 'font-size:11px;color:#64ffda;');
+if (EASTER_EGGS) {
+  console.log('%c AMOL DESAI ', 'font-size:50px;color:red;font-weight:bold;');
+  console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:16px;color:white;');
+  console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:14px;color:#64ffda;');
+  console.log('%c AMOL DESAI AMOL DESAI AMOL DESAI AMOL DESAI', 'font-size:12px;color:#f0c040;');
+  console.log('%c Built with pain, suffering, and one very patient AI at 2am', 'font-size:11px;color:#0a0a1a;background:#0a0a1a;');
+  console.log('%c FLAG{2_c0ns0l3_cr4wl3r}', 'font-size:1px;color:#0a0a1a;');
+  console.log('%c Safe mode: learnTFSafeMode(true) = calm, learnTFSafeMode(false) = chaos, learnTFSafeMode() = reset to default', 'font-size:11px;color:#64ffda;');
+}
 
 // ============================================================
 // SAFE MODE
@@ -888,6 +902,8 @@ function getVisitCount() {
   return isNaN(n) ? 0 : n;
 }
 function isSafeMode() {
+  // Master switch off => always safe, nothing can re-enable the pranks.
+  if (!EASTER_EGGS) return true;
   // Manual override always wins (see learnTFSafeMode() below)
   const forced = localStorage.getItem('learntf_safe_override');
   if (forced === 'on') return true;
@@ -897,6 +913,10 @@ function isSafeMode() {
 }
 // Console helper so this is recoverable either way
 function learnTFSafeMode(on) {
+  if (!EASTER_EGGS) {
+    console.log('Easter eggs are disabled at the source (EASTER_EGGS = false), so safe mode cannot be turned off.');
+    return;
+  }
   if (on === undefined) {
     localStorage.removeItem('learntf_safe_override');
     console.log('Safe mode override cleared. Currently safe: ' + isSafeMode());

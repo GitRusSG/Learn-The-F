@@ -50,13 +50,10 @@ h1{color:#64ffda;text-align:center;letter-spacing:4px;}
     if (visits === 0) {
       localStorage.setItem('learntf_ctf_first', '1');
       note.innerHTML = '&#128274; You found this page before the quizzes, so <b>Safe Mode</b> is on for you: '
-        + 'the site will never redirect you, fake-scam you or blast audio.<br>'
-        + '<span style="color:#888;">Want the chaos anyway? Open the console on the quiz page and run '
-        + '<code style="color:#f0c040;">learnTFSafeMode(false)</code></span>';
+        + 'the site will never redirect you, fake-scam you or blast audio.';
       note.style.display = 'block';
     } else if (localStorage.getItem('learntf_ctf_first') === '1') {
-      note.innerHTML = '&#128274; <b>Safe Mode</b> is active for you. Run '
-        + '<code style="color:#f0c040;">learnTFSafeMode(false)</code> in the quiz page console to disable it.';
+      note.innerHTML = '&#128274; <b>Safe Mode</b> is active for you.';
       note.style.display = 'block';
     }
   } catch (e) { /* localStorage blocked — nothing to do */ }
