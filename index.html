@@ -127,6 +127,7 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 </html>
 <script src="quizdata-new.js"></script>
 <script src="sciencedata.js"></script>
+<script src="congruencedata.js"></script>
 <script>
 const quizzes = {
   "Unit 3: Algebraic Expressions": [
@@ -399,6 +400,8 @@ const quizzes = {
 Object.assign(quizzes, newQuizzes);
 // Merge science quizzes
 if (typeof scienceQuizzes !== 'undefined') Object.assign(quizzes, scienceQuizzes);
+// Merge congruence quizzes
+if (typeof congruenceQuizzes !== 'undefined') Object.assign(quizzes, congruenceQuizzes);
 
 // ============================================================
 // MASTER SWITCH for all the joke content.
@@ -432,7 +435,8 @@ function init() {
       "Unit 4: Quadratic Equations & Graphs": [],
       "Unit 5: Scales & Maps": [],
       "Unit 6: Direct & Inverse Proportion": [],
-      "Unit 7: Rate & Speed": []
+      "Unit 7: Rate & Speed": [],
+      "Unit 8: Congruence & Similarity": []
     },
     "Science": {
       "Electricity: Symbols, Formulas & Circuits": []
@@ -442,6 +446,7 @@ function init() {
   // Sort quizzes into folders
   Object.keys(quizzes).forEach(name => {
     if (name.startsWith("Sci ")) subjects["Science"]["Electricity: Symbols, Formulas & Circuits"].push(name);
+    else if (name.startsWith("Unit 8")) mathFolders["Unit 8: Congruence & Similarity"].push(name);
     else if (name.includes("Unit 3")) mathFolders["Unit 3: Algebraic Expressions"].push(name);
     else if (name.includes("Unit 4") || name.includes("4.")) mathFolders["Unit 4: Quadratic Equations & Graphs"].push(name);
     else if (name.includes("Unit 5")) mathFolders["Unit 5: Scales & Maps"].push(name);
@@ -507,6 +512,39 @@ function init() {
         <li><b>Speed-time graph:</b> gradient = acceleration, area under = distance</li>
         <li><b>Acceleration</b> = change in speed ÷ time</li>
         <li><b>Area of trapezium:</b> ½(a+b)×h (useful for speed-time graphs)</li>
+      </ul>`,
+    "Unit 8: Congruence & Similarity": `
+      <h3>Congruence</h3>
+      <p>Two figures are <b>congruent</b> if they have exactly the same shape AND size. They can be mapped onto each other by translation, rotation, or reflection.</p>
+      <h4>Congruence Tests (Triangles)</h4>
+      <ul>
+        <li><b>SSS:</b> 3 pairs of equal sides</li>
+        <li><b>SAS:</b> 2 sides + the <i>included</i> angle</li>
+        <li><b>ASA / AAS:</b> 2 angles + 1 side</li>
+        <li><b>RHS:</b> Right angle + Hypotenuse + 1 other side</li>
+      </ul>
+      <p style="color:#ff6464;">⚠️ SSA is NOT valid (ambiguous case).</p>
+      <h3>Similarity</h3>
+      <p>Two figures are <b>similar</b> if corresponding angles are equal AND corresponding sides are proportional.</p>
+      <h4>Similarity Tests (Triangles)</h4>
+      <ul>
+        <li><b>AA:</b> 2 pairs of equal angles</li>
+        <li><b>SSS:</b> All 3 pairs of sides proportional</li>
+        <li><b>SAS:</b> 2 pairs of sides proportional + included angle equal</li>
+      </ul>
+      <h4>Ratios</h4>
+      <ul>
+        <li>Linear scale factor = k</li>
+        <li><b>Area ratio</b> = k²</li>
+        <li><b>Volume ratio</b> = k³</li>
+        <li>Perimeter ratio = k (linear, not squared)</li>
+      </ul>
+      <h4>Key Reminders</h4>
+      <ul>
+        <li>The <b>order of vertices</b> in ΔABC ≡ ΔXYZ matters: A↔X, B↔Y, C↔Z.</li>
+        <li>Congruence ⊂ Similarity (all congruent figures are similar, but not vice versa).</li>
+        <li>AAA does NOT prove congruence — only similarity.</li>
+        <li>To <b>prove</b> congruence: state 3 facts with reasons, then conclude with the test used.</li>
       </ul>`,
     "Electricity: Symbols, Formulas & Circuits": `
       <h3>Symbols, Meanings & Units</h3>
