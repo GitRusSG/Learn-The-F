@@ -121,37 +121,35 @@ function sVoltmeter(bLabel, rLabel) {
   );
 }
 function sParallel2(bLabel, r1, r2) {
-  // Correct parallel circuit: battery on the left, two resistor branches
-  // between junction A (top) and junction B (bottom).
+  // Parallel circuit as a closed rectangular loop:
   //
-  //    A ──────┬──────── ─┐
-  //    |       |          |
-  //   batt   [R1]       [R2]
-  //    |       |          |
-  //    B ──────┴──────── ─┘
+  //      ┌────[R1]────┐
+  //      |            |
+  //    ─┤├─           |
+  //      |            |
+  //      └────[R2]────┘
   //
-  const left = 60, right = 340, top = 40, bot = 190;
-  const brX1 = 160, brX2 = 280; // x-positions of the two branches
-  const battCy = 115;
+  const jL = 80, jR = 320;    // left/right vertical rails
+  const top = 50, bot = 180;  // y of top/bottom branches
+  const midX = 200;            // resistor centre
+  const battCy = 115;          // battery centre y (on left rail)
   return sWrap(
-    // top rail: junction A across to both branches
-    sW(left, top, right, top) +
-    // bottom rail: junction B across to both branches
-    sW(left, bot, right, bot) +
-    // left vertical — split into two segments with a gap for the battery
-    // (no wire passes through the battery symbol itself)
-    sW(left, top, left, battCy - 24) +
-    sW(left, battCy + 24, left, bot) +
-    // branch 1 vertical wire
-    sW(brX1, top, brX1, bot) +
-    // branch 2 vertical wire
-    sW(brX2, top, brX2, bot) +
-    // resistors on the two branches
-    sResV(brX1, 115, r1) + sResV(brX2, 115, r2) +
-    // battery on the left rail (between the two wire segments)
-    sBatt(left, battCy, '') +
-    `<text x="${left}" y="${bot + 26}" text-anchor="middle" fill="${S_CY}" font-size="15" font-family="monospace">${bLabel}</text>`,
-    224
+    // left rail — split for battery
+    sW(jL, top, jL, battCy - 24) +
+    sW(jL, battCy + 24, jL, bot) +
+    // right rail — solid vertical
+    sW(jR, top, jR, bot) +
+    // top branch: left rail → resistor → right rail
+    sW(jL, top, midX - 30, top) +
+    sW(midX + 30, top, jR, top) +
+    // bottom branch: left rail → resistor → right rail
+    sW(jL, bot, midX - 30, bot) +
+    sW(midX + 30, bot, jR, bot) +
+    // resistors (horizontal)
+    sRes(midX, top, r1) + sRes(midX, bot, r2) +
+    // battery on the left rail
+    sBatt(jL, battCy, bLabel),
+    220
   );
 }
 function sLampCircuit(bLabel) {
