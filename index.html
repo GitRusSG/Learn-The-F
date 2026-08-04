@@ -594,41 +594,121 @@ function init() {
         <li><b>Memorise the three triangles</b> — V/IR, P/VI, Q/It. Nine formulas from three pictures.</li>
       </ul>`,
     "Electricity: Components & Concepts": `
-      <h3>Circuit Symbols</h3>
+      <h3>📖 What Each Quantity Means</h3>
+      <table style="width:100%;border-collapse:collapse;font-family:'Rajdhani',sans-serif;margin-bottom:16px;">
+        <tr style="color:#64ffda;text-align:left;"><th style="padding:8px;border-bottom:1px solid rgba(100,255,218,0.3);">Quantity</th><th style="padding:8px;border-bottom:1px solid rgba(100,255,218,0.3);">What it means (in plain English)</th><th style="padding:8px;border-bottom:1px solid rgba(100,255,218,0.3);">Unit</th></tr>
+        <tr><td style="padding:8px;color:#f0c040;"><b>Current (I)</b></td><td style="padding:8px;">The rate of flow of charge — how many coulombs pass a point each second.</td><td style="padding:8px;">Ampere (A)</td></tr>
+        <tr><td style="padding:8px;color:#f0c040;"><b>Voltage / P.D. (V)</b></td><td style="padding:8px;">The energy transferred per coulomb of charge — how much energy each coulomb carries between two points.</td><td style="padding:8px;">Volt (V)</td></tr>
+        <tr><td style="padding:8px;color:#f0c040;"><b>Resistance (R)</b></td><td style="padding:8px;">How much a component opposes current — the harder it is for charge to flow through.</td><td style="padding:8px;">Ohm (Ω)</td></tr>
+        <tr><td style="padding:8px;color:#f0c040;"><b>Charge (Q)</b></td><td style="padding:8px;">The "stuff" that flows — electrons carry it. Total charge = current × time.</td><td style="padding:8px;">Coulomb (C)</td></tr>
+        <tr><td style="padding:8px;color:#f0c040;"><b>Power (P)</b></td><td style="padding:8px;">How fast energy is used — a 100 W bulb uses energy twice as fast as a 50 W bulb.</td><td style="padding:8px;">Watt (W)</td></tr>
+        <tr><td style="padding:8px;color:#f0c040;"><b>EMF</b></td><td style="padding:8px;">The energy per coulomb <i>given</i> by the battery. It's the battery's "push".</td><td style="padding:8px;">Volt (V)</td></tr>
+      </table>
+
+      <h3>💡 What 1 of Each Unit Actually Means</h3>
+      <ul>
+        <li><b>1 Ampere</b> = 1 coulomb of charge flows past a point every second.</li>
+        <li><b>1 Volt</b> = each coulomb of charge transfers 1 joule of energy.</li>
+        <li><b>1 Ohm</b> = the resistance that allows 1 A to flow when 1 V is applied.</li>
+        <li><b>1 Watt</b> = 1 joule of energy transferred every second.</li>
+        <li><b>1 Coulomb</b> = the charge carried by 1 A of current in 1 second.</li>
+      </ul>
+
+      <h3>⚡ EMF vs Potential Difference</h3>
+      <table style="width:100%;border-collapse:collapse;font-family:'Rajdhani',sans-serif;margin-bottom:16px;">
+        <tr style="color:#64ffda;"><th style="padding:8px;border-bottom:1px solid rgba(100,255,218,0.3);text-align:left;">EMF</th><th style="padding:8px;border-bottom:1px solid rgba(100,255,218,0.3);text-align:left;">Potential Difference (P.D.)</th></tr>
+        <tr><td style="padding:8px;">Energy <b>given</b> to each coulomb by the source</td><td style="padding:8px;">Energy <b>used</b> by each coulomb in a component</td></tr>
+        <tr><td style="padding:8px;">At the battery</td><td style="padding:8px;">Across a resistor/lamp/etc.</td></tr>
+        <tr><td style="padding:8px;">The "push"</td><td style="padding:8px;">The "drop"</td></tr>
+      </table>
+      <p style="color:#aaa;font-size:0.9em;">Example: A 12 V battery gives 12 J to every coulomb. As that coulomb passes through a 12 V resistor, it loses all 12 J as heat.</p>
+
+      <h3>🔌 Circuit Symbols — What Each Component Does</h3>
       <table style="width:100%;border-collapse:collapse;font-family:'Rajdhani',sans-serif;margin-bottom:16px;">
         <tr style="color:#64ffda;text-align:left;"><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">Component</th><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">What it does</th></tr>
         <tr><td style="padding:6px;color:#f0c040;">Cell / Battery</td><td style="padding:6px;">Provides EMF — pushes charge around the circuit</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Switch</td><td style="padding:6px;">Opens or closes the circuit</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Resistor</td><td style="padding:6px;">Opposes current flow (converts energy to heat)</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Variable resistor</td><td style="padding:6px;">Adjustable resistance</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Lamp</td><td style="padding:6px;">Converts electrical energy to light</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Fuse</td><td style="padding:6px;">Melts if current too high (safety)</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Diode</td><td style="padding:6px;">Allows current in one direction only</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">LED</td><td style="padding:6px;">Emits light (one direction only)</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Thermistor</td><td style="padding:6px;">Resistance decreases as temperature increases</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">LDR</td><td style="padding:6px;">Resistance decreases as light increases</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Ammeter</td><td style="padding:6px;">Measures current (connected in <b>series</b>)</td></tr>
-        <tr><td style="padding:6px;color:#f0c040;">Voltmeter</td><td style="padding:6px;">Measures voltage (connected in <b>parallel</b>)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Switch</td><td style="padding:6px;">Opens (breaks) or closes (completes) the circuit</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Resistor</td><td style="padding:6px;">Opposes current flow — converts electrical energy to heat</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Variable resistor</td><td style="padding:6px;">Adjustable resistance (turn it to change how much current flows)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Lamp</td><td style="padding:6px;">Converts electrical energy to light (and heat)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Fuse</td><td style="padding:6px;">Safety — melts and breaks the circuit if current is too high</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Diode</td><td style="padding:6px;">One-way valve — allows current in one direction only</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">LED</td><td style="padding:6px;">Light Emitting Diode — glows when current flows (one direction)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Thermistor</td><td style="padding:6px;">Resistance goes DOWN when temperature goes UP</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">LDR</td><td style="padding:6px;">Light Dependent Resistor — resistance goes DOWN when light goes UP</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Ammeter</td><td style="padding:6px;">Measures current — must be in <b>SERIES</b></td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Voltmeter</td><td style="padding:6px;">Measures voltage — must be in <b>PARALLEL</b></td></tr>
       </table>
-      <h3>Current Direction</h3>
+
+      <h3>🔄 Current Direction</h3>
       <ul>
-        <li><b>Conventional current:</b> flows from + to − (the way we draw arrows)</li>
-        <li><b>Electron flow:</b> from − to + (what actually moves)</li>
-        <li>EMF = the "push" the battery gives to charge. Measured in volts.</li>
+        <li><b>Conventional current:</b> + → through circuit → − (the way we draw it)</li>
+        <li><b>Electron flow:</b> − → through circuit → + (what actually moves — opposite!)</li>
+        <li>We always use conventional current in diagrams and calculations.</li>
       </ul>
-      <h3>Series vs Parallel</h3>
-      <ul>
-        <li><b>Series:</b> one path → same current everywhere, voltages add up, resistances add up</li>
-        <li><b>Parallel:</b> multiple paths → same voltage across each branch, currents add up, 1/R total = 1/R₁ + 1/R₂</li>
-        <li>Series: one component fails → all stop. Parallel: one fails → others still work.</li>
-        <li>Household appliances use <b>parallel</b> so each gets full voltage and works independently.</li>
-      </ul>
-      <h3>Key Rules</h3>
-      <ul>
-        <li>Adding resistors in <b>series</b> increases total resistance → decreases current.</li>
-        <li>Adding resistors in <b>parallel</b> decreases total resistance → increases total current.</li>
-        <li>Two <i>equal</i> resistors in parallel → half the resistance of one.</li>
-      </ul>`
+
+      <h3>🔗 Series vs Parallel</h3>
+      <table style="width:100%;border-collapse:collapse;font-family:'Rajdhani',sans-serif;margin-bottom:16px;">
+        <tr style="color:#64ffda;"><th style="padding:8px;border-bottom:1px solid rgba(100,255,218,0.3);text-align:left;">Series</th><th style="padding:8px;border-bottom:1px solid rgba(100,255,218,0.3);text-align:left;">Parallel</th></tr>
+        <tr><td style="padding:8px;">One path only</td><td style="padding:8px;">Multiple paths (branches)</td></tr>
+        <tr><td style="padding:8px;">Current is the <b>SAME</b> everywhere</td><td style="padding:8px;">Voltage is the <b>SAME</b> across each branch</td></tr>
+        <tr><td style="padding:8px;">Voltages <b>ADD UP</b> to supply</td><td style="padding:8px;">Currents <b>ADD UP</b> to total</td></tr>
+        <tr><td style="padding:8px;">R<sub>total</sub> = R₁ + R₂ + R₃</td><td style="padding:8px;">1/R<sub>total</sub> = 1/R₁ + 1/R₂</td></tr>
+        <tr><td style="padding:8px;">One breaks → ALL stop</td><td style="padding:8px;">One breaks → others still work</td></tr>
+      </table>
+      <p style="color:#aaa;font-size:0.9em;">Your house uses <b>parallel</b> — each appliance gets full 230 V and you can switch them independently.</p>
+
+      <h3>📝 Worked Example (Series)</h3>
+      <div style="background:rgba(100,255,218,0.04);border:1px solid rgba(100,255,218,0.15);border-radius:8px;padding:14px;margin-bottom:14px;font-size:0.92em;">
+        <p style="color:#f0c040;margin:0 0 8px;"><b>Question:</b> A 12 V battery is connected to a 3 Ω and a 5 Ω resistor in series. Find the current and the voltage across each resistor.</p>
+        <p style="margin:4px 0;"><b>Step 1:</b> Total resistance = 3 + 5 = <b>8 Ω</b></p>
+        <p style="margin:4px 0;"><b>Step 2:</b> Current I = V/R = 12/8 = <b>1.5 A</b> (same everywhere in series)</p>
+        <p style="margin:4px 0;"><b>Step 3:</b> V across 3 Ω = IR = 1.5 × 3 = <b>4.5 V</b></p>
+        <p style="margin:4px 0;"><b>Step 4:</b> V across 5 Ω = IR = 1.5 × 5 = <b>7.5 V</b></p>
+        <p style="margin:4px 0;color:#64ffda;"><b>Check:</b> 4.5 + 7.5 = 12 V ✓ (adds up to supply)</p>
+      </div>
+
+      <h3>📝 Worked Example (Parallel)</h3>
+      <div style="background:rgba(100,255,218,0.04);border:1px solid rgba(100,255,218,0.15);border-radius:8px;padding:14px;margin-bottom:14px;font-size:0.92em;">
+        <p style="color:#f0c040;margin:0 0 8px;"><b>Question:</b> A 6 V battery is connected to two 12 Ω resistors in parallel. Find the total resistance, branch current, and total current.</p>
+        <p style="margin:4px 0;"><b>Step 1:</b> 1/R = 1/12 + 1/12 = 2/12 = 1/6 → R<sub>total</sub> = <b>6 Ω</b> (or shortcut: two equal → halve it)</p>
+        <p style="margin:4px 0;"><b>Step 2:</b> Each branch: I = V/R = 6/12 = <b>0.5 A</b></p>
+        <p style="margin:4px 0;"><b>Step 3:</b> Total I = 0.5 + 0.5 = <b>1 A</b></p>
+        <p style="margin:4px 0;color:#64ffda;"><b>Check:</b> I = V/R<sub>total</sub> = 6/6 = 1 A ✓</p>
+      </div>
+
+      <h3>📝 Worked Example (Power & Charge)</h3>
+      <div style="background:rgba(100,255,218,0.04);border:1px solid rgba(100,255,218,0.15);border-radius:8px;padding:14px;margin-bottom:14px;font-size:0.92em;">
+        <p style="color:#f0c040;margin:0 0 8px;"><b>Question:</b> A 230 V kettle draws 10 A. Find its power and the charge that flows in 2 minutes.</p>
+        <p style="margin:4px 0;"><b>Power:</b> P = VI = 230 × 10 = <b>2300 W</b></p>
+        <p style="margin:4px 0;"><b>Time:</b> 2 min = 120 s (always convert to seconds!)</p>
+        <p style="margin:4px 0;"><b>Charge:</b> Q = It = 10 × 120 = <b>1200 C</b></p>
+      </div>
+
+      <h3>🎯 How to Answer Electricity Questions (4-Step Method)</h3>
+      <ol style="line-height:2;">
+        <li><b>List</b> what you're GIVEN (V = ?, I = ?, R = ?, t = ?)</li>
+        <li><b>Identify</b> what you need to FIND</li>
+        <li><b>Pick</b> the formula that links them (use the triangles!)</li>
+        <li><b>Substitute</b> numbers in, then solve</li>
+      </ol>
+      <p style="color:#aaa;font-size:0.9em;">Always write the formula first → then substitute → then answer with units. Even if you get the wrong number, you get method marks for the formula.</p>
+
+      <h3>🧠 Which Formula to Pick?</h3>
+      <table style="width:100%;border-collapse:collapse;font-family:'Rajdhani',sans-serif;margin-bottom:16px;">
+        <tr style="color:#64ffda;text-align:left;"><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">You have...</th><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">You want...</th><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">Use...</th></tr>
+        <tr><td style="padding:6px;">V, R</td><td style="padding:6px;">I</td><td style="padding:6px;">I = V/R</td></tr>
+        <tr><td style="padding:6px;">I, R</td><td style="padding:6px;">V</td><td style="padding:6px;">V = IR</td></tr>
+        <tr><td style="padding:6px;">V, I</td><td style="padding:6px;">R</td><td style="padding:6px;">R = V/I</td></tr>
+        <tr><td style="padding:6px;">V, I</td><td style="padding:6px;">P</td><td style="padding:6px;">P = VI</td></tr>
+        <tr><td style="padding:6px;">P, I</td><td style="padding:6px;">V</td><td style="padding:6px;">V = P/I</td></tr>
+        <tr><td style="padding:6px;">P, V</td><td style="padding:6px;">I</td><td style="padding:6px;">I = P/V</td></tr>
+        <tr><td style="padding:6px;">I, t</td><td style="padding:6px;">Q</td><td style="padding:6px;">Q = It</td></tr>
+        <tr><td style="padding:6px;">Q, t</td><td style="padding:6px;">I</td><td style="padding:6px;">I = Q/t</td></tr>
+        <tr><td style="padding:6px;">Q, I</td><td style="padding:6px;">t</td><td style="padding:6px;">t = Q/I</td></tr>
+        <tr><td style="padding:6px;">I, R (no V)</td><td style="padding:6px;">P</td><td style="padding:6px;">P = I²R</td></tr>
+      </table>
+      <p style="color:#aaa;font-size:0.9em;"><b>Tip:</b> If you see the word "charge" → Q = It triangle. If you see "power" → P = VI triangle. If you see "resistance" → V = IR triangle.</p>`
   };
 
   // Render subjects -> units -> quizzes
