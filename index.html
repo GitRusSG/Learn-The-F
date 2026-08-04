@@ -34,6 +34,8 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 .teach-panel table td, .teach-panel table th { font-size: 0.95em; }
 /* cap diagram size but stay responsive on narrow screens */
 .prompt svg { width: 100%; max-width: 420px; height: auto; }
+/* Print cheatsheet */
+@media print { body * { visibility: hidden !important; } #cheatsheet-print, #cheatsheet-print * { visibility: visible !important; } #cheatsheet-print { position: fixed; top: 0; left: 0; width: 100%; background: #fff !important; color: #000 !important; padding: 20px !important; font-size: 11pt !important; } #cheatsheet-print h2, #cheatsheet-print h3 { color: #000 !important; } #cheatsheet-print table { border-collapse: collapse; width: 100%; margin-bottom: 10px; } #cheatsheet-print td, #cheatsheet-print th { border: 1px solid #999; padding: 4px 8px; color: #000 !important; } .no-print { display: none !important; } }
 .quiz-btn { padding: 18px; background: rgba(10,20,40,0.8); border: 1px solid rgba(100,255,218,0.12); border-radius: 12px; cursor: pointer; transition: all 0.3s; color: #aaa; font-size: 0.95em; text-align: left; font-family: 'Rajdhani', sans-serif; font-weight: 500; backdrop-filter: blur(5px); position: relative; overflow: hidden; }
 .quiz-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(100,255,218,0.05),transparent); transition:left 0.5s; }
 .quiz-btn:hover::before { left:100%; }
@@ -122,6 +124,43 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 <div id="score" style="text-align:center;font-size:1.5em;margin:20px 0;color:#64ffda;font-family:'Orbitron',monospace;"></div>
 <div id="prevScore" style="text-align:center;font-size:0.9em;color:#888;font-family:'Rajdhani',sans-serif;margin-bottom:20px;"></div>
 </div>
+</div>
+<!-- Print-only cheatsheet (always in DOM so print works regardless of which panel is open) -->
+<div id="cheatsheet-print" style="display:none;">
+<h2 style="text-align:center;margin-bottom:10px;">⚡ Electricity Cheatsheet — Learn TF</h2>
+<h3>Quantities &amp; Units</h3>
+<table><tr><th>Symbol</th><th>Quantity</th><th>Unit</th><th>Meaning</th></tr>
+<tr><td>V</td><td>Voltage / P.D.</td><td>Volt (V)</td><td>Energy per coulomb</td></tr>
+<tr><td>I</td><td>Current</td><td>Ampere (A)</td><td>Charge per second</td></tr>
+<tr><td>R</td><td>Resistance</td><td>Ohm (Ω)</td><td>Opposition to current</td></tr>
+<tr><td>P</td><td>Power</td><td>Watt (W)</td><td>Energy per second</td></tr>
+<tr><td>Q</td><td>Charge</td><td>Coulomb (C)</td><td>What flows</td></tr>
+<tr><td>t</td><td>Time</td><td>Second (s)</td><td>Duration</td></tr></table>
+<h3>Formulas (the 3 triangles + combined)</h3>
+<table><tr><th>Triangle</th><th>Formulas</th></tr>
+<tr><td>Ohm's Law (V/IR)</td><td>V = IR &nbsp;&nbsp; I = V/R &nbsp;&nbsp; R = V/I</td></tr>
+<tr><td>Power (P/VI)</td><td>P = VI &nbsp;&nbsp; V = P/I &nbsp;&nbsp; I = P/V</td></tr>
+<tr><td>Charge (Q/It)</td><td>Q = It &nbsp;&nbsp; I = Q/t &nbsp;&nbsp; t = Q/I</td></tr>
+<tr><td>Combined</td><td>P = I²R</td></tr></table>
+<h3>Series vs Parallel</h3>
+<table><tr><th></th><th>Series</th><th>Parallel</th></tr>
+<tr><td>Current</td><td>Same everywhere</td><td>Splits (adds up)</td></tr>
+<tr><td>Voltage</td><td>Adds up to supply</td><td>Same across each branch</td></tr>
+<tr><td>Resistance</td><td>R = R₁ + R₂</td><td>1/R = 1/R₁ + 1/R₂</td></tr>
+<tr><td>If one breaks</td><td>All stop</td><td>Rest still work</td></tr></table>
+<h3>Components</h3>
+<table><tr><th>Component</th><th>What it does</th></tr>
+<tr><td>Battery</td><td>Provides EMF (pushes charge)</td></tr>
+<tr><td>Resistor</td><td>Opposes current (→ heat)</td></tr>
+<tr><td>Fuse</td><td>Melts if current too high (safety)</td></tr>
+<tr><td>Diode</td><td>One direction only</td></tr>
+<tr><td>Thermistor</td><td>R decreases when temp increases</td></tr>
+<tr><td>LDR</td><td>R decreases when light increases</td></tr>
+<tr><td>Ammeter</td><td>Measures I (series)</td></tr>
+<tr><td>Voltmeter</td><td>Measures V (parallel)</td></tr></table>
+<h3>Answering Method</h3>
+<p>1. List what you're given &nbsp; 2. Identify the unknown &nbsp; 3. Pick the formula &nbsp; 4. Substitute and solve</p>
+<p style="font-size:0.9em;">Always write the formula first — you get method marks even if the arithmetic is wrong.</p>
 </div>
 </body>
 </html>
@@ -604,12 +643,13 @@ function init() {
         .slide-nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid rgba(100,255,218,0.1);margin-top:10px;}
         .slide-nav button{background:none;border:1px solid #64ffda;color:#64ffda;padding:8px 18px;border-radius:6px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:0.9em;transition:all 0.2s;}
         .slide-nav button:hover{background:rgba(100,255,218,0.1);}
-        .slide-dots{display:flex;gap:6px;}
+        .slide-dots{display:flex;gap:6px;align-items:center;}
         .slide-dot{width:8px;height:8px;border-radius:50%;background:#333;transition:background 0.3s;}
         .slide-dot.active{background:#64ffda;}
+        .slide ol,.slide ul{padding-left:20px;margin:0;}
+        .slide li{margin-bottom:4px;}
         .print-btn{display:block;margin:16px auto 0;background:linear-gradient(135deg,#64ffda,#00bfa5);color:#0a0a1a;border:none;padding:12px 28px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:0.8em;letter-spacing:2px;font-weight:bold;}
         .print-btn:hover{box-shadow:0 0 20px rgba(100,255,218,0.4);}
-        @media print{body *{visibility:hidden!important;} #cheatsheet-print,#cheatsheet-print *{visibility:visible!important;} #cheatsheet-print{position:fixed;top:0;left:0;width:100%;background:#fff!important;color:#000!important;padding:20px!important;font-size:11pt!important;} #cheatsheet-print h3{color:#000!important;border-bottom:1px solid #000;} #cheatsheet-print table{border:1px solid #333;} #cheatsheet-print td,#cheatsheet-print th{border:1px solid #ccc;padding:4px 8px;color:#000!important;} .no-print{display:none!important;}}
       </style>
       <div class="slide-tabs">
         <button class="slide-tab active" onclick="switchTeachTab(this,0)">⚡ Theory</button>
@@ -637,8 +677,7 @@ function init() {
         </div>
         <div class="slide-nav"><button onclick="moveSlide('teachTrack1','teachDeck1',-1)">◀ Prev</button><div class="slide-dots" id="dots1"></div><button onclick="moveSlide('teachTrack1','teachDeck1',1)">Next ▶</button></div>
       </div>
-      <button class="print-btn no-print" onclick="printCheatsheet()">🖨️ PRINT CHEATSHEET</button>
-      <div id="cheatsheet-print" style="display:none;"><h2 style="text-align:center;">⚡ Electricity Cheatsheet</h2><h3>Quantities</h3><table><tr><th>Sym</th><th>Name</th><th>Unit</th><th>Meaning</th></tr><tr><td>V</td><td>Voltage</td><td>V</td><td>Energy/coulomb</td></tr><tr><td>I</td><td>Current</td><td>A</td><td>Charge/second</td></tr><tr><td>R</td><td>Resistance</td><td>Ω</td><td>Opposition</td></tr><tr><td>P</td><td>Power</td><td>W</td><td>Energy/second</td></tr><tr><td>Q</td><td>Charge</td><td>C</td><td>What flows</td></tr><tr><td>t</td><td>Time</td><td>s</td><td>Duration</td></tr></table><h3>Formulas</h3><p>V=IR, I=V/R, R=V/I | P=VI, V=P/I, I=P/V | Q=It, I=Q/t, t=Q/I | P=I²R</p><h3>Series vs Parallel</h3><table><tr><th></th><th>Series</th><th>Parallel</th></tr><tr><td>I</td><td>Same</td><td>Splits</td></tr><tr><td>V</td><td>Adds up</td><td>Same</td></tr><tr><td>R</td><td>R₁+R₂</td><td>1/R=1/R₁+1/R₂</td></tr></table><h3>Method</h3><p>1.List givens 2.Find unknown 3.Pick formula 4.Substitute</p></div>`
+      <button class="print-btn no-print" onclick="printCheatsheet()">🖨️ PRINT CHEATSHEET</button>`
   };
 
   // Render subjects -> units -> quizzes
@@ -980,6 +1019,7 @@ if (EASTER_EGGS) {
 // ============================================================
 const deckState = {};
 function initDeck(tid, did) {
+  if (deckState[tid]) return; // already initialized
   const t = document.getElementById(tid); if (!t) return;
   const s = t.querySelectorAll('.slide');
   deckState[tid] = { current: 0, total: s.length };
@@ -1006,7 +1046,11 @@ function printCheatsheet() {
 }
 // Init decks after teach panel is rendered
 const _deckObs = new MutationObserver(() => {
-  if (document.getElementById('teachTrack0')) { initDeck('teachTrack0', 'dots0'); initDeck('teachTrack1', 'dots1'); _deckObs.disconnect(); }
+  const t0 = document.getElementById('teachTrack0');
+  if (t0 && !deckState['teachTrack0']) {
+    initDeck('teachTrack0', 'dots0');
+    initDeck('teachTrack1', 'dots1');
+  }
 });
 _deckObs.observe(document.body, { childList: true, subtree: true });
 
