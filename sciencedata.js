@@ -250,3 +250,194 @@ const scienceQuizzes = {
 ]
 
 };
+
+
+// ============================================================
+// ADDITIONAL SCIENCE QUIZZES — Circuit Symbols & Concepts
+// Understanding what symbols mean, what components do,
+// conventional current, EMF, push/pull etc.
+// ============================================================
+
+// --- Symbol drawing helpers ---------------------------------
+function sSymWrap(inner) {
+  return `<svg viewBox="0 0 200 100" width="180" style="display:block;margin:10px auto;background:${S_BG};border:1px solid rgba(100,255,218,0.2);border-radius:8px;">${inner}</svg>`;
+}
+// Cell symbol (single)
+function sSym_cell() {
+  return sSymWrap(
+    sW(30,50,80,50) + sW(120,50,170,50) +
+    `<line x1="88" y1="25" x2="88" y2="75" stroke="${S_CY}" stroke-width="3"/>` +
+    `<line x1="112" y1="35" x2="112" y2="65" stroke="${S_CY}" stroke-width="3"/>`
+  );
+}
+// Battery symbol (two cells)
+function sSym_battery() {
+  return sSymWrap(
+    sW(20,50,60,50) + sW(140,50,180,50) +
+    `<line x1="68" y1="25" x2="68" y2="75" stroke="${S_CY}" stroke-width="3"/>` +
+    `<line x1="82" y1="35" x2="82" y2="65" stroke="${S_CY}" stroke-width="3"/>` +
+    `<line x1="98" y1="25" x2="98" y2="75" stroke="${S_CY}" stroke-width="3"/>` +
+    `<line x1="112" y1="35" x2="112" y2="65" stroke="${S_CY}" stroke-width="3"/>`
+  );
+}
+// Switch (open)
+function sSym_switchOpen() {
+  return sSymWrap(
+    sW(30,50,80,50) + sW(130,50,170,50) +
+    `<circle cx="80" cy="50" r="4" fill="${S_CY}"/>` +
+    `<circle cx="130" cy="50" r="4" fill="${S_CY}"/>` +
+    `<line x1="80" y1="50" x2="120" y2="30" stroke="${S_CY}" stroke-width="2"/>`
+  );
+}
+// Switch (closed)
+function sSym_switchClosed() {
+  return sSymWrap(
+    sW(30,50,80,50) + sW(130,50,170,50) +
+    `<circle cx="80" cy="50" r="4" fill="${S_CY}"/>` +
+    `<circle cx="130" cy="50" r="4" fill="${S_CY}"/>` +
+    `<line x1="80" y1="50" x2="130" y2="50" stroke="${S_CY}" stroke-width="2"/>`
+  );
+}
+// Resistor symbol
+function sSym_resistor() {
+  return sSymWrap(
+    sW(30,50,70,50) + sW(130,50,170,50) +
+    `<rect x="70" y="36" width="60" height="28" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>`
+  );
+}
+// Variable resistor (resistor + arrow)
+function sSym_varResistor() {
+  return sSymWrap(
+    sW(30,50,70,50) + sW(130,50,170,50) +
+    `<rect x="70" y="36" width="60" height="28" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>` +
+    `<line x1="80" y1="70" x2="120" y2="30" stroke="${S_CY}" stroke-width="2"/>` +
+    `<polygon points="120,30 112,38 118,40" fill="${S_CY}"/>`
+  );
+}
+// Lamp symbol
+function sSym_lamp() {
+  return sSymWrap(
+    sW(30,50,66,50) + sW(134,50,170,50) +
+    `<circle cx="100" cy="50" r="16" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>` +
+    sW(89,39,111,61) + sW(89,61,111,39)
+  );
+}
+// Ammeter
+function sSym_ammeter() {
+  return sSymWrap(
+    sW(30,50,68,50) + sW(132,50,170,50) +
+    `<circle cx="100" cy="50" r="18" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>` +
+    `<text x="100" y="56" text-anchor="middle" fill="${S_CY}" font-size="18" font-family="monospace">A</text>`
+  );
+}
+// Voltmeter
+function sSym_voltmeter() {
+  return sSymWrap(
+    sW(30,50,68,50) + sW(132,50,170,50) +
+    `<circle cx="100" cy="50" r="18" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>` +
+    `<text x="100" y="56" text-anchor="middle" fill="${S_CY}" font-size="18" font-family="monospace">V</text>`
+  );
+}
+// Fuse
+function sSym_fuse() {
+  return sSymWrap(
+    sW(30,50,70,50) + sW(130,50,170,50) +
+    `<rect x="70" y="40" width="60" height="20" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>` +
+    sW(75,50,125,50)
+  );
+}
+// Diode
+function sSym_diode() {
+  return sSymWrap(
+    sW(30,50,80,50) + sW(120,50,170,50) +
+    `<polygon points="80,35 80,65 115,50" fill="none" stroke="${S_CY}" stroke-width="2"/>` +
+    `<line x1="115" y1="35" x2="115" y2="65" stroke="${S_CY}" stroke-width="2"/>`
+  );
+}
+// LED
+function sSym_LED() {
+  return sSymWrap(
+    sW(30,50,80,50) + sW(120,50,170,50) +
+    `<polygon points="80,35 80,65 115,50" fill="none" stroke="${S_CY}" stroke-width="2"/>` +
+    `<line x1="115" y1="35" x2="115" y2="65" stroke="${S_CY}" stroke-width="2"/>` +
+    `<line x1="105" y1="25" x2="115" y2="15" stroke="${S_CY}" stroke-width="1.5"/>` +
+    `<polygon points="115,15 110,20 113,22" fill="${S_CY}"/>` +
+    `<line x1="95" y1="28" x2="105" y2="18" stroke="${S_CY}" stroke-width="1.5"/>` +
+    `<polygon points="105,18 100,23 103,25" fill="${S_CY}"/>`
+  );
+}
+// Thermistor
+function sSym_thermistor() {
+  return sSymWrap(
+    sW(30,50,70,50) + sW(130,50,170,50) +
+    `<rect x="70" y="36" width="60" height="28" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>` +
+    `<text x="100" y="54" text-anchor="middle" fill="${S_CY}" font-size="11" font-family="monospace">−t°−</text>`
+  );
+}
+// LDR
+function sSym_LDR() {
+  return sSymWrap(
+    sW(30,50,70,50) + sW(130,50,170,50) +
+    `<rect x="70" y="36" width="60" height="28" fill="${S_BG}" stroke="${S_CY}" stroke-width="2"/>` +
+    `<line x1="75" y1="28" x2="90" y2="18" stroke="${S_CY}" stroke-width="1.5"/>` +
+    `<polygon points="90,18 85,23 88,25" fill="${S_CY}"/>` +
+    `<line x1="85" y1="31" x2="100" y2="21" stroke="${S_CY}" stroke-width="1.5"/>` +
+    `<polygon points="100,21 95,26 98,28" fill="${S_CY}"/>`
+  );
+}
+
+// ============================================================
+// NEW QUIZZES
+// ============================================================
+
+scienceQuizzes["Sci 2.1: Circuit Symbols — Identify the Component"] = [
+  { q: "Name this component:" + sSym_cell(), answer: "Cell", accepts: ["cell", "battery cell", "single cell"], hint: "One long line and one short line.", explanation: "A cell is a single unit that provides EMF (voltage). Long line = positive terminal, short line = negative terminal." },
+  { q: "Name this component:" + sSym_battery(), answer: "Battery", accepts: ["battery", "battery pack", "cells"], hint: "Multiple cells joined together.", explanation: "A battery is two or more cells connected in series. More cells = higher total voltage." },
+  { q: "Name this component:" + sSym_switchOpen(), answer: "Open switch", accepts: ["open switch", "switch (open)", "switch open", "switch"], hint: "It has a gap — current cannot flow.", explanation: "An open switch has a break in the circuit. No current flows when the switch is open." },
+  { q: "Name this component:" + sSym_resistor(), answer: "Resistor", accepts: ["resistor", "fixed resistor"], hint: "A rectangle on the wire.", explanation: "A resistor opposes the flow of current. It converts electrical energy into heat." },
+  { q: "Name this component:" + sSym_varResistor(), answer: "Variable resistor", accepts: ["variable resistor", "rheostat", "potentiometer"], hint: "Resistor with an arrow through it.", explanation: "A variable resistor (rheostat) can be adjusted to change the resistance in a circuit." },
+  { q: "Name this component:" + sSym_lamp(), answer: "Lamp", accepts: ["lamp", "bulb", "light bulb", "filament lamp"], hint: "Circle with a cross inside.", explanation: "A lamp converts electrical energy into light (and heat). The cross represents the filament." },
+  { q: "Name this component:" + sSym_ammeter(), answer: "Ammeter", accepts: ["ammeter"], hint: "Circle with the letter A.", explanation: "An ammeter measures current (in amperes). It is connected in series." },
+  { q: "Name this component:" + sSym_voltmeter(), answer: "Voltmeter", accepts: ["voltmeter"], hint: "Circle with the letter V.", explanation: "A voltmeter measures voltage (potential difference). It is connected in parallel." },
+  { q: "Name this component:" + sSym_fuse(), answer: "Fuse", accepts: ["fuse"], hint: "Rectangle with a wire through the middle.", explanation: "A fuse is a safety device. It melts and breaks the circuit if the current is too high." },
+  { q: "Name this component:" + sSym_diode(), answer: "Diode", accepts: ["diode"], hint: "Triangle pointing at a bar — current flows in only one direction.", explanation: "A diode allows current to flow in one direction only (in the direction the triangle points)." }
+];
+
+scienceQuizzes["Sci 2.2: Circuit Symbols — What They Do"] = [
+  { q: "What does a <b>battery</b> do in a circuit?", answer: "Provides EMF (pushes charge around the circuit)", accepts: ["provides emf", "pushes current", "pushes charge", "provides voltage", "provides energy", "supplies energy", "supplies voltage"], hint: "It's the 'push' that drives everything.", explanation: "A battery provides electromotive force (EMF). It 'pushes' charge carriers around the circuit by converting chemical energy into electrical energy." },
+  { q: "What does a <b>resistor</b> do?", answer: "Opposes the flow of current", accepts: ["opposes current", "opposes the flow of current", "resists current", "reduces current", "limits current"], hint: "It 'resists' the current.", explanation: "A resistor opposes/limits the flow of current. Energy is transferred to heat as charge flows through it." },
+  { q: "What does a <b>switch</b> do?", answer: "Opens or closes the circuit", accepts: ["opens or closes the circuit", "breaks or completes the circuit", "controls current flow", "turns circuit on or off", "makes or breaks circuit"], hint: "It either lets current flow or stops it.", explanation: "A switch opens (breaks) or closes (completes) a circuit, controlling whether current can flow." },
+  { q: "What does a <b>fuse</b> do?", answer: "Breaks the circuit if current is too high", accepts: ["breaks the circuit if current is too high", "protects circuit from overcurrent", "melts if current too high", "safety device", "breaks circuit when overloaded"], hint: "It's a safety device that melts.", explanation: "A fuse contains a thin wire that melts if the current exceeds a safe level, breaking the circuit to prevent damage or fire." },
+  { q: "What does a <b>diode</b> do?", answer: "Allows current to flow in one direction only", accepts: ["allows current in one direction", "allows current to flow in one direction only", "one way current", "one direction only"], hint: "Think of it as a one-way valve.", explanation: "A diode only allows conventional current to flow in one direction — from the anode (triangle) to the cathode (bar)." },
+  { q: "What does an <b>LED</b> do?", answer: "Emits light when current flows through it (one direction only)", accepts: ["emits light", "produces light", "lights up", "gives off light when current flows", "light emitting diode"], hint: "It's a diode that glows.", explanation: "An LED (Light Emitting Diode) emits light when forward-biased. Like a normal diode, it only works in one direction." },
+  { q: "What does a <b>thermistor</b> do?", answer: "Its resistance changes with temperature", accepts: ["resistance changes with temperature", "resistance decreases as temperature increases", "temperature dependent resistor", "senses temperature"], hint: "Its name contains 'therm' (heat).", explanation: "A thermistor's resistance decreases as temperature increases (for NTC type). Used in temperature sensors." },
+  { q: "What does an <b>LDR</b> do?", answer: "Its resistance changes with light intensity", accepts: ["resistance changes with light", "resistance decreases as light increases", "light dependent resistor", "senses light"], hint: "LDR = Light Dependent Resistor.", explanation: "An LDR's resistance decreases as light intensity increases. Used in light-sensing circuits (e.g. automatic streetlights)." },
+  { q: "How must an <b>ammeter</b> be connected?", answer: "In series", accepts: ["in series", "series"], hint: "All the current must flow through it to be measured.", explanation: "An ammeter MUST be in series so that all the current passes through it. It has very low resistance so it doesn't affect the circuit." },
+  { q: "How must a <b>voltmeter</b> be connected?", answer: "In parallel", accepts: ["in parallel", "parallel"], hint: "It measures the difference between two points.", explanation: "A voltmeter MUST be in parallel across the component it measures. It has very high resistance so minimal current is diverted through it." }
+];
+
+scienceQuizzes["Sci 2.3: Current, EMF & Energy Concepts"] = [
+  { q: "What is <b>conventional current</b>? Which direction does it flow?", answer: "From positive to negative terminal", accepts: ["from positive to negative", "positive to negative", "from + to -", "+ to -"], hint: "It's the historical direction chosen before electrons were discovered.", explanation: "Conventional current flows from the positive terminal of the battery, through the circuit, to the negative terminal. (Actual electron flow is the opposite.)" },
+  { q: "What is <b>electron flow</b>? Which direction?", answer: "From negative to positive terminal", accepts: ["from negative to positive", "negative to positive", "from - to +", "- to +"], hint: "Electrons are negative, so they are pushed away from the negative terminal.", explanation: "Electrons flow from the negative terminal to the positive terminal — the opposite direction to conventional current." },
+  { q: "What does <b>EMF</b> stand for?", answer: "Electromotive force", accepts: ["electromotive force", "electro motive force"], hint: "It's the 'push' that a battery provides.", explanation: "EMF = Electromotive Force. It is the energy per unit charge supplied by the battery (measured in volts)." },
+  { q: "Is EMF actually a force?", answer: "No", accepts: ["no", "n", "false"], hint: "Despite its name...", explanation: "No. Despite the name, EMF is not a force — it is a voltage (energy per unit charge, measured in volts). The name is historical." },
+  { q: "What happens to current at a junction where a wire splits into two branches?", answer: "It splits (the total current in = total current out)", accepts: ["it splits", "splits", "divides", "current in equals current out", "conserved"], hint: "Think of water splitting at a fork in a pipe.", explanation: "At a junction, current splits between branches. By Kirchhoff's Current Law: total current in = total current out. Current is conserved." },
+  { q: "In a series circuit, the current is ______ everywhere.", answer: "the same", accepts: ["the same", "same", "constant", "equal"], hint: "There is only one path for current to flow.", explanation: "In series, all components share the same single path, so current is identical at every point." },
+  { q: "In a parallel circuit, the voltage across each branch is ______.", answer: "the same", accepts: ["the same", "same", "equal", "constant"], hint: "Each branch is connected directly across the battery.", explanation: "In parallel, each branch is connected directly to the supply terminals, so each branch has the same voltage across it." },
+  { q: "What does 'potential difference' mean in simple terms?", answer: "The energy transferred per unit charge between two points", accepts: ["energy per unit charge", "energy transferred per unit charge", "voltage", "difference in energy per coulomb", "energy difference per charge"], hint: "It's another name for voltage.", explanation: "Potential difference (p.d.) = the energy transferred per coulomb of charge as it moves between two points. Unit: volt (V). 1 V = 1 J/C." },
+  { q: "A battery 'pushes' charge. What does a resistor do to the charge?", answer: "It takes energy from the charge (converts it to heat)", accepts: ["takes energy", "removes energy", "converts energy to heat", "transfers energy to heat", "dissipates energy", "uses up energy"], hint: "The charge loses energy as it passes through.", explanation: "A resistor takes energy FROM the moving charges and converts it into heat. The charges slow down (higher resistance = more energy lost per coulomb)." },
+  { q: "If a 12 V battery is connected to a single resistor, what is the voltage across the resistor?", answer: "12 V", accepts: ["12", "12v", "12 v", "12 volt", "12 volts"], hint: "In a simple single-loop circuit, the resistor gets all the supply voltage.", explanation: "With only one component, the full supply EMF appears across it: 12 V. (Energy given to each coulomb by the battery = energy taken from each coulomb by the resistor.)" }
+];
+
+scienceQuizzes["Sci 2.4: Series vs Parallel — Rules"] = [
+  { q: "In a <b>series</b> circuit with a 12 V battery and two identical lamps, what is the voltage across each lamp?", answer: "6 V", accepts: ["6", "6v", "6 v", "6 volt"], hint: "The voltage divides equally between identical components.", explanation: "In series, voltages add up to the supply. Two identical lamps share equally: 12/2 = 6 V each." },
+  { q: "In a <b>parallel</b> circuit with a 9 V battery and two branches, what is the voltage across each branch?", answer: "9 V", accepts: ["9", "9v", "9 v", "9 volt"], hint: "Each branch is directly across the battery.", explanation: "In parallel, every branch has the full supply voltage: 9 V." },
+  { q: "A series circuit has a 6 V battery and a current of 2 A. A second identical resistor is added in series. What happens to the current?", answer: "It halves (becomes 1 A)", accepts: ["halves", "it halves", "decreases", "1 a", "1a", "1", "becomes 1 a", "goes down"], hint: "More resistance in series = less current.", explanation: "Adding a second identical resistor doubles the total resistance. I = V/R, so current halves: 6/(2R) → from 2 A to 1 A." },
+  { q: "A parallel circuit has a 12 V battery and one 6 Ω resistor. A second 6 Ω resistor is added in parallel. What happens to the total current?", answer: "It doubles", accepts: ["doubles", "it doubles", "increases", "goes up"], hint: "Each branch draws its own current independently.", explanation: "Each 6 Ω branch draws 12/6 = 2 A. With two branches: total = 2 + 2 = 4 A (doubled from the original 2 A)." },
+  { q: "What happens to the other lamps if one lamp blows in a <b>series</b> circuit?", answer: "They all go out", accepts: ["they all go out", "all go out", "all stop working", "circuit breaks", "all off"], hint: "There is only one path for current.", explanation: "In series there is only one path. If one lamp blows, the circuit is broken and NO current flows — all lamps go out." },
+  { q: "What happens to the other lamps if one lamp blows in a <b>parallel</b> circuit?", answer: "The others stay on", accepts: ["others stay on", "the others stay on", "they stay on", "nothing", "rest stay lit", "still work"], hint: "Each branch is independent.", explanation: "In parallel, each branch is independent. If one lamp blows, current still flows through the other branches — they stay on." },
+  { q: "Three resistors of 2 Ω, 3 Ω and 5 Ω are connected in series. Find the total resistance.", answer: "10 Ω", accepts: ["10", "10 ohm", "10ohm", "10Ω"], hint: "In series, resistances simply add.", explanation: "R_total = 2 + 3 + 5 = 10 Ω." },
+  { q: "Two resistors of 4 Ω are connected in parallel. Find the total resistance.", answer: "2 Ω", accepts: ["2", "2 ohm", "2ohm", "2Ω"], hint: "Two equal resistors in parallel = half of one.", explanation: "1/R = 1/4 + 1/4 = 2/4 = 1/2. R = 2 Ω. (Or shortcut: two equal resistors in parallel → halve it.)" },
+  { q: "Why are household appliances connected in <b>parallel</b>, not series?", answer: "So each gets full voltage and can be switched on/off independently", accepts: ["each gets full voltage", "independent", "can be switched independently", "full voltage", "each works independently"], hint: "Think about what happens when you turn off your TV — does your fridge turn off too?", explanation: "Parallel ensures: (1) each appliance gets the full mains voltage, (2) they can be switched on/off independently, (3) if one fails the others still work." },
+  { q: "In a series circuit, which quantity is the SAME through every component: current or voltage?", answer: "Current", accepts: ["current", "i", "the current"], hint: "There's only one path for charge to flow.", explanation: "Current is the same everywhere in a series circuit (one path). Voltage divides between components." }
+];

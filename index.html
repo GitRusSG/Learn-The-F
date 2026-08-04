@@ -439,13 +439,15 @@ function init() {
       "Unit 8: Congruence & Similarity": []
     },
     "Science": {
-      "Electricity: Symbols, Formulas & Circuits": []
+      "Electricity: Symbols, Formulas & Circuits": [],
+      "Electricity: Components & Concepts": []
     }
   };
   const mathFolders = subjects["Mathematics"];
   // Sort quizzes into folders
   Object.keys(quizzes).forEach(name => {
-    if (name.startsWith("Sci ")) subjects["Science"]["Electricity: Symbols, Formulas & Circuits"].push(name);
+    if (name.startsWith("Sci 1")) subjects["Science"]["Electricity: Symbols, Formulas & Circuits"].push(name);
+    else if (name.startsWith("Sci 2")) subjects["Science"]["Electricity: Components & Concepts"].push(name);
     else if (name.startsWith("Unit 8")) mathFolders["Unit 8: Congruence & Similarity"].push(name);
     else if (name.includes("Unit 3")) mathFolders["Unit 3: Algebraic Expressions"].push(name);
     else if (name.includes("Unit 4") || name.includes("4.")) mathFolders["Unit 4: Quadratic Equations & Graphs"].push(name);
@@ -590,6 +592,42 @@ function init() {
         <li><b>Write the formula, then substitute, then solve.</b> You get method marks even if the arithmetic slips.</li>
         <li><b>Always write the unit.</b> A bare number loses marks.</li>
         <li><b>Memorise the three triangles</b> — V/IR, P/VI, Q/It. Nine formulas from three pictures.</li>
+      </ul>`,
+    "Electricity: Components & Concepts": `
+      <h3>Circuit Symbols</h3>
+      <table style="width:100%;border-collapse:collapse;font-family:'Rajdhani',sans-serif;margin-bottom:16px;">
+        <tr style="color:#64ffda;text-align:left;"><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">Component</th><th style="padding:6px;border-bottom:1px solid rgba(100,255,218,0.3);">What it does</th></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Cell / Battery</td><td style="padding:6px;">Provides EMF — pushes charge around the circuit</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Switch</td><td style="padding:6px;">Opens or closes the circuit</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Resistor</td><td style="padding:6px;">Opposes current flow (converts energy to heat)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Variable resistor</td><td style="padding:6px;">Adjustable resistance</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Lamp</td><td style="padding:6px;">Converts electrical energy to light</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Fuse</td><td style="padding:6px;">Melts if current too high (safety)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Diode</td><td style="padding:6px;">Allows current in one direction only</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">LED</td><td style="padding:6px;">Emits light (one direction only)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Thermistor</td><td style="padding:6px;">Resistance decreases as temperature increases</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">LDR</td><td style="padding:6px;">Resistance decreases as light increases</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Ammeter</td><td style="padding:6px;">Measures current (connected in <b>series</b>)</td></tr>
+        <tr><td style="padding:6px;color:#f0c040;">Voltmeter</td><td style="padding:6px;">Measures voltage (connected in <b>parallel</b>)</td></tr>
+      </table>
+      <h3>Current Direction</h3>
+      <ul>
+        <li><b>Conventional current:</b> flows from + to − (the way we draw arrows)</li>
+        <li><b>Electron flow:</b> from − to + (what actually moves)</li>
+        <li>EMF = the "push" the battery gives to charge. Measured in volts.</li>
+      </ul>
+      <h3>Series vs Parallel</h3>
+      <ul>
+        <li><b>Series:</b> one path → same current everywhere, voltages add up, resistances add up</li>
+        <li><b>Parallel:</b> multiple paths → same voltage across each branch, currents add up, 1/R total = 1/R₁ + 1/R₂</li>
+        <li>Series: one component fails → all stop. Parallel: one fails → others still work.</li>
+        <li>Household appliances use <b>parallel</b> so each gets full voltage and works independently.</li>
+      </ul>
+      <h3>Key Rules</h3>
+      <ul>
+        <li>Adding resistors in <b>series</b> increases total resistance → decreases current.</li>
+        <li>Adding resistors in <b>parallel</b> decreases total resistance → increases total current.</li>
+        <li>Two <i>equal</i> resistors in parallel → half the resistance of one.</li>
       </ul>`
   };
 
