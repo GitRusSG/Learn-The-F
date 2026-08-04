@@ -808,6 +808,8 @@ function normalize(s) {
     .replace(/\s+/g,'')
     .replace(/\*/g,'')
     .replace(/×/g,'')
+    .replace(/(\d)x(\d)/g,'$1$2')         // "3x5" → "35" (digit × digit)
+    .replace(/([a-z])x([a-z])/g,'$1$2')   // "ixr" → "ir" (letter × letter, after toLowerCase)
     .replace(/⁰/g,'^0')
     .replace(/¹/g,'^1')
     .replace(/²/g,'^2')
