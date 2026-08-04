@@ -455,3 +455,50 @@ scienceQuizzes["Sci 2.5: Definitions — What Does It All Mean?"] = [
   { q: "What does <b>1 volt</b> mean?", answer: "1 joule of energy per coulomb of charge", accepts: ["1 joule per coulomb", "1 j per coulomb", "1j/c", "one joule per coulomb", "1 joule of energy per coulomb"], hint: "It links voltage to energy and charge.", explanation: "1 V means each coulomb of charge transfers 1 joule of energy. V = W/Q, so 1 V = 1 J/C." },
   { q: "What does <b>1 ohm</b> mean?", answer: "The resistance when 1 V drives a current of 1 A", accepts: ["1 volt drives 1 amp", "when 1v causes 1a", "1v per 1a", "resistance of 1v/1a", "v/a"], hint: "It links resistance to voltage and current (Ohm's Law).", explanation: "1 Ω means that a potential difference of 1 V across the component causes a current of 1 A to flow. R = V/I, so 1 Ω = 1 V/A." }
 ];
+
+
+scienceQuizzes["Sci 2.6: Potential Difference In Depth"] = [
+  { q: "What is another name for <b>potential difference</b>?", answer: "Voltage", accepts: ["voltage", "p.d.", "pd", "electromotive force"], hint: "The everyday word we use for it.", explanation: "Potential difference is commonly called voltage. Symbol: V. Unit: volt (V)." },
+  { q: "Potential difference is the energy transferred per unit ______.", answer: "charge", accepts: ["charge", "coulomb"], hint: "Energy per ______ (the thing that flows).", explanation: "P.D. = energy transferred per unit charge. V = W/Q (joules per coulomb)." },
+  { q: "If 60 J of energy is transferred when 5 C of charge passes through a resistor, what is the p.d.?", answer: "12 V", accepts: ["12", "12v", "12 v", "12 volt"], hint: "V = W/Q = 60/5.", explanation: "V = W/Q = 60 J / 5 C = 12 V." },
+  { q: "A lamp has a p.d. of 6 V across it and 3 C of charge flows through. How much energy is transferred?", answer: "18 J", accepts: ["18", "18j", "18 j", "18 joules"], hint: "W = V × Q.", explanation: "W = VQ = 6 × 3 = 18 J." },
+  { q: "In a series circuit with a 9 V battery, one resistor has 4 V across it. What is the p.d. across the other?", answer: "5 V", accepts: ["5", "5v", "5 v", "5 volt"], hint: "In series, voltages add up to the supply.", explanation: "Voltages in series add to the EMF: 4 + V₂ = 9, so V₂ = 5 V." },
+  { q: "Where is the p.d. largest — across a large resistance or a small resistance (same current)?", answer: "Large resistance", accepts: ["large resistance", "larger resistance", "large", "bigger resistance", "higher resistance"], hint: "V = IR. If I is the same, bigger R means bigger V.", explanation: "V = IR. With the same current, the larger resistance has the larger voltage drop across it." },
+  { q: "What does a voltmeter actually measure?", answer: "The energy difference per coulomb between two points", accepts: ["energy difference per coulomb", "potential difference", "voltage across a component", "energy transferred per coulomb"], hint: "It compares the energy of charge at one point to another.", explanation: "A voltmeter measures how much energy each coulomb of charge loses (or gains) between the two points it is connected across." },
+  { q: "A 3 V battery is connected to two lamps in series. Lamp A has 1.2 V across it. What is the p.d. across Lamp B?", answer: "1.8 V", accepts: ["1.8", "1.8v", "1.8 v", "1.8 volt"], hint: "3 − 1.2 = ?", explanation: "In series: V_A + V_B = EMF. V_B = 3 − 1.2 = 1.8 V." },
+  { q: "If the p.d. across a component is 0 V, what does that tell you?", answer: "No energy is being transferred by that component", accepts: ["no energy transferred", "no energy is transferred", "no energy used", "it does nothing", "zero energy transfer"], hint: "V = 0 means 0 joules per coulomb.", explanation: "0 V means charge passes through without losing or gaining energy — the component isn't doing any work (e.g. a wire with negligible resistance)." },
+  { q: "Why is p.d. measured in <b>parallel</b> (not series)?", answer: "Because it measures the difference between two points on either side of the component", accepts: ["measures difference between two points", "compares two points", "needs to be across the component", "it compares energy at two points"], hint: "You need to connect to BOTH sides of the component at the same time.", explanation: "P.D. is the energy difference between two points. The voltmeter must touch both sides of the component simultaneously, which means it sits in parallel across it." }
+];
+
+scienceQuizzes["Sci 2.7: Answering Skills — How to Tackle Electricity Questions"] = [
+  { q: "You are given V and R and asked to find I. Which formula do you use?", answer: "I = V/R", accepts: ["i=v/r", "i = v/r", "i=v÷r", "v/r"], hint: "Cover I on the Ohm's Law triangle.", explanation: "Given V and R, use Ohm's Law: I = V/R. Always write the formula first, then substitute." },
+  { q: "You are given I and t and asked to find Q. Which formula do you use?", answer: "Q = It", accepts: ["q=it", "q = it", "q=i×t", "it"], hint: "Cover Q on the Charge triangle.", explanation: "Given I and t, use Q = It. Remember t must be in seconds." },
+  { q: "You are given P and I and asked to find V. Which formula do you use?", answer: "V = P/I", accepts: ["v=p/i", "v = p/i", "v=p÷i", "p/i"], hint: "Cover V on the Power triangle.", explanation: "Given P and I, use V = P/I from the Power triangle (P = VI rearranged)." },
+  { q: "A question gives you V = 12 V and I = 3 A and asks for power. What TWO steps do you write?",
+    answer: "P = VI, P = 12 × 3 = 36 W",
+    accepts: ["p=vi,p=12×3=36w", "p=vi, p=36w", "p = vi = 12 x 3 = 36 w", "36", "36w", "36 w"],
+    hint: "Step 1: write the formula. Step 2: substitute and calculate.",
+    explanation: "Step 1: Write formula → P = VI. Step 2: Substitute → P = 12 × 3 = 36 W. Always show both steps for full marks." },
+  { q: "You see the word 'charge' in a question. Which triangle should you think of?", answer: "Q/It triangle (Charge triangle)", accepts: ["charge triangle", "q/it", "qit", "q = it triangle", "charge"], hint: "Q, I and t live together.", explanation: "When you see 'charge' (Q), think of the Charge triangle: Q = It, I = Q/t, t = Q/I." },
+  { q: "A question says 'the lamp is rated at 60 W'. What does 'rated' mean?", answer: "The power it uses under normal operating conditions", accepts: ["power it uses normally", "normal operating power", "power at normal voltage", "its designed power"], hint: "It's the intended/designed value.", explanation: "'Rated 60 W' means the lamp is designed to use 60 watts when connected to its correct voltage. Use this as P in calculations." },
+  { q: "What is the FIRST thing you should do when you see a circuit calculation question?",
+    answer: "Identify what you are given (V, I, R, P, Q, t) and what you need to find",
+    accepts: ["identify given and find", "list given quantities", "write down known values", "identify what you know and what you need", "list knowns"],
+    hint: "Before you can pick a formula, you need to know what you have.",
+    explanation: "Step 1: List the KNOWN values (with units). Step 2: Identify the UNKNOWN. Step 3: Pick the formula that links them. Step 4: Substitute and solve." },
+  { q: "You need to find resistance but are given P = 100 W and I = 2 A (no V given). What do you do?",
+    answer: "Use P = I²R, then R = P/I²",
+    accepts: ["p=i^2r", "r=p/i^2", "r=p/i²", "use p=i²r", "p = i squared r"],
+    hint: "There is a combined formula that links P, I and R without needing V.",
+    explanation: "Since V is not given, use P = I²R (derived from P = VI and V = IR). Rearrange: R = P/I² = 100/4 = 25 Ω." },
+  { q: "In a series circuit problem, you find the current first. Why?",
+    answer: "Because current is the same everywhere in series, so you can use it for every component",
+    accepts: ["current is same everywhere", "current same in series", "it is the same for all components", "same current through all"],
+    hint: "What's special about current in series?",
+    explanation: "In series, current is IDENTICAL at every point. So once you find I (using total V and total R), you can use that same I to find the voltage across each individual resistor: V = IR." },
+  { q: "You get a weird number like 0.666... A. How should you write it in your final answer?",
+    answer: "As a fraction (2/3 A) or rounded to 3 significant figures (0.667 A)",
+    accepts: ["fraction", "2/3", "2/3 a", "0.667", "3 significant figures", "3sf", "3 s.f."],
+    hint: "Fractions are exact; if you round, use 3 s.f.",
+    explanation: "Give exact fractions where possible (2/3 A). If you must round, use 3 significant figures (0.667 A). Never write 0.66666666... — the marker wants a clean answer." }
+];
