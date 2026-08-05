@@ -126,6 +126,39 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 </div>
 </div>
 <!-- Print-only cheatsheet (always in DOM so print works regardless of which panel is open) -->
+<!-- Conversion panel toggle button -->
+<button id="convToggle" onclick="document.getElementById('convPanel').classList.toggle('open')" style="position:fixed;bottom:20px;right:20px;z-index:1000;background:linear-gradient(135deg,#64ffda,#00bfa5);color:#0a0a1a;border:none;width:50px;height:50px;border-radius:50%;cursor:pointer;font-size:1.3em;box-shadow:0 4px 20px rgba(100,255,218,0.3);font-weight:bold;" title="Conversion Table">📐</button>
+<div id="convPanel" style="position:fixed;top:0;right:-340px;width:320px;height:100vh;background:#0d1526;border-left:2px solid #64ffda;z-index:999;overflow-y:auto;padding:20px;transition:right 0.35s ease;box-shadow:-4px 0 30px rgba(0,0,0,0.5);">
+<button onclick="document.getElementById('convPanel').classList.remove('open')" style="position:absolute;top:10px;right:14px;background:none;border:none;color:#64ffda;font-size:1.5em;cursor:pointer;">×</button>
+<h3 style="color:#64ffda;font-family:'Orbitron',monospace;font-size:0.85em;letter-spacing:2px;margin-bottom:16px;">📐 CONVERSIONS</h3>
+<table style="width:100%;border-collapse:collapse;font-size:0.82em;font-family:'Rajdhani',sans-serif;">
+<tr style="color:#64ffda;"><th style="padding:5px;text-align:left;border-bottom:1px solid rgba(100,255,218,0.3);">From</th><th style="padding:5px;text-align:left;border-bottom:1px solid rgba(100,255,218,0.3);">To</th><th style="padding:5px;text-align:left;border-bottom:1px solid rgba(100,255,218,0.3);">×</th></tr>
+<tr><td style="padding:4px;">km</td><td style="padding:4px;">m</td><td style="padding:4px;color:#f0c040;">× 1000</td></tr>
+<tr><td style="padding:4px;">m</td><td style="padding:4px;">cm</td><td style="padding:4px;color:#f0c040;">× 100</td></tr>
+<tr><td style="padding:4px;">cm</td><td style="padding:4px;">mm</td><td style="padding:4px;color:#f0c040;">× 10</td></tr>
+<tr><td style="padding:4px;">km/h</td><td style="padding:4px;">m/s</td><td style="padding:4px;color:#f0c040;">÷ 3.6</td></tr>
+<tr><td style="padding:4px;">m/s</td><td style="padding:4px;">km/h</td><td style="padding:4px;color:#f0c040;">× 3.6</td></tr>
+<tr><td style="padding:4px;">hour</td><td style="padding:4px;">min</td><td style="padding:4px;color:#f0c040;">× 60</td></tr>
+<tr><td style="padding:4px;">min</td><td style="padding:4px;">sec</td><td style="padding:4px;color:#f0c040;">× 60</td></tr>
+<tr><td style="padding:4px;">hour</td><td style="padding:4px;">sec</td><td style="padding:4px;color:#f0c040;">× 3600</td></tr>
+<tr><td style="padding:4px;">kg</td><td style="padding:4px;">g</td><td style="padding:4px;color:#f0c040;">× 1000</td></tr>
+<tr><td style="padding:4px;">kW</td><td style="padding:4px;">W</td><td style="padding:4px;color:#f0c040;">× 1000</td></tr>
+<tr><td style="padding:4px;">mA</td><td style="padding:4px;">A</td><td style="padding:4px;color:#f0c040;">÷ 1000</td></tr>
+<tr><td style="padding:4px;">km²</td><td style="padding:4px;">m²</td><td style="padding:4px;color:#f0c040;">× 1 000 000</td></tr>
+<tr><td style="padding:4px;">m²</td><td style="padding:4px;">cm²</td><td style="padding:4px;color:#f0c040;">× 10 000</td></tr>
+<tr><td style="padding:4px;">m³</td><td style="padding:4px;">cm³</td><td style="padding:4px;color:#f0c040;">× 1 000 000</td></tr>
+<tr><td style="padding:4px;">litre</td><td style="padding:4px;">cm³</td><td style="padding:4px;color:#f0c040;">× 1000</td></tr>
+<tr><td style="padding:4px;">ml</td><td style="padding:4px;">cm³</td><td style="padding:4px;color:#f0c040;">= same</td></tr>
+</table>
+<h4 style="color:#64ffda;margin:16px 0 8px;font-size:0.8em;">Area & Volume Scales</h4>
+<ul style="font-size:0.82em;line-height:1.9;padding-left:16px;">
+<li>Linear scale = k → <b>Area scale = k²</b></li>
+<li>Linear scale = k → <b>Volume scale = k³</b></li>
+</ul>
+<h4 style="color:#64ffda;margin:16px 0 8px;font-size:0.8em;">Speed Triangle</h4>
+<p style="font-size:0.82em;color:#aaa;">S = D/T &nbsp; D = S×T &nbsp; T = D/S</p>
+</div>
+<style>#convPanel.open{right:0;}</style>
 <div id="cheatsheet-print" style="display:none;">
 <h2 style="text-align:center;margin-bottom:10px;">⚡ Electricity Cheatsheet — Learn TF</h2>
 <h3>Quantities &amp; Units</h3>
@@ -161,12 +194,26 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 <h3>Answering Method</h3>
 <p>1. List what you're given &nbsp; 2. Identify the unknown &nbsp; 3. Pick the formula &nbsp; 4. Substitute and solve</p>
 <p style="font-size:0.9em;">Always write the formula first — you get method marks even if the arithmetic is wrong.</p>
+<h3>Conversions</h3>
+<table><tr><th>From</th><th>To</th><th>Multiply by</th></tr>
+<tr><td>km → m</td><td></td><td>×1000</td></tr>
+<tr><td>m → cm</td><td></td><td>×100</td></tr>
+<tr><td>km/h → m/s</td><td></td><td>÷3.6</td></tr>
+<tr><td>min → sec</td><td></td><td>×60</td></tr>
+<tr><td>hr → sec</td><td></td><td>×3600</td></tr>
+<tr><td>kW → W</td><td></td><td>×1000</td></tr>
+<tr><td>mA → A</td><td></td><td>÷1000</td></tr>
+<tr><td>km² → m²</td><td></td><td>×1000000</td></tr>
+<tr><td>m² → cm²</td><td></td><td>×10000</td></tr>
+<tr><td>m³ → cm³</td><td></td><td>×1000000</td></tr></table>
+<p style="font-size:0.9em;">Area scale = k² &nbsp;|&nbsp; Volume scale = k³</p>
 </div>
 </body>
 </html>
 <script src="quizdata-new.js"></script>
 <script src="sciencedata.js"></script>
 <script src="congruencedata.js"></script>
+<script src="unit3extra.js"></script>
 <script>
 const quizzes = {
   "Unit 3: Algebraic Expressions": [
@@ -441,6 +488,8 @@ Object.assign(quizzes, newQuizzes);
 if (typeof scienceQuizzes !== 'undefined') Object.assign(quizzes, scienceQuizzes);
 // Merge congruence quizzes
 if (typeof congruenceQuizzes !== 'undefined') Object.assign(quizzes, congruenceQuizzes);
+// Merge extra math quizzes
+if (typeof extraMathQuizzes !== 'undefined') Object.assign(quizzes, extraMathQuizzes);
 
 // ============================================================
 // MASTER SWITCH for all the joke content.
