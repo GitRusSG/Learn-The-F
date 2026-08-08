@@ -223,6 +223,7 @@ h1 { text-align: center; margin-bottom: 30px; color: #64ffda; font-size: 2.5em; 
 <script src="sciencedata.js"></script>
 <script src="congruencedata.js"></script>
 <script src="unit3extra.js"></script>
+<script src="englishdata.js"></script>
 <script>
 const quizzes = {
   "Unit 3: Algebraic Expressions": [
@@ -499,6 +500,8 @@ if (typeof scienceQuizzes !== 'undefined') Object.assign(quizzes, scienceQuizzes
 if (typeof congruenceQuizzes !== 'undefined') Object.assign(quizzes, congruenceQuizzes);
 // Merge extra math quizzes
 if (typeof extraMathQuizzes !== 'undefined') Object.assign(quizzes, extraMathQuizzes);
+// Merge english quizzes
+if (typeof englishQuizzes !== 'undefined') Object.assign(quizzes, englishQuizzes);
 
 // ============================================================
 // MASTER SWITCH for all the joke content.
@@ -538,6 +541,10 @@ function init() {
     "Science": {
       "Electricity: Symbols, Formulas & Circuits": [],
       "Electricity: Components & Concepts": []
+    },
+    "English": {
+      "Writing Skills": [],
+      "Answering Questions": []
     }
   };
   const mathFolders = subjects["Mathematics"];
@@ -545,6 +552,8 @@ function init() {
   Object.keys(quizzes).forEach(name => {
     if (name.startsWith("Sci 1")) subjects["Science"]["Electricity: Symbols, Formulas & Circuits"].push(name);
     else if (name.startsWith("Sci 2")) subjects["Science"]["Electricity: Components & Concepts"].push(name);
+    else if (name.startsWith("Eng 1")) subjects["English"]["Writing Skills"].push(name);
+    else if (name.startsWith("Eng 2")) subjects["English"]["Answering Questions"].push(name);
     else if (name.startsWith("Unit 8")) mathFolders["Unit 8: Congruence & Similarity"].push(name);
     else if (name.includes("Unit 3")) mathFolders["Unit 3: Algebraic Expressions"].push(name);
     else if (name.includes("Unit 4") || name.includes("4.")) mathFolders["Unit 4: Quadratic Equations & Graphs"].push(name);
@@ -553,7 +562,7 @@ function init() {
     else if (name.includes("Unit 7")) mathFolders["Unit 7: Rate & Speed"].push(name);
     else mathFolders["Unit 3: Algebraic Expressions"].push(name); // fallback
   });
-  const subjectIcons = { "Mathematics": "🧮", "Science": "⚡" };
+  const subjectIcons = { "Mathematics": "🧮", "Science": "⚡", "English": "✍️" };
   // Unit summaries for "Teach me" sections
   const unitTeach = {
     "Unit 3: Algebraic Expressions": `
@@ -644,6 +653,99 @@ function init() {
         <li>Congruence ⊂ Similarity (all congruent figures are similar, but not vice versa).</li>
         <li>AAA does NOT prove congruence — only similarity.</li>
         <li>To <b>prove</b> congruence: state 3 facts with reasons, then conclude with the test used.</li>
+      </ul>`,
+    "Writing Skills": `
+      <h3>Sentence Structures</h3>
+      <ul>
+        <li><b>Simple:</b> 1 clause. <i>"The cat sat."</i></li>
+        <li><b>Compound:</b> 2 clauses + FANBOYS (for, and, nor, but, or, yet, so). <i>"I ran, but I was late."</i></li>
+        <li><b>Complex:</b> Main clause + dependent clause. <i>"Although it rained, we played."</i></li>
+      </ul>
+      <h3>Transition Words</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:0.9em;">
+        <tr style="color:#64ffda;"><th style="padding:4px;text-align:left;">Purpose</th><th style="padding:4px;text-align:left;">Words</th></tr>
+        <tr><td style="padding:4px;color:#f0c040;">Adding</td><td style="padding:4px;">furthermore, moreover, in addition</td></tr>
+        <tr><td style="padding:4px;color:#f0c040;">Contrasting</td><td style="padding:4px;">however, whereas, although, nevertheless</td></tr>
+        <tr><td style="padding:4px;color:#f0c040;">Cause</td><td style="padding:4px;">because, since, as, due to</td></tr>
+        <tr><td style="padding:4px;color:#f0c040;">Effect</td><td style="padding:4px;">therefore, consequently, hence, thus</td></tr>
+        <tr><td style="padding:4px;color:#f0c040;">Examples</td><td style="padding:4px;">for example, for instance, such as</td></tr>
+        <tr><td style="padding:4px;color:#f0c040;">Concluding</td><td style="padding:4px;">in conclusion, overall, to summarize</td></tr>
+      </table>
+      <h3>Formal Replacements</h3>
+      <ul>
+        <li>kids → <b>children</b> | a lot → <b>many/much</b> | get → <b>obtain</b></li>
+        <li>good → <b>effective/beneficial</b> | bad → <b>detrimental</b> | big → <b>significant</b></li>
+        <li>thing → <b>factor/aspect</b> | stuff → <b>material/content</b></li>
+        <li>No contractions in formal writing (can't → cannot)</li>
+      </ul>
+      <h3>PEEL Paragraph</h3>
+      <ul>
+        <li><b>P</b>oint — state your argument</li>
+        <li><b>E</b>vidence — quote or example</li>
+        <li><b>E</b>xplanation — how it supports your point</li>
+        <li><b>L</b>ink — back to the question or next point</li>
+      </ul>
+      <h3>Summary Writing</h3>
+      <ol>
+        <li>Identify main points (ignore examples/details)</li>
+        <li>Paraphrase — don't copy</li>
+        <li>Combine related points</li>
+        <li>No personal opinions</li>
+        <li>Stay within word limit (usually 80-100 words)</li>
+      </ol>
+      <h3>Editing Checklist</h3>
+      <ul>
+        <li>☐ Every sentence makes sense?</li>
+        <li>☐ Subject-verb agreement?</li>
+        <li>☐ Tenses consistent?</li>
+        <li>☐ Punctuation correct?</li>
+        <li>☐ Formal enough?</li>
+        <li>☐ Actually answered the question?</li>
+      </ul>`,
+    "Answering Questions": `
+      <h3>Command Words</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:0.88em;">
+        <tr style="color:#64ffda;"><th style="padding:5px;text-align:left;">Command</th><th style="padding:5px;text-align:left;">What to do</th></tr>
+        <tr><td style="padding:5px;color:#f0c040;">State / Name</td><td style="padding:5px;">Give the answer directly. No explanation.</td></tr>
+        <tr><td style="padding:5px;color:#f0c040;">Describe</td><td style="padding:5px;">Say what happens. No need to say why.</td></tr>
+        <tr><td style="padding:5px;color:#f0c040;">Explain</td><td style="padding:5px;">What happens + <b>why/how</b> (use "because")</td></tr>
+        <tr><td style="padding:5px;color:#f0c040;">Compare</td><td style="padding:5px;">Similarities AND differences. Use "whereas".</td></tr>
+        <tr><td style="padding:5px;color:#f0c040;">Calculate</td><td style="padding:5px;">Formula → substitute → answer + unit</td></tr>
+        <tr><td style="padding:5px;color:#f0c040;">Suggest</td><td style="padding:5px;">Give a reasonable possible answer.</td></tr>
+        <tr><td style="padding:5px;color:#f0c040;">Justify</td><td style="padding:5px;">Answer + evidence/reasoning.</td></tr>
+        <tr><td style="padding:5px;color:#f0c040;">Evaluate</td><td style="padding:5px;">Pros + cons + your conclusion.</td></tr>
+      </table>
+      <h3>How to "Explain"</h3>
+      <div style="background:rgba(100,255,218,0.04);border:1px solid rgba(100,255,218,0.15);border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.9em;">
+        <p style="color:#ff6464;margin:0 0 6px;">❌ "B1 is brighter."</p>
+        <p style="color:#64ffda;margin:0;">✓ "B1 is brighter <b>because</b> it carries a larger current, so it transfers more energy per second."</p>
+      </div>
+      <p style="font-size:0.88em;color:#aaa;">Structure: <b>Point → because → reason → result</b></p>
+      <h3>How to "Compare"</h3>
+      <div style="background:rgba(100,255,218,0.04);border:1px solid rgba(100,255,218,0.15);border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.9em;">
+        <p style="color:#ff6464;margin:0 0 6px;">❌ "Series has one path. Parallel has many paths."</p>
+        <p style="color:#64ffda;margin:0;">✓ "In series there is one path for current, <b>whereas</b> in parallel there are multiple paths."</p>
+      </div>
+      <h3>Show Working (Calculations)</h3>
+      <div style="background:rgba(100,255,218,0.04);border:1px solid rgba(100,255,218,0.15);border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.9em;">
+        <p style="margin:2px 0;">1. <b>Formula:</b> V = IR</p>
+        <p style="margin:2px 0;">2. <b>Substitute:</b> V = 2 × 4</p>
+        <p style="margin:2px 0;">3. <b>Answer:</b> V = 8 <b>V</b> ← unit!</p>
+      </div>
+      <p style="font-size:0.85em;color:#aaa;">You get method marks for the formula even if the arithmetic is wrong.</p>
+      <h3>Full Sentence Rule</h3>
+      <ul style="font-size:0.9em;">
+        <li>❌ "Because it saves time."</li>
+        <li>✓ "It is beneficial <b>because</b> it saves time."</li>
+      </ul>
+      <p style="font-size:0.85em;color:#aaa;">Start with the main clause, then add "because". Never start an answer with "Because" alone.</p>
+      <h3>Common Mark Losers</h3>
+      <ul style="font-size:0.9em;">
+        <li>No unit on calculations</li>
+        <li>Not answering in full sentences</li>
+        <li>Describing when asked to explain (missing the "why")</li>
+        <li>Copying from the passage instead of paraphrasing</li>
+        <li>Not reading the command word</li>
       </ul>`,
     "Electricity: Symbols, Formulas & Circuits": `
       <h3>Symbols, Meanings & Units</h3>
