@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn TF — Printable Worksheets</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Rajdhani',sans-serif;background:#0a0a1a;color:#eee;padding:20px;min-height:100vh;}
+.container{max-width:800px;margin:0 auto;}
+h1{text-align:center;color:#64ffda;font-family:'Orbitron',monospace;font-size:1.8em;letter-spacing:4px;margin-bottom:20px;}
+p.sub{text-align:center;color:#888;margin-bottom:20px;font-size:0.9em;}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;align-items:center;}
+select,button{padding:10px 16px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:0.95em;}
+select{background:#0d1526;color:#eee;border:1px solid #64ffda;flex:1;min-width:200px;}
+button{background:linear-gradient(135deg,#64ffda,#00bfa5);color:#0a0a1a;border:none;cursor:pointer;font-weight:700;letter-spacing:1px;}
+button:hover{box-shadow:0 0 16px rgba(100,255,218,0.4);}
+.btn-secondary{background:none;border:1px solid #64ffda;color:#64ffda;}
+#preview{margin-top:20px;}
+a{color:#64ffda;text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* Print styles */
+@media print {
+  body{background:#fff!important;color:#000!important;padding:0!important;font-family:Arial,sans-serif!important;}
+  .no-print{display:none!important;}
+  #preview{margin:0;}
+  .ws-page{page-break-after:always;padding:15mm;font-size:11pt;}
+  .ws-page:last-child{page-break-after:auto;}
+  .ws-header{border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:12px;}
+  .ws-header h2{font-size:14pt;color:#000!important;}
+  .ws-header p{font-size:10pt;color:#333!important;}
+  .ws-q{margin-bottom:16px;page-break-inside:avoid;}
+  .ws-q h4{font-size:11pt;color:#000!important;margin-bottom:4px;}
+  .ws-q .prompt{font-size:11pt;color:#000!important;margin-bottom:6px;}
+  .ws-q .answer-line{border-bottom:1px solid #999;height:24px;margin:4px 0;}
+  .ws-q .work-box{border:1px solid #ccc;height:60px;margin:4px 0;border-radius:4px;}
+  .ws-q svg{max-width:300px!important;border:1px solid #ccc!important;background:#fff!important;}
+  .ws-q svg text{fill:#000!important;}
+  .ws-q svg line,.ws-q svg rect,.ws-q svg circle,.ws-q svg polygon,.ws-q svg path{stroke:#333!important;}
+  .ws-q svg rect[fill]{fill:#fff!important;}
+  .ws-key{page-break-before:always;padding:15mm;}
+  .ws-key h2{font-size:14pt;border-bottom:2px solid #000;padding-bottom:6px;margin-bottom:10px;}
+  .ws-key ol{font-size:10pt;column-count:2;column-gap:20px;}
+  .ws-key li{margin-bottom:4px;}
+}
+
+/* Screen preview */
+@media screen {
+  .ws-page{background:#fff;color:#000;padding:30px;margin-bottom:20px;border-radius:12px;box-shadow:0 4px 30px rgba(0,0,0,0.5);}
+  .ws-header{border-bottom:2px solid #333;padding-bottom:10px;margin-bottom:16px;}
+  .ws-header h2{font-size:1.3em;}
+  .ws-q{margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid #eee;}
+  .ws-q h4{color:#333;font-size:0.95em;}
+  .ws-q .prompt{color:#000;font-size:0.95em;margin:4px 0;}
+  .ws-q .answer-line{border-bottom:1.5px dashed #999;height:28px;margin:6px 0;}
+  .ws-q .work-box{border:1.5px dashed #bbb;height:70px;margin:6px 0;border-radius:6px;}
+  .ws-q svg{max-width:320px!important;display:block;margin:8px 0;}
+  .ws-key{background:#f8f8f0;color:#000;padding:30px;margin-top:20px;border-radius:12px;box-shadow:0 4px 30px rgba(0,0,0,0.3);}
+  .ws-key h2{border-bottom:2px solid #333;padding-bottom:8px;margin-bottom:12px;}
+  .ws-key ol{column-count:2;column-gap:24px;font-size:0.9em;}
+  .ws-key li{margin-bottom:6px;}
+}
+</style>
+</head>
+<body>
+<div class="container no-print">
+  <h1>📝 Printable Worksheets</h1>
+  <p class="sub">Generate print-ready worksheets from any quiz. Includes answer lines + answer key on a separate page.</p>
+  <div class="controls">
+    <select id="quizPicker"><option value="">— Select a quiz —</option></select>
+    <button onclick="generateWorksheet()">Generate</button>
+    <button class="btn-secondary" onclick="window.print()">🖨️ Print</button>
+    <button class="btn-secondary" onclick="generateAll()">📋 All Quizzes</button>
+  </div>
+  <p style="margin-top:10px;"><a href="index.html">← Back to Learn TF</a></p>
+</div>
+<div id="preview"></div>
+
+<script src="quizdata-new.js"></script>
+<script src="sciencedata.js"></script>
+<script src="congruencedata.js"></script>
+<script src="unit3extra.js"></script>
+<script src="englishdata.js"></script>
+<script>
+// Build full quiz object
+const quizzes = {};
+// inline quizzes from index.html are not available here, but the external ones are:
+if(typeof newQuizzes!=='undefined') Object.assign(quizzes, newQuizzes);
+if(typeof scienceQuizzes!=='undefined') Object.assign(quizzes, scienceQuizzes);
+if(typeof congruenceQuizzes!=='undefined') Object.assign(quizzes, congruenceQuizzes);
+if(typeof extraMathQuizzes!=='undefined') Object.assign(quizzes, extraMathQuizzes);
+if(typeof englishQuizzes!=='undefined') Object.assign(quizzes, englishQuizzes);
+
+// Populate picker
+const picker = document.getElementById('quizPicker');
+Object.keys(quizzes).sort().forEach(name => {
+  const opt = document.createElement('option');
+  opt.value = name;
+  opt.textContent = name;
+  picker.appendChild(opt);
+});
+
+function stripHtml(html) {
+  // keep SVG but strip other HTML for clean text
+  return html;
+}
+
+function renderWorksheet(name) {
+  const items = quizzes[name];
+  if (!items) return '';
+  let qs = '';
+  items.forEach((it, i) => {
+    const hasSvg = it.q.includes('<svg');
+    qs += `<div class="ws-q">
+      <h4>Question ${i + 1}</h4>
+      <div class="prompt">${it.q}</div>
+      ${hasSvg ? '' : '<div class="work-box"></div>'}
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>`;
+  });
+
+  const page = `<div class="ws-page">
+    <div class="ws-header">
+      <h2>${name}</h2>
+      <p>Name: _________________________ &nbsp; Date: _____________ &nbsp; Score: ____ / ${items.length}</p>
+    </div>
+    ${qs}
+  </div>`;
+
+  // Answer key
+  let answers = '';
+  items.forEach((it, i) => {
+    answers += `<li><b>Q${i + 1}:</b> ${it.answer}</li>`;
+  });
+  const key = `<div class="ws-key">
+    <h2>Answer Key — ${name}</h2>
+    <ol>${answers}</ol>
+  </div>`;
+
+  return page + key;
+}
+
+function generateWorksheet() {
+  const name = picker.value;
+  if (!name) { alert('Pick a quiz first!'); return; }
+  document.getElementById('preview').innerHTML = renderWorksheet(name);
+}
+
+function generateAll() {
+  let html = '';
+  Object.keys(quizzes).sort().forEach(name => {
+    html += renderWorksheet(name);
+  });
+  document.getElementById('preview').innerHTML = html;
+}
+</script>
+</body>
+</html>
