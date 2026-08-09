@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Learn TF — Revision Printout</title>
+<style>
+@media screen {
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0a1a;color:#eee;padding:20px;max-width:900px;margin:0 auto;}
+  h1{text-align:center;color:#64ffda;margin-bottom:6px;}
+  .print-btn{display:block;margin:10px auto 20px;background:linear-gradient(135deg,#64ffda,#00bfa5);color:#0a0a1a;border:none;padding:12px 30px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:bold;}
+  .sheet{background:#fff;color:#000;padding:20px;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,0.5);}
+  a{color:#64ffda;}
+}
+@media print {
+  body{margin:0;padding:8mm;font-family:Arial,sans-serif;font-size:8.5pt;color:#000;background:#fff;}
+  .no-print{display:none!important;}
+  .sheet{padding:0;}
+  h1{font-size:13pt;margin-bottom:4px;}
+  h2{font-size:10pt;margin:6px 0 2px;border-bottom:1px solid #333;padding-bottom:2px;}
+  h3{font-size:9pt;margin:4px 0 1px;}
+  table{border-collapse:collapse;width:100%;margin-bottom:4px;font-size:8pt;}
+  td,th{border:1px solid #aaa;padding:2px 4px;text-align:left;}
+  th{background:#eee;}
+  ul,ol{margin:0 0 4px;padding-left:14px;}
+  li{margin-bottom:1px;}
+  p{margin:2px 0;}
+  .cols{display:flex;gap:10px;}
+  .cols>div{flex:1;}
+  .highlight{background:#ffe;padding:2px 4px;border:1px solid #cc0;font-weight:bold;}
+}
+@media screen {
+  h2{color:#64ffda;font-size:1.1em;border-bottom:1px solid #333;padding-bottom:4px;margin:12px 0 6px;}
+  h3{color:#f0c040;font-size:0.95em;margin:8px 0 3px;}
+  table{border-collapse:collapse;width:100%;margin-bottom:8px;font-size:0.85em;}
+  td,th{border:1px solid #ccc;padding:3px 6px;}
+  th{background:#f5f5f5;}
+  .cols{display:flex;gap:14px;flex-wrap:wrap;}
+  .cols>div{flex:1;min-width:280px;}
+  .highlight{background:#ffe;padding:3px 6px;border:1px solid #cc0;font-weight:bold;display:inline-block;margin:2px 0;}
+}
+</style>
+</head>
+<body>
+<div class="no-print">
+  <h1>📋 Bite-Sized Revision</h1>
+  <button class="print-btn" onclick="window.print()">🖨️ PRINT THIS PAGE</button>
+  <p style="text-align:center;margin-bottom:10px;"><a href="index.html">← Back to Learn TF</a></p>
+</div>
+
+<div class="sheet">
+<h1 style="text-align:center;">Learn TF — Quick Revision Sheet</h1>
+
+<div class="cols">
+<div>
+
+<h2>⚡ Electricity Formulas</h2>
+<table>
+<tr><th>Triangle</th><th>Formulas</th></tr>
+<tr><td>Ohm's Law</td><td>V=IR &nbsp; I=V/R &nbsp; R=V/I</td></tr>
+<tr><td>Power</td><td>P=VI &nbsp; V=P/I &nbsp; I=P/V</td></tr>
+<tr><td>Charge</td><td>Q=It &nbsp; I=Q/t &nbsp; t=Q/I</td></tr>
+<tr><td>Combined</td><td>P=I²R</td></tr>
+</table>
+
+<h3>Quantities</h3>
+<table>
+<tr><th>Sym</th><th>Name</th><th>Unit</th><th>Means</th></tr>
+<tr><td>V</td><td>Voltage</td><td>V</td><td>Energy/coulomb</td></tr>
+<tr><td>I</td><td>Current</td><td>A</td><td>Charge/second</td></tr>
+<tr><td>R</td><td>Resistance</td><td>Ω</td><td>Opposes current</td></tr>
+<tr><td>P</td><td>Power</td><td>W</td><td>Energy/second</td></tr>
+<tr><td>Q</td><td>Charge</td><td>C</td><td>What flows</td></tr>
+</table>
+
+<h3>Series vs Parallel</h3>
+<table>
+<tr><th></th><th>Series</th><th>Parallel</th></tr>
+<tr><td>I</td><td>Same</td><td>Splits</td></tr>
+<tr><td>V</td><td>Adds up</td><td>Same</td></tr>
+<tr><td>R</td><td>R₁+R₂</td><td>(R₁×R₂)/(R₁+R₂)</td></tr>
+</table>
+<p><span class="highlight">Parallel shortcut (2 resistors): multiply ÷ add</span></p>
+
+<h3>Key Facts</h3>
+<ul>
+<li>1A = 1C/s &nbsp;|&nbsp; 1V = 1J/C &nbsp;|&nbsp; 1W = 1J/s</li>
+<li>EMF = push (given by battery) | PD = drop (used by component)</li>
+<li>Ammeter → series | Voltmeter → parallel</li>
+<li>Bigger R in series → bigger voltage drop (V=IR)</li>
+<li>Parallel total R always < smallest R</li>
+</ul>
+
+<h2>📐 Conversions</h2>
+<table>
+<tr><td>km/h → m/s</td><td><b>÷ 3.6</b></td><td>m/s → km/h</td><td><b>× 3.6</b></td></tr>
+<tr><td>km → m</td><td>×1000</td><td>m → cm</td><td>×100</td></tr>
+<tr><td>hr → sec</td><td>×3600</td><td>min → sec</td><td>×60</td></tr>
+<tr><td>kW → W</td><td>×1000</td><td>mA → A</td><td>÷1000</td></tr>
+<tr><td>m² → cm²</td><td>×10,000</td><td>m³ → cm³</td><td>×1,000,000</td></tr>
+</table>
+<p>Scale: Area = k² &nbsp;|&nbsp; Volume = k³</p>
+
+</div>
+<div>
+
+<h2>📝 Answering Questions</h2>
+<h3>Command Words</h3>
+<table>
+<tr><th>Word</th><th>What to do</th></tr>
+<tr><td><b>State/Name</b></td><td>Direct answer. No explanation.</td></tr>
+<tr><td><b>Describe</b></td><td>What happens. No why.</td></tr>
+<tr><td><b>Explain</b></td><td>What + <b>why</b> (use "because")</td></tr>
+<tr><td><b>Compare</b></td><td>Use "whereas" — both in same sentence</td></tr>
+<tr><td><b>Calculate</b></td><td>Formula → sub → answer + <b>unit</b></td></tr>
+<tr><td><b>Suggest</b></td><td>Reasonable guess (multiple valid)</td></tr>
+<tr><td><b>Justify</b></td><td>Answer + evidence</td></tr>
+<tr><td><b>Evaluate</b></td><td>Pros + cons + conclusion</td></tr>
+</table>
+
+<h3>How to Explain</h3>
+<p>❌ "B1 is brighter."</p>
+<p>✓ "B1 is brighter <b>because</b> it carries more current, so more energy is transferred per second."</p>
+<p class="highlight">Point → because → reason → result</p>
+
+<h3>Show Working</h3>
+<p>1. Formula: V = IR<br>2. Sub: V = 2 × 4<br>3. Answer: V = 8 <b>V</b> ← unit!</p>
+
+<h3>Full Sentences</h3>
+<p>❌ "Because it saves time."<br>✓ "It is beneficial <b>because</b> it saves time."</p>
+
+<h2>✍️ Writing Skills</h2>
+<h3>PEEL Paragraph</h3>
+<ul>
+<li><b>P</b>oint — state your argument</li>
+<li><b>E</b>vidence — quote/example</li>
+<li><b>E</b>xplanation — how it supports the point</li>
+<li><b>L</b>ink — back to question / next point</li>
+</ul>
+
+<h3>Transitions</h3>
+<table>
+<tr><td>Adding</td><td>furthermore, moreover</td></tr>
+<tr><td>Contrast</td><td>however, whereas</td></tr>
+<tr><td>Cause</td><td>because, since</td></tr>
+<tr><td>Effect</td><td>therefore, consequently</td></tr>
+<tr><td>Example</td><td>for example, such as</td></tr>
+<tr><td>Conclude</td><td>in conclusion, overall</td></tr>
+</table>
+
+<h3>Formal Upgrades</h3>
+<p>kids→children | a lot→many | get→obtain | good→effective | bad→detrimental | big→significant | thing→factor</p>
+
+<h3>Editing Checklist</h3>
+<ul>
+<li>☐ Sentence makes sense?</li>
+<li>☐ Subject-verb agree?</li>
+<li>☐ Tenses consistent?</li>
+<li>☐ Answered the question?</li>
+<li>☐ Units on calculations?</li>
+<li>☐ Full sentences?</li>
+</ul>
+
+</div>
+</div>
+</div>
+</body>
+</html>
