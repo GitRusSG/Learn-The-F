@@ -502,3 +502,17 @@ scienceQuizzes["Sci 2.7: Answering Skills — How to Tackle Electricity Question
     hint: "Fractions are exact; if you round, use 3 s.f.",
     explanation: "Give exact fractions where possible (2/3 A). If you must round, use 3 significant figures (0.667 A). Never write 0.66666666... — the marker wants a clean answer." }
 ];
+
+
+scienceQuizzes["Sci 2.8: Parallel Resistor Shortcut"] = [
+  { q: "What is the shortcut formula for <b>two</b> resistors in parallel?", answer: "R = (R₁×R₂)/(R₁+R₂)", accepts: ["r=(r1xr2)/(r1+r2)","r=r1r2/(r1+r2)","r1r2/(r1+r2)","product over sum","(r1×r2)/(r1+r2)","r1*r2/(r1+r2)"], hint: "Multiply on top, add on the bottom.", explanation: "For TWO resistors in parallel: R = (R₁ × R₂) / (R₁ + R₂). 'Product over sum.' Only works for exactly two resistors." },
+  { q: "Two resistors: 8 Ω and 4 Ω in parallel. Find total resistance.", answer: "2.67 Ω", accepts: ["2.67","2.67Ω","2.67 ohm","8/3","2.7"], hint: "R = (8×4)/(8+4) = 32/12.", explanation: "R = (8×4)/(8+4) = 32/12 = 2.67 Ω (or 8/3 Ω)." },
+  { q: "Two resistors: 6 Ω and 3 Ω in parallel. Find total resistance.", answer: "2 Ω", accepts: ["2","2Ω","2 ohm"], hint: "R = (6×3)/(6+3).", explanation: "R = (6×3)/(6+3) = 18/9 = 2 Ω." },
+  { q: "Two resistors: 10 Ω and 10 Ω in parallel. Find total resistance.", answer: "5 Ω", accepts: ["5","5Ω","5 ohm"], hint: "Two equal resistors in parallel = half of one.", explanation: "R = (10×10)/(10+10) = 100/20 = 5 Ω. Shortcut: two equal → halve it." },
+  { q: "Two resistors: 12 Ω and 4 Ω in parallel. Find total resistance.", answer: "3 Ω", accepts: ["3","3Ω","3 ohm"], hint: "R = (12×4)/(12+4).", explanation: "R = (12×4)/(12+4) = 48/16 = 3 Ω." },
+  { q: "Two resistors: 20 Ω and 5 Ω in parallel. Find total resistance.", answer: "4 Ω", accepts: ["4","4Ω","4 ohm"], hint: "R = (20×5)/(20+5).", explanation: "R = (20×5)/(20+5) = 100/25 = 4 Ω." },
+  { q: "Does the 'product over sum' shortcut work for 3 resistors?", answer: "No (only for exactly 2)", accepts: ["no","false","n","only 2","only for 2"], hint: "For 3+ you must use 1/R = 1/R₁ + 1/R₂ + 1/R₃.", explanation: "No. Product/sum only works for exactly 2 resistors. For 3 or more, use the full formula: 1/R = 1/R₁ + 1/R₂ + 1/R₃..." },
+  { q: "A 6 V battery is connected to 8 Ω and 4 Ω in parallel. Find the total current.", answer: "2.25 A", accepts: ["2.25","2.25a","2.25 a","2.3","9/4"], hint: "First find R total (product/sum), then I = V/R.", explanation: "R = 32/12 = 8/3 Ω. I = V/R = 6 ÷ (8/3) = 6 × 3/8 = 18/8 = 2.25 A." },
+  { q: "Is the total resistance of a parallel combination always LESS than the smallest resistor?", answer: "Yes", accepts: ["yes","y","true"], hint: "Adding a parallel path always makes it easier for current to flow.", explanation: "Yes — always. Adding parallel paths gives current MORE ways to flow, so total resistance drops below even the smallest individual resistor." },
+  { q: "Two resistors: 3 Ω and 6 Ω in parallel. Which carries more current?", answer: "The 3 Ω resistor", accepts: ["3 ohm","3Ω","the 3 ohm","the smaller one","3"], hint: "In parallel, voltage is the same across both. I = V/R → smaller R = bigger I.", explanation: "Same voltage across both (parallel). I = V/R. Smaller R (3 Ω) → larger current. The 3 Ω carries twice the current of the 6 Ω." }
+];
