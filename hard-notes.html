@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Learn TF — Hard Topics Notes</title>
+<style>
+@media screen{body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0a1a;color:#eee;padding:20px;max-width:850px;margin:0 auto;}h1{text-align:center;color:#64ffda;}
+.print-btn{display:block;margin:10px auto 20px;background:linear-gradient(135deg,#64ffda,#00bfa5);color:#0a0a1a;border:none;padding:12px 30px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:bold;}
+.sheet{background:#fff;color:#000;padding:24px;border-radius:10px;box-shadow:0 4px 30px rgba(0,0,0,.5);}a{color:#64ffda;}}
+@media print{body{margin:0;padding:8mm;font-family:Arial,sans-serif;font-size:9pt;color:#000;background:#fff;}.no-print{display:none!important;}.sheet{padding:0;}
+h1{font-size:13pt;margin-bottom:2px;}h2{font-size:11pt;margin:8px 0 3px;border-bottom:1.5px solid #000;padding-bottom:2px;}h3{font-size:9.5pt;margin:5px 0 2px;color:#333;}
+table{border-collapse:collapse;width:100%;margin-bottom:5px;font-size:8.5pt;}td,th{border:1px solid #aaa;padding:2px 5px;}th{background:#eee;}
+ul,ol{margin:0 0 4px;padding-left:14px;}li{margin-bottom:2px;}p{margin:2px 0;}
+.ex{background:#f5f5e8;border:1px solid #cca;padding:6px 8px;border-radius:4px;margin:4px 0;font-size:9pt;}
+.warn{background:#fee;border:1px solid #c66;padding:4px 8px;border-radius:4px;margin:4px 0;font-size:8.5pt;}
+.cols{display:flex;gap:12px;}.cols>div{flex:1;}
+svg{display:block;margin:4px auto;max-width:240px;}}
+@media screen{h2{color:#64ffda;border-bottom:1px solid #444;padding-bottom:4px;margin:16px 0 8px;}h3{color:#f0c040;}
+.ex{background:#1a2a1a;border:1px solid #64ffda;color:#eee;padding:10px;border-radius:6px;margin:6px 0;}
+.warn{background:#2a1a1a;border:1px solid #ff6464;color:#eee;padding:8px;border-radius:6px;margin:6px 0;}
+.cols{display:flex;gap:16px;flex-wrap:wrap;}.cols>div{flex:1;min-width:300px;}}
+</style>
+</head>
+<body>
+<div class="no-print">
+<h1>🧠 Hard Topics — Revision Notes</h1>
+<button class="print-btn" onclick="window.print()">🖨️ PRINT</button>
+<p style="text-align:center;"><a href="index.html">← Back</a> &nbsp;|&nbsp; <a href="revision-paper.html">Practice Paper</a> &nbsp;|&nbsp; <a href="revision.html">Quick Sheet</a></p>
+</div>
+<div class="sheet">
+<h1 style="text-align:center;">Hard Topics — Study Notes</h1>
+
+<div class="cols">
+<div>
+
+<h2>1. Algebraic Fractions</h2>
+<h3>Rule: ALWAYS factorise first, then cancel</h3>
+<ul>
+<li>Factor top and bottom separately</li>
+<li>Cancel common brackets (not individual terms!)</li>
+<li>You can only cancel FACTORS, never TERMS</li>
+</ul>
+<div class="warn">⚠️ You CANNOT cancel: (x+3)/(x+5) ≠ 3/5. The x is part of the TERM, not a separate factor.</div>
+
+<div class="ex">
+<b>Example:</b> Simplify (x²-9)/(x²+5x+6)<br>
+Top: x²-9 = (x+3)(x-3) [diff of squares]<br>
+Bottom: x²+5x+6 = (x+2)(x+3) [trinomial]<br>
+Cancel (x+3): = <b>(x-3)/(x+2)</b>
+</div>
+
+<h3>Adding/Subtracting Fractions</h3>
+<ol>
+<li>Find the LCD (usually multiply the denominators)</li>
+<li>Multiply each fraction's top AND bottom to get the LCD</li>
+<li>Add/subtract the numerators</li>
+<li>Simplify if possible</li>
+</ol>
+<div class="ex">
+<b>Example:</b> 2/(x+1) + 3/(x-2)<br>
+LCD = (x+1)(x-2)<br>
+= 2(x-2)/LCD + 3(x+1)/LCD<br>
+= (2x-4+3x+3)/LCD<br>
+= <b>(5x-1)/((x+1)(x-2))</b>
+</div>
+
+<h2>2. Completing the Square</h2>
+<h3>Steps: x² + bx + c → (x + b/2)² + [c - (b/2)²]</h3>
+<ol>
+<li><b>Halve</b> the coefficient of x → that's p</li>
+<li><b>Square</b> p → that's what you added</li>
+<li><b>Subtract</b> what you added from the constant</li>
+</ol>
+<div class="ex">
+<b>Example:</b> x² + 8x + 10<br>
+Half of 8 = 4, square it = 16<br>
+x² + 8x + 16 - 16 + 10<br>
+= (x+4)² - 6<br>
+So p=4, q=-6. <b>Answer: (x+4)² - 6</b>
+</div>
+
+<div class="ex">
+<b>To solve:</b> x² - 6x + 5 = 0<br>
+(x-3)² - 9 + 5 = 0<br>
+(x-3)² = 4<br>
+x-3 = ±2<br>
+<b>x = 5 or x = 1</b>
+</div>
+
+<div class="warn">⚠️ Common mistake: forgetting to subtract (b/2)² from the constant. If you add 16 inside the bracket, you must take 16 away outside!</div>
+
+</div>
+<div>
+
+<h2>3. Turning Points & Line of Symmetry</h2>
+
+<h3>From factorised form: y = (x-a)(x-b)</h3>
+<ul>
+<li><b>x-intercepts:</b> x = a and x = b (set each bracket = 0)</li>
+<li><b>Line of symmetry:</b> x = (a+b)/2 (midpoint of intercepts)</li>
+<li><b>Turning point:</b> sub x = (a+b)/2 back into the equation for y</li>
+</ul>
+
+<svg viewBox="-10 -10 220 150" width="240" height="160">
+<line x1="0" y1="110" x2="200" y2="110" stroke="#000" stroke-width="1"/>
+<line x1="20" y1="0" x2="20" y2="140" stroke="#000" stroke-width="1"/>
+<text x="190" y="125" font-size="8">x</text><text x="8" y="10" font-size="8">y</text>
+<polyline points="20,70 50,100 80,118 100,122 120,118 150,100 180,70" fill="none" stroke="#0066cc" stroke-width="2"/>
+<circle cx="50" cy="110" r="2.5" fill="#000"/><text x="47" y="107" font-size="7">a</text>
+<circle cx="150" cy="110" r="2.5" fill="#000"/><text x="147" y="107" font-size="7">b</text>
+<circle cx="100" cy="122" r="3" fill="#cc0000"/><text x="103" y="137" font-size="7" fill="#cc0000">turning pt</text>
+<line x1="100" y1="5" x2="100" y2="120" stroke="#cc0000" stroke-width="0.7" stroke-dasharray="3,2"/>
+<text x="103" y="12" font-size="7" fill="#cc0000">x=(a+b)/2</text>
+</svg>
+
+<h3>From completed square: y = (x-p)² + q</h3>
+<ul>
+<li><b>Turning point:</b> (p, q) — read it straight off!</li>
+<li><b>Line of symmetry:</b> x = p</li>
+<li>If coefficient of x² is <b>positive</b> → ∪ → <b>minimum</b></li>
+<li>If coefficient of x² is <b>negative</b> → ∩ → <b>maximum</b></li>
+</ul>
+
+<div class="ex">
+<b>Example:</b> y = (x-3)² - 4<br>
+Turning point: <b>(3, -4)</b> [minimum]<br>
+Line of symmetry: <b>x = 3</b><br>
+Shape: ∪ (positive x² → minimum)
+</div>
+
+<h3>Quick checks</h3>
+<table>
+<tr><th>Given</th><th>Turning point</th><th>Symmetry</th></tr>
+<tr><td>y=(x-a)(x-b)</td><td>Sub x=(a+b)/2</td><td>x=(a+b)/2</td></tr>
+<tr><td>y=(x-p)²+q</td><td>(p, q)</td><td>x=p</td></tr>
+<tr><td>y=ax²+bx+c</td><td>Complete square first!</td><td>x=-b/(2a)</td></tr>
+</table>
+
+<h2>4. Change of Subject (Hard)</h2>
+<h3>When x appears on BOTH sides</h3>
+<ol>
+<li>Multiply out any fractions</li>
+<li>Expand brackets</li>
+<li>Collect all x terms on ONE side</li>
+<li>Factor out x</li>
+<li>Divide</li>
+</ol>
+<div class="ex">
+<b>Example:</b> Make x the subject: y = (2x+1)/(x-3)<br>
+y(x-3) = 2x+1<br>
+xy - 3y = 2x + 1<br>
+xy - 2x = 3y + 1 &nbsp; [collect x terms]<br>
+x(y-2) = 3y + 1 &nbsp; [factor out x]<br>
+<b>x = (3y+1)/(y-2)</b>
+</div>
+
+<div class="warn">⚠️ Don't try to "undo" x when it's in two places. You MUST collect and factor.</div>
+
+<h3>Square root subjects</h3>
+<div class="ex">
+Make r the subject: A = πr²<br>
+r² = A/π<br>
+<b>r = √(A/π)</b>
+</div>
+
+</div>
+</div>
+
+</div>
+</body>
+</html>
