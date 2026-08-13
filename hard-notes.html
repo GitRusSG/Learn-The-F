@@ -24,10 +24,20 @@ svg{display:block;margin:4px auto;max-width:240px;}}
 <body>
 <div class="no-print">
 <h1>🧠 Hard Topics — Revision Notes</h1>
-<button class="print-btn" onclick="window.print()">🖨️ PRINT</button>
-<p style="text-align:center;"><a href="index.html">← Back</a> &nbsp;|&nbsp; <a href="revision-paper.html">Practice Paper</a> &nbsp;|&nbsp; <a href="revision.html">Quick Sheet</a></p>
+<div style="text-align:center;margin-bottom:10px;">
+<button class="print-btn" style="display:inline-block;margin:4px;" onclick="showVersion('compact')">📄 Compact (1 page)</button>
+<button class="print-btn" style="display:inline-block;margin:4px;background:linear-gradient(135deg,#ff9800,#ff5722);" onclick="showVersion('detailed')">📖 Detailed (2 pages)</button>
+<button class="print-btn" style="display:inline-block;margin:4px;background:none;border:2px solid #64ffda;color:#64ffda;" onclick="window.print()">🖨️ Print</button>
 </div>
-<div class="sheet">
+<p style="text-align:center;"><a href="index.html">← Back</a> &nbsp;|&nbsp; <a href="revision-paper.html">Practice Paper</a> &nbsp;|&nbsp; <a href="revision.html">Quick Sheet</a></p>
+<script>
+function showVersion(v){
+  document.getElementById('compact-ver').style.display = v==='compact'?'block':'none';
+  document.getElementById('detailed-ver').style.display = v==='detailed'?'block':'none';
+}
+</script>
+</div>
+<div class="sheet" id="compact-ver">
 <h1 style="text-align:center;">Hard Topics — Study Notes</h1>
 
 <div class="cols">
@@ -165,6 +175,194 @@ r² = A/π<br>
 
 </div>
 </div>
+
+</div>
+
+<!-- ============ DETAILED VERSION (2 pages) ============ -->
+<div class="sheet" id="detailed-ver" style="display:none;">
+<h1 style="text-align:center;">Hard Topics — Detailed Notes</h1>
+<p style="text-align:center;font-size:0.85em;color:#666;">Take your time. Read every step. Understand before moving on.</p>
+
+<h2>1. Algebraic Fractions — Step by Step</h2>
+
+<h3>What IS an algebraic fraction?</h3>
+<p>It's a fraction where the top and/or bottom contain algebra (letters). Like (x+3)/(x-1).</p>
+<p>You treat them <b>exactly</b> like number fractions — same rules for simplifying, adding, multiplying.</p>
+
+<h3>How to Simplify</h3>
+<p>The key idea: <b>factorise top and bottom, then cancel common BRACKETS</b>.</p>
+
+<div class="ex">
+<b>Example 1:</b> Simplify (x² - 9) / (x² + 5x + 6)<br><br>
+<b>Step 1:</b> Factor the top.<br>
+x² - 9 = x² - 3² = (x+3)(x-3) &nbsp; ← difference of squares<br><br>
+<b>Step 2:</b> Factor the bottom.<br>
+x² + 5x + 6 → find two numbers that × to 6 and + to 5 → 2 and 3<br>
+= (x+2)(x+3)<br><br>
+<b>Step 3:</b> Cancel the common bracket.<br>
+(x+3)(x-3) / (x+2)(x+3) → cancel (x+3)<br>
+= <b>(x-3)/(x+2)</b> ✓
+</div>
+
+<div class="warn">
+⚠️ <b>THE #1 MISTAKE:</b> Cancelling terms instead of factors.<br>
+(x+3)/(x+5) does NOT equal 3/5. You can't cross out the x.<br>
+You can only cancel a <b>whole bracket</b> that appears on BOTH top and bottom.
+</div>
+
+<h3>How to Add/Subtract Fractions</h3>
+<p>Same as numbers: get a <b>common denominator</b>, then add the tops.</p>
+
+<div class="ex">
+<b>Example 2:</b> 2/(x+1) + 3/(x-2)<br><br>
+<b>Step 1:</b> LCD = (x+1)(x-2) — just multiply the two bottoms.<br><br>
+<b>Step 2:</b> Multiply each fraction:<br>
+First: 2/(x+1) × (x-2)/(x-2) = 2(x-2) / LCD<br>
+Second: 3/(x-2) × (x+1)/(x+1) = 3(x+1) / LCD<br><br>
+<b>Step 3:</b> Add the tops (keep the same bottom):<br>
+= [2(x-2) + 3(x+1)] / LCD<br>
+= [2x - 4 + 3x + 3] / LCD<br>
+= <b>(5x - 1) / ((x+1)(x-2))</b> ✓
+</div>
+
+<h2>2. Completing the Square — Baby Steps</h2>
+
+<h3>What's the point?</h3>
+<p>You're rewriting x² + bx + c into the form <b>(x + something)² + something</b>.<br>
+Why? Because from that form you can instantly read off the turning point of the graph.</p>
+
+<h3>The Method (3 steps)</h3>
+<table>
+<tr><th>Step</th><th>What to do</th><th>Example: x² + 8x + 10</th></tr>
+<tr><td>1</td><td><b>Halve</b> the number in front of x</td><td>8 ÷ 2 = <b>4</b></td></tr>
+<tr><td>2</td><td><b>Square</b> that number</td><td>4² = <b>16</b></td></tr>
+<tr><td>3</td><td>Write (x + half)² then <b>subtract</b> the square and <b>add back</b> the original constant</td><td>(x+4)² - 16 + 10 = <b>(x+4)² - 6</b></td></tr>
+</table>
+
+<div class="ex">
+<b>Example 3:</b> Complete the square for x² + 8x + 10<br><br>
+Half of 8 = 4<br>
+4² = 16<br>
+x² + 8x + 10<br>
+= (x² + 8x + 16) - 16 + 10 &nbsp; ← added 16 inside, so subtract 16 outside<br>
+= (x + 4)² - 6<br><br>
+<b>Answer: (x+4)² - 6</b> &nbsp; → p = 4, q = -6
+</div>
+
+<div class="ex">
+<b>Example 4:</b> Solve x² - 6x + 5 = 0 by completing the square<br><br>
+Half of -6 = -3, square = 9<br>
+(x² - 6x + 9) - 9 + 5 = 0<br>
+(x - 3)² - 4 = 0<br>
+(x - 3)² = 4<br>
+x - 3 = ±√4 = ±2<br>
+x = 3 + 2 = <b>5</b> &nbsp; or &nbsp; x = 3 - 2 = <b>1</b>
+</div>
+
+<div class="warn">
+⚠️ <b>Common mistake:</b> "I completed the square and got (x+4)² + 16 + 10."<br>
+NO! If you ADD 16 inside the bracket, you must SUBTRACT 16 outside. Think of it as borrowing — give it back!
+</div>
+
+<h3>Why it's useful: Finding the minimum/maximum</h3>
+<p>Once you have y = (x + p)² + q:</p>
+<ul>
+<li>The <b>smallest</b> value of (x+p)² is <b>0</b> (a square is never negative)</li>
+<li>So the smallest value of y is <b>q</b></li>
+<li>This happens when x = <b>-p</b></li>
+</ul>
+<div class="ex">
+y = (x+4)² - 6 → minimum value is <b>-6</b> (when x = -4)
+</div>
+
+<h2>3. Turning Points & Line of Symmetry — Full Explanation</h2>
+
+<h3>What is a turning point?</h3>
+<p>The point where the graph changes direction. For a ∪ shape it's the <b>bottom</b> (minimum). For a ∩ shape it's the <b>top</b> (maximum).</p>
+
+<h3>How to find it (3 different situations):</h3>
+
+<h3>Situation A: Given y = (x - a)(x - b) [factorised form]</h3>
+<div class="ex">
+<b>Example:</b> y = (x - 1)(x - 5)<br><br>
+<b>x-intercepts:</b> Set each bracket = 0 → x = 1, x = 5<br><br>
+<b>Line of symmetry:</b> Midpoint = (1+5)/2 = <b>x = 3</b><br><br>
+<b>Turning point:</b> Sub x = 3 back in:<br>
+y = (3-1)(3-5) = (2)(-2) = -4<br>
+Turning point = <b>(3, -4)</b>
+</div>
+
+<h3>Situation B: Given y = (x - p)² + q [completed square form]</h3>
+<div class="ex">
+<b>Example:</b> y = (x - 3)² - 4<br><br>
+Just <b>read it off</b>:<br>
+Turning point = <b>(3, -4)</b><br>
+Line of symmetry = <b>x = 3</b><br>
+Type: <b>Minimum</b> (because the x² coefficient is positive → ∪ shape)
+</div>
+
+<h3>Situation C: Given y = ax² + bx + c [general form]</h3>
+<p>You MUST complete the square first to get it into form B. Or use: line of symmetry = x = -b/(2a).</p>
+
+<h3>How to tell if it's a max or min?</h3>
+<table>
+<tr><th>If the number in front of x² is...</th><th>Shape</th><th>Turning point is...</th></tr>
+<tr><td><b>Positive</b> (e.g. x², 2x², 0.5x²)</td><td>∪ (smile)</td><td><b>Minimum</b> (bottom)</td></tr>
+<tr><td><b>Negative</b> (e.g. -x², -3x²)</td><td>∩ (frown)</td><td><b>Maximum</b> (top)</td></tr>
+</table>
+
+<h2>4. Change of Subject — When x is on Both Sides</h2>
+
+<h3>The problem</h3>
+<p>Normal "make x the subject" is easy: just undo operations. But when x appears in <b>two places</b>, you can't undo — you have to <b>collect and factor</b>.</p>
+
+<h3>The method (5 steps)</h3>
+<ol>
+<li><b>Multiply out</b> any fractions (multiply both sides by the denominator)</li>
+<li><b>Expand</b> all brackets</li>
+<li><b>Move</b> all terms with x to ONE side, everything else to the OTHER side</li>
+<li><b>Factor out</b> x</li>
+<li><b>Divide</b> both sides by what's left in the bracket</li>
+</ol>
+
+<div class="ex">
+<b>Example:</b> Make x the subject of y = (2x + 1)/(x - 3)<br><br>
+<b>Step 1:</b> Multiply both sides by (x-3):<br>
+y(x - 3) = 2x + 1<br><br>
+<b>Step 2:</b> Expand:<br>
+xy - 3y = 2x + 1<br><br>
+<b>Step 3:</b> Move x terms to left, non-x to right:<br>
+xy - 2x = 3y + 1<br><br>
+<b>Step 4:</b> Factor out x:<br>
+x(y - 2) = 3y + 1<br><br>
+<b>Step 5:</b> Divide:<br>
+<b>x = (3y + 1)/(y - 2)</b> ✓
+</div>
+
+<div class="warn">
+⚠️ <b>The trick you MUST remember:</b> In step 3, you're literally just moving terms across the = sign (changing their sign). In step 4, x is the common factor — pull it out. That's it. Don't overthink it.
+</div>
+
+<h3>Square root subjects</h3>
+<div class="ex">
+Make r the subject: A = πr²<br>
+<b>÷ π:</b> A/π = r²<br>
+<b>√ both sides:</b> r = √(A/π)<br><br>
+Make t the subject: s = ½at²<br>
+<b>× 2:</b> 2s = at²<br>
+<b>÷ a:</b> 2s/a = t²<br>
+<b>√:</b> t = √(2s/a)
+</div>
+
+<h2>5. Quick Memory Aids</h2>
+<ul>
+<li><b>Fractions:</b> Factorise First, Cancel Carefully (F.F.C.C.)</li>
+<li><b>Completing square:</b> "Halve it, square it, take it away"</li>
+<li><b>Turning point from (x-p)²+q:</b> The point is literally (p, q) — just read it</li>
+<li><b>Max or min:</b> Positive = smile ∪ = min. Negative = frown ∩ = max.</li>
+<li><b>Change of subject:</b> "Collect, Factor, Divide" (C.F.D.)</li>
+<li><b>Line of symmetry:</b> Always halfway between the x-intercepts</li>
+</ul>
 
 </div>
 </body>
