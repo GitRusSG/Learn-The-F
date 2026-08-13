@@ -21,10 +21,16 @@ svg{display:block;margin:6px auto;max-width:280px;border:1px solid #ccc;border-r
 <body>
 <div class="no-print">
 <h1>📄 Revision Paper — Hard Topics</h1>
-<button class="print-btn" onclick="window.print()">🖨️ PRINT</button>
-<p style="text-align:center;"><a href="index.html">← Back to Learn TF</a> &nbsp;|&nbsp; <a href="revision.html">Quick Revision Sheet</a></p>
+<div style="text-align:center;margin-bottom:10px;">
+<button class="print-btn" style="display:inline-block;margin:4px;" onclick="showTab('questions')">📝 Questions</button>
+<button class="print-btn" style="display:inline-block;margin:4px;background:linear-gradient(135deg,#f0c040,#ff9800);" onclick="showTab('quick')">⚡ Quick Answers</button>
+<button class="print-btn" style="display:inline-block;margin:4px;background:linear-gradient(135deg,#ff64ff,#9c27b0);" onclick="showTab('detailed')">📖 Detailed Answers</button>
+<button class="print-btn" style="display:inline-block;margin:4px;background:none;border:2px solid #64ffda;color:#64ffda;" onclick="window.print()">🖨️ Print</button>
 </div>
-<div class="sheet">
+<p style="text-align:center;"><a href="index.html">← Back to Learn TF</a> &nbsp;|&nbsp; <a href="revision.html">Quick Revision Sheet</a></p>
+<script>function showTab(t){document.getElementById('tab-questions').style.display=t==='questions'?'block':'none';document.getElementById('tab-quick').style.display=t==='quick'?'block':'none';document.getElementById('tab-detailed').style.display=t==='detailed'?'block':'none';}</script>
+</div>
+<div class="sheet" id="tab-questions">
 
 <h1 style="text-align:center;">Learn TF — Revision Paper: Hard Topics</h1>
 <p style="text-align:center;font-size:9pt;color:#555;">Name: _________________________ Date: _____________ Score: ____ / 20</p>
@@ -179,23 +185,81 @@ svg{display:block;margin:6px auto;max-width:280px;border:1px solid #ccc;border-r
 <div class="answer-space"></div>
 </div>
 
-<!-- ============ ANSWER KEY ============ -->
-<div class="key">
-<h2>Answer Key</h2>
+<!-- ============ ANSWER KEY (quick) ============ -->
+</div>
+<div class="sheet" id="tab-quick" style="display:none;">
+<h2>Quick Answer Key</h2>
 <ol>
-<li><b>(x-3)/(x+2)</b> — Top: (x+3)(x-3). Bottom: (x+2)(x+3). Cancel (x+3).</li>
-<li><b>(5x-1)/((x+1)(x-2))</b> — 2(x-2)+3(x+1) = 2x-4+3x+3 = 5x-1 over LCD.</li>
-<li><b>2(x+2)/(x-2)</b> — Top: 2(x+2)(x-2). Bottom: (x-2)². Cancel one (x-2).</li>
-<li><b>p=4, q=-6</b> — x²+8x+10 = (x+4)²-16+10 = (x+4)²-6.</li>
-<li><b>x=1 or x=5</b> — (x-3)²=4 → x-3=±2 → x=5 or x=1.</li>
-<li><b>Minimum value = 2</b> — (x-3)²+2 ≥ 2 always. Min when (x-3)²=0.</li>
-<li>(a) <b>x=1 and x=5</b> (b) <b>x=3</b> (c) <b>(3, -4)</b></li>
-<li>(a) <b>x=-2 and x=4</b> (b) <b>Maximum</b> (negative coefficient of x², ∩ shape)</li>
-<li><b>x=(3y+1)/(y-2)</b> — y(x-3)=2x+1 → xy-3y=2x+1 → xy-2x=3y+1 → x(y-2)=3y+1 → x=(3y+1)/(y-2)</li>
-<li>(a) <b>p=2, q=-5</b> (b) <b>x=2</b> (c) <b>Minimum</b> — coefficient of x² is positive (∪ shape), and the vertex is the lowest point.</li>
+<li><b>(x-3)/(x+2)</b></li>
+<li><b>(5x-1)/((x+1)(x-2))</b></li>
+<li><b>2(x+2)/(x-2)</b></li>
+<li><b>p=4, q=-6</b></li>
+<li><b>x=1 or x=5</b></li>
+<li><b>Minimum value = 2</b></li>
+<li>(a) x=1, x=5 &nbsp;(b) x=3 &nbsp;(c) (3, -4)</li>
+<li>(a) x=-2, x=4 &nbsp;(b) Maximum</li>
+<li><b>x=(3y+1)/(y-2)</b></li>
+<li>(a) p=2, q=-5 &nbsp;(b) x=2 &nbsp;(c) Minimum</li>
 </ol>
 </div>
 
+<div class="sheet" id="tab-detailed" style="display:none;">
+<h2>Detailed Solutions — Full Working</h2>
+
+<h3>Q1. Simplify (x²-9)/(x²+5x+6)</h3>
+<p><b>Step 1:</b> Factor the top: x²-9 = (x+3)(x-3) [difference of squares]</p>
+<p><b>Step 2:</b> Factor the bottom: x²+5x+6 → numbers that × to 6 and + to 5 → 2,3<br>= (x+2)(x+3)</p>
+<p><b>Step 3:</b> Cancel (x+3) from top and bottom:<br>= (x-3)/(x+2) ✓</p>
+
+<h3>Q2. Express 2/(x+1) + 3/(x-2) as a single fraction</h3>
+<p><b>Step 1:</b> LCD = (x+1)(x-2)</p>
+<p><b>Step 2:</b> First fraction: 2(x-2)/LCD = (2x-4)/LCD<br>Second fraction: 3(x+1)/LCD = (3x+3)/LCD</p>
+<p><b>Step 3:</b> Add tops: (2x-4)+(3x+3) = 5x-1</p>
+<p><b>Answer:</b> (5x-1)/((x+1)(x-2)) ✓</p>
+
+<h3>Q3. Simplify (2x²-8)/(x²-4x+4)</h3>
+<p><b>Top:</b> 2x²-8 = 2(x²-4) = 2(x+2)(x-2)</p>
+<p><b>Bottom:</b> x²-4x+4 = (x-2)²</p>
+<p><b>Cancel one (x-2):</b> = 2(x+2)/(x-2) ✓</p>
+
+<h3>Q4. Express x²+8x+10 as (x+p)²+q</h3>
+<p><b>Half of 8 = 4.</b> Square it = 16.</p>
+<p>x²+8x+10 = (x²+8x+16) - 16 + 10 = (x+4)² - 6</p>
+<p><b>p = 4, q = -6</b> ✓</p>
+
+<h3>Q5. Solve x²-6x+5=0 by completing the square</h3>
+<p>Half of -6 = -3. Square = 9.</p>
+<p>x²-6x+5 = (x-3)² - 9 + 5 = (x-3)² - 4</p>
+<p>Set = 0: (x-3)² - 4 = 0</p>
+<p>(x-3)² = 4</p>
+<p>x-3 = ±2</p>
+<p>x = 3+2 = <b>5</b> &nbsp;or&nbsp; x = 3-2 = <b>1</b> ✓</p>
+
+<h3>Q6. Minimum value of x²-6x+11</h3>
+<p>Complete the square: (x-3)² - 9 + 11 = (x-3)² + 2</p>
+<p>Since (x-3)² ≥ 0 always, the smallest y can be is <b>0 + 2 = 2</b>.</p>
+<p>Minimum value = <b>2</b> (occurs when x = 3) ✓</p>
+
+<h3>Q7. y = (x-1)(x-5)</h3>
+<p>(a) <b>x-intercepts:</b> Set y=0 → (x-1)(x-5)=0 → x=1 or x=5</p>
+<p>(b) <b>Line of symmetry:</b> Midpoint of 1 and 5 = (1+5)/2 = <b>x=3</b></p>
+<p>(c) <b>Turning point:</b> Sub x=3: y=(3-1)(3-5)=(2)(-2)=-4 → <b>(3,-4)</b></p>
+
+<h3>Q8. y = -(x+2)(x-4)</h3>
+<p>(a) <b>x-intercepts:</b> x=-2 and x=4</p>
+<p>(b) The coefficient of x² is <b>negative</b> (the - in front), so the parabola is ∩ shaped → <b>Maximum</b></p>
+
+<h3>Q9. Make x the subject: y = (2x+1)/(x-3)</h3>
+<p><b>Step 1:</b> Multiply by (x-3): y(x-3) = 2x+1</p>
+<p><b>Step 2:</b> Expand: xy - 3y = 2x + 1</p>
+<p><b>Step 3:</b> Collect x terms on left: xy - 2x = 3y + 1</p>
+<p><b>Step 4:</b> Factor out x: x(y-2) = 3y + 1</p>
+<p><b>Step 5:</b> Divide: x = <b>(3y+1)/(y-2)</b> ✓</p>
+
+<h3>Q10. y = (x-p)²+q with turning point (2,-5)</h3>
+<p>(a) The turning point of (x-p)²+q is at (p,q). So <b>p=2, q=-5</b>.</p>
+<p>(b) Line of symmetry passes through the turning point vertically: <b>x=2</b></p>
+<p>(c) <b>Minimum</b> — the coefficient of x² is positive (no negative sign), so the parabola is ∪ shaped and the turning point is the lowest point.</p>
 </div>
 </body>
 </html>
